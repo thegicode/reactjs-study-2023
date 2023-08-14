@@ -1,8 +1,8 @@
-import ForwardRef0 from "../contents/ForwardRef0";
-import ForwardRef1 from "../contents/ForwardRef1";
-import ForwardRef2 from "../contents/ForwardRef2";
-import ForwardRef3 from "../contents/ForwardRef3";
-import ForwardRef4 from "../contents/ForwardRef4";
+import ForwardRef0 from "../contents/forwardRefs/ForwardRef0";
+import ForwardRef1 from "../contents/forwardRefs/ForwardRef1";
+import ForwardRef2 from "../contents/forwardRefs/ForwardRef2";
+import ForwardRef3 from "../contents/forwardRefs/ForwardRef3";
+import ForwardRef4 from "../contents/forwardRefs/ForwardRef4";
 
 import "../css/forwardRef.css";
 

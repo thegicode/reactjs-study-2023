@@ -8,7 +8,7 @@ import Navigation from "./components/Navigation";
 // import AboutPage from "./pages/AboutPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ForwardRefPage from "./pages/ForwardRefPage";
-import memoPage from "./pages/memoPage";
+import MemoPage from "./pages/MemoPage";
 import ProductsPage from "./pages/ProductsPage";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
                     {/* <Route path="/" Component={HomePage} /> */}
                     {/* <Route path="/about" Component={AboutPage} /> */}
                     <Route path="/forwardref" Component={ForwardRefPage} />
-                    <Route path="/memo" Component={memoPage} />
+                    <Route path="/memo" Component={MemoPage} />
                     <Route path="/products" Component={ProductsPage} />
                     <Route Component={NotFoundPage} />
                 </Routes>
