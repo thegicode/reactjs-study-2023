@@ -2,6 +2,7 @@ import ForwardRef0 from "../contents/ForwardRef0";
 import ForwardRef1 from "../contents/ForwardRef1";
 import ForwardRef2 from "../contents/ForwardRef2";
 import ForwardRef3 from "../contents/ForwardRef3";
+import ForwardRef4 from "../contents/ForwardRef4";
 
 import "../css/forwardRef.css";
 
@@ -25,6 +26,9 @@ function ForwardRefPage() {
 
             <h2>3. Forwarding a ref through multiple components </h2>
             <ForwardRef3 />
+
+            <h2>4. Exposing an imperative handle instead of a DOM node </h2>
+            <ForwardRef4 />
         </div>
     );
 }
