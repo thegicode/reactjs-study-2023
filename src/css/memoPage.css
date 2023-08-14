@@ -1,3 +1,11 @@
+.memoPage {
+    font-size: 14px;
+}
+
+.memoPage > p {
+    margin: 10px 0;
+}
+
 .memoPage h1 {
     margin-bottom: 2rem;
 }
@@ -5,4 +13,24 @@
 .memoPage h2 {
     padding-top: 1rem;
     border-top: 1px solid #ddd;
+}
+
+.memoPage .memo1 button {
+    margin-left: 5px;
+}
+.memoPage .memo1 .child {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid green;
+}
+
+.memoPage .memo1 h3 {
+    margin: 0 0 10px;
+}
+.memoPage .memo1 h4 {
+    margin: 0;
+}
+.memoPage .memo1 p {
+    margin: 5px 0;
 }

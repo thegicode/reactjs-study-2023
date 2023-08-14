@@ -13,6 +13,7 @@ import ProductsPage from "./pages/ProductsPage";
 
 function App() {
     return (
+        // <React.StrictMode>
         <Router basename={process.env.PUBLIC_URL}>
             <Navigation />
             <div className="body">
@@ -26,6 +27,7 @@ function App() {
                 </Routes>
             </div>
         </Router>
+        // </React.StrictMode>
     );
 }
 
