@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import NotFoundPage from "./pages/NotFoundPage";
 // import HomePage from "./pages/HomePage";
 // import AboutPage from "./pages/AboutPage";
@@ -9,7 +9,7 @@ import "./css/app.css";
 
 function App() {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Navigation />
             <div className="body">
                 <Routes>

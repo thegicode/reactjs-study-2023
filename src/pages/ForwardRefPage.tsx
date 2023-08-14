@@ -10,24 +10,32 @@ function ForwardRefPage() {
     return (
         <div className="forwardRef">
             <h1>ForwardRef</h1>
-            <p>자식의 ref를 부모에게 전달</p>
-            <p>자식의 컴포턴트를 반복적으로 사용할 때</p>
-            <p>컴포넌트의 캡슐화를 해칠 수 있다. </p>
-            <p>필요할 때만 사용</p>
+            <code>const SomeComponent = forwardRef(render)</code>
+            <ul>
+                <li>부모 컴포넌트에서 자녀 컴포넌트로 ref를 전달</li>
+                <li>두 번째 인자에 ref 전달</li>
+                <li>재사용성이 높은 자녀 컴포턴트</li>
+                <li>컴포넌트의 캡슐화의 장점을 없앨 수 있다. </li>
+                <li>필요할 때만 사용편이 좋다.</li>
+            </ul>
 
             <h2>0. ForwardRef 적용 전</h2>
             <ForwardRef0 />
 
-            <h2>1. Focusing a text input</h2>
+            <h2>1. input 엘리먼트 focusing</h2>
             <ForwardRef1 />
 
-            <h2>2. Playing and pausing a video</h2>
+            <h2>2. 비디오 재생 & 일시정지</h2>
             <ForwardRef2 />
 
-            <h2>3. Forwarding a ref through multiple components </h2>
+            <h2>3. 여러 컴포넌트를 통해 ref 전달</h2>
             <ForwardRef3 />
 
-            <h2>4. Exposing an imperative handle instead of a DOM node </h2>
+            <h2>4. useImperativeHandle 사용</h2>
+            <p>
+                부모 컴포넌트가 자식 컴포넌트의 특정 메서드나 값을 직접 액세스
+            </p>
+            <p>focus()가 자식 컴포넌트에</p>
             <ForwardRef4 />
         </div>
     );

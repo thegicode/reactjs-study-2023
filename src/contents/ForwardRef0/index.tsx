@@ -10,6 +10,7 @@ export default function ForwardRef0() {
     return (
         <form className="forwardRef">
             <input type="text" ref={inputRef} />
+
             <button type="button" onClick={handleClick}>
                 Edit
             </button>

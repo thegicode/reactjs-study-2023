@@ -1,17 +1,16 @@
-import { InputHTMLAttributes, forwardRef, ForwardedRef } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 
 interface MyInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
 }
 
-const MyInput = (props: MyInputProps, ref: ForwardedRef<HTMLInputElement>) => {
-    const { label, ...otherProps } = props;
+const MyInput = forwardRef<HTMLInputElement, MyInputProps>((props, ref) => {
     return (
         <label>
-            {label}
-            <input {...otherProps} ref={ref} />
+            {props.label}
+            <input {...props} ref={ref} />
         </label>
     );
-};
+});
 
-export default forwardRef<HTMLInputElement, MyInputProps>(MyInput);
+export default MyInput;
