@@ -8,8 +8,8 @@ import "../css/forwardRef.css";
 
 function ForwardRefPage() {
     return (
-        <div className="forwardRef">
-            <h1>ForwardRef</h1>
+        <section className="forwardRef">
+            <h1>React ForwardRef</h1>
             <code>const SomeComponent = forwardRef(render)</code>
             <ul>
                 <li>부모 컴포넌트에서 자녀 컴포넌트로 ref를 전달</li>
@@ -37,7 +37,7 @@ function ForwardRefPage() {
             </p>
             <p>focus()가 자식 컴포넌트에</p>
             <ForwardRef4 />
-        </div>
+        </section>
     );
 }
 

@@ -14,6 +14,9 @@ function Navigation() {
                 <li>
                     <Link to="/forwardref">ForwardRef</Link>
                 </li>
+                <li>
+                    <Link to="/memo">Memo</Link>
+                </li>
             </ul>
         </nav>
     );
