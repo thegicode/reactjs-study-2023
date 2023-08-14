@@ -4,6 +4,7 @@ import MyInput from "./MyInput";
 interface MyInputInstance {
     focus: () => void;
     scrollIntoView: () => void;
+    // setValue: (value: number) => void;
 }
 
 export default function Form() {
@@ -13,6 +14,7 @@ export default function Form() {
         ref.current?.focus();
         // This won't work because the DOM node isn't exposed:
         // ref.current.style.opacity = 0.5;
+        // ref.current?.setValue(3);
     }
 
     return (

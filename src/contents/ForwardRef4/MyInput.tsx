@@ -3,6 +3,8 @@ import {
     useRef,
     useImperativeHandle,
     InputHTMLAttributes,
+    // useState,
+    // useEffect,
 } from "react";
 
 interface MyInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -12,10 +14,13 @@ interface MyInputProps extends InputHTMLAttributes<HTMLInputElement> {
 interface MyInputRef {
     focus: () => void;
     scrollIntoView: () => void;
+    // state: number;
+    // setValue: (value: number) => void;
 }
 
 const MyInput = forwardRef<MyInputRef, MyInputProps>((props, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    // const [state, setState] = useState<number>(1);
 
     useImperativeHandle(
         ref,
@@ -26,9 +31,18 @@ const MyInput = forwardRef<MyInputRef, MyInputProps>((props, ref) => {
             scrollIntoView() {
                 inputRef.current?.scrollIntoView();
             },
+            // setValue(idx: number) {
+            //     setState(idx);
+            // },
         }),
         []
     );
+
+    // useEffect(() => {
+    //     if (inputRef.current) {
+    //         inputRef.current.value = state.toString();
+    //     }
+    // }, [state]);
 
     return <input {...props} ref={inputRef} />;
 });
