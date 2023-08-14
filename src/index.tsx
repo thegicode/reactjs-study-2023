@@ -1,26 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-// import App from "./App";
-import ForwardRef from "./ForwardRef";
-import ForwardRef2 from "./ForwardRef2";
-
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
 root.render(
     <React.StrictMode>
-        {/* <App /> */}
-
-        <h2>ForwardRef</h2>
-
-        <h3>1. Focusing a text input</h3>
-        <ForwardRef />
-
-        <h3>2. Playing and pausing a video</h3>
-        <ForwardRef2 />
+        <App />
     </React.StrictMode>
 );
 

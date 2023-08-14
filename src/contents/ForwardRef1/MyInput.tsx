@@ -1,10 +1,10 @@
-import React, { InputHTMLAttributes, forwardRef } from "react";
+import { InputHTMLAttributes, forwardRef, ForwardedRef } from "react";
 
 interface MyInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
 }
 
-const MyInput = forwardRef<HTMLInputElement, MyInputProps>((props, ref) => {
+const MyInput = (props: MyInputProps, ref: ForwardedRef<HTMLInputElement>) => {
     const { label, ...otherProps } = props;
     return (
         <label>
@@ -12,6 +12,6 @@ const MyInput = forwardRef<HTMLInputElement, MyInputProps>((props, ref) => {
             <input {...otherProps} ref={ref} />
         </label>
     );
-});
+};
 
-export default MyInput;
+export default forwardRef<HTMLInputElement, MyInputProps>(MyInput);

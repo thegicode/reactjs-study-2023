@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import MyInput from "./MyInput";
 
-export default function Form() {
+export default function ForwardRef() {
     const ref = useRef<HTMLInputElement>(null);
 
     function handleClick() {
