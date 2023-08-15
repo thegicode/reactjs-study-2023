@@ -65,3 +65,15 @@
     color: #fff;
     cursor: pointer;
 }
+
+.useContext4 {
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.useContext4 h1 {
+    margin: 0 0 1rem;
+}

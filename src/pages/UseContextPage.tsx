@@ -3,6 +3,7 @@ import UseConText0 from "../contents/useContext/useContext0/";
 import UseConText1 from "../contents/useContext/useContext1/";
 import UseConText2 from "../contents/useContext/useContext2/";
 import UseConText3 from "../contents/useContext/UseContext3";
+import UseConText4 from "../contents/useContext/UseContext4";
 
 export default function useContextPage() {
     return (
@@ -28,20 +29,23 @@ export default function useContextPage() {
                 </li>
             </ul>
 
-            <h2>예제0 Context 적용전 : Prop Drilling</h2>
+            <h2>0. Context 적용전 : Prop Drilling</h2>
             <p>props로 자식에서 자식에게 전달</p>
             <UseConText0 />
 
-            <h2>예제1 : createContext, useContext</h2>
+            <h2>1. createContext, useContext</h2>
             <p>object, {"value={{ isDark, setIsDark }}"}</p>
             <UseConText1 />
 
-            <h2>예제2 </h2>
+            <h2>2. </h2>
             <p>string, {"value={'예쁜 타이틀 컨텍스트'}"}</p>
             <UseConText2 />
 
-            <h3>Passing data deeply into the tree </h3>
+            <h2>3. Passing data deeply into the tree </h2>
             <UseConText3 />
+
+            <h2>4. Updating a value via context </h2>
+            <UseConText4 />
         </section>
     );
 }
