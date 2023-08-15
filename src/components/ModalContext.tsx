@@ -1,7 +1,7 @@
 import "../css/modal.css";
 
 import { useContext } from "react";
-import { SelectedItemContext } from "../context/SelectdIdxContext";
+import { SelectedItemContext } from "../context/SelectdItemContext";
 
 // interface ModalContextProps {
 //     product: Product | null;
