@@ -3,7 +3,7 @@ import React, { createContext, memo, useContext, useState } from "react";
 type Theme = "dark" | "light";
 const ThemeContext = createContext<Theme | null>(null);
 
-export default function MyApp() {
+export default function Memo6() {
     const [theme, setTheme] = useState<Theme>("dark");
 
     function handleClick() {

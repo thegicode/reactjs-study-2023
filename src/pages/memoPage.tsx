@@ -4,6 +4,7 @@ import Memo2 from "../contents/memo/memo2";
 import Memo3 from "../contents/memo/memo3";
 import Memo4 from "../contents/memo/Memo4";
 import Memo5 from "../contents/memo/Memo5";
+import Memo6 from "../contents/memo/Memo6";
 
 export default function memoPage() {
     return (
@@ -16,7 +17,7 @@ export default function memoPage() {
 
             <ul>
                 <li>memo: memoization</li>
-                <li>불필요한 렌더링을 하지 않는 아이디어</li>
+                <li>불필요한 렌더링을 하지 않는다.</li>
                 <li>
                     리엑트는 부모 컴포넌트가 렌더링되면 자식 컴포넌트로 자동으로
                     렌더링된다.
@@ -79,7 +80,11 @@ export default function memoPage() {
             </p>
 
             <h2>Updating a memoized component using a context </h2>
-            {/* <MemoApp3 /> */}
+            <Memo6 />
+            <p>
+                memo를 적용했더라도 useContext를 사용하고 변경되었다면
+                리렌더링된다.
+            </p>
         </section>
     );
 }
