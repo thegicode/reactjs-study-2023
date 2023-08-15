@@ -1,5 +1,6 @@
 import "../css/memoPage.css";
 import Memo1 from "../contents/memo/memo1";
+import Memo2 from "../contents/memo/memo2";
 import MemoApp1 from "../contents/memo/MemoApp1";
 import MemoApp2 from "../contents/memo/MemoApp2";
 
@@ -41,7 +42,7 @@ export default function memoPage() {
                 </li>
             </ul>
 
-            <h2>간단한 예제</h2>
+            <h2>간단한 예제 : memo </h2>
             <Memo1 />
             <p>
                 - 부모 props가 변경될 때마다 자식 컴포턴트의 props가 변경이
@@ -52,6 +53,10 @@ export default function memoPage() {
                 컴포넌트의 prop이 변화가 없으면 리렌더링을 하지 않고 저장되었던
                 것을 사용한다.
             </p>
+
+            <h2>간단한 예제2: memo, useMemo</h2>
+            <Memo2 />
+            <p>- useMemo를 사용하여 Child는 리렌더링이 되지 않는다.</p>
 
             <h2>Skipping re-rendering when props are unchanged</h2>
             <MemoApp1 />
