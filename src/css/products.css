@@ -1,18 +1,18 @@
-.productsPage {
+.products {
     font-size: 14px;
 }
-.productsPage h1 {
+.products h1 {
     margin: 1rem 0;
 }
-.productsPage ul {
+.products ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
-.productsPage li {
+.products li {
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
 }
-.productsPage p {
+.products p {
     margin: 0;
 }

@@ -1,17 +1,17 @@
-import "../css/products.css";
-import { useState } from "react";
-import PorductList from "../contents/products/ProductList";
+import "../css/productsPage.css";
+import Products1 from "../contents/products/products1/index";
+import Products2 from "../contents/products/products2/index";
 
-import Modal from "../components/Modal";
-
-export default function ProuductsPage() {
-    const [selectedItem, setSelectedItem] = useState<Product | null>(null);
-
+export default function memoPage() {
     return (
         <section className="productsPage">
-            <h1>Products</h1>
-            <PorductList setSelectedItem={setSelectedItem} />
-            <Modal product={selectedItem} setSelectedItem={setSelectedItem} />
+            <h1>Prodcuts</h1>
+
+            <h2>Products 1</h2>
+            <Products1 />
+
+            <h2>Products 2</h2>
+            <Products2 />
         </section>
     );
 }
