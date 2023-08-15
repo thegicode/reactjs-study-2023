@@ -12,8 +12,10 @@ const Header = () => {
 
     const { isDark } = themeContext;
 
+    const className = "theme-" + (isDark ? "dark" : "normal");
+
     return (
-        <header className={isDark ? "dark" : "noDark"}>
+        <header className={className}>
             <h1>Header - {titleContext}</h1>
         </header>
     );

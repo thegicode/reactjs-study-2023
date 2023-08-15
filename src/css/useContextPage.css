@@ -31,12 +31,37 @@
     border-top: 1px solid #ddd;
 }
 
-.dark {
+.dark,
+.theme-dark {
     background-color: #000;
     color: #fff;
 }
 
-.noDark {
+.noDark,
+.theme-normal {
     background-color: #fff;
     color: #000;
+}
+
+.userContext3 {
+    overflow: hidden;
+    padding: 1rem;
+    border-radius: 10px;
+}
+.userContext3 h1 {
+    margin: 0 0 10px;
+}
+.userContext3 button {
+    margin-right: 10px;
+}
+.panel-dark {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+.panel-dark button {
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
 }

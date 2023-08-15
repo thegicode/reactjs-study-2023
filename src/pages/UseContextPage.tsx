@@ -1,7 +1,8 @@
 import "../css/useContextPage.css";
-import UseConText0 from "../contents/useContext/useContext0/index";
-import UseConText1 from "../contents/useContext/useContext1/index";
-import UseConText2 from "../contents/useContext/useContext2/index";
+import UseConText0 from "../contents/useContext/useContext0/";
+import UseConText1 from "../contents/useContext/useContext1/";
+import UseConText2 from "../contents/useContext/useContext2/";
+import UseConText3 from "../contents/useContext/UseContext3";
 
 export default function useContextPage() {
     return (
@@ -13,7 +14,9 @@ export default function useContextPage() {
                 </strong>
             </p>
 
-            <code className="code-reference"></code>
+            <code className="code-reference">
+                const value = useContext(SomeContext)
+            </code>
 
             <ul>
                 <li>Context를 사용하면 컴포넌트를 재사용하기 어렵다.</li>
@@ -36,6 +39,9 @@ export default function useContextPage() {
             <h2>예제2 </h2>
             <p>string, {"value={'예쁜 타이틀 컨텍스트'}"}</p>
             <UseConText2 />
+
+            <h3>Passing data deeply into the tree </h3>
+            <UseConText3 />
         </section>
     );
 }

@@ -14,8 +14,10 @@ const Footer = () => {
         setIsDark(!isDark);
     };
 
+    const className = "theme-" + (isDark ? "dark" : "normal");
+
     return (
-        <footer className={isDark ? "dark" : "noDark"}>
+        <footer className={className}>
             <h1>Footer</h1>
             <button onClick={toggle}>Dark Mode</button>
         </footer>

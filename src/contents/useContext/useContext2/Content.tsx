@@ -12,8 +12,10 @@ const Content = () => {
 
     const { isDark } = themeContext;
 
+    const className = "content theme-" + (isDark ? "dark" : "normal");
+
     return (
-        <section className={"content " + (isDark ? "dark" : "noDark")}>
+        <section className={className}>
             <h1>Content - {titleContext}</h1>
         </section>
     );
