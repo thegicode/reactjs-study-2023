@@ -11,7 +11,11 @@ export default function memoPage() {
         <section className="memoPage">
             <h1>React Memo</h1>
 
-            <code>
+            <p>
+                <strong>prop이 변동되지 않으면 리렌더링을 하지 않는다.</strong>
+            </p>
+
+            <code className="code-reference">
                 const MemoizedComponent = memo(SomeComponent, arePropsEqual?)
             </code>
 
@@ -37,10 +41,6 @@ export default function memoPage() {
                 <li>
                     useState, useReducer, useContext 와 같은 상태와 같은 hook을
                     사용하면 props와 상관없이 리렌더링된다.
-                </li>
-                <li>
-                    [자식컴포넌트] -{">"} React.memo (prop.check) -{">"}
-                    [자식컴포넌트]
                 </li>
             </ul>
 

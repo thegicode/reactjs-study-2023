@@ -1,18 +1,24 @@
+import "../css/forwardRef.css";
+
 import ForwardRef0 from "../contents/forwardRefs/ForwardRef0";
 import ForwardRef1 from "../contents/forwardRefs/ForwardRef1";
 import ForwardRef2 from "../contents/forwardRefs/ForwardRef2";
 import ForwardRef3 from "../contents/forwardRefs/ForwardRef3";
 import ForwardRef4 from "../contents/forwardRefs/ForwardRef4";
 
-import "../css/forwardRef.css";
-
 function ForwardRefPage() {
     return (
         <section className="forwardRef">
             <h1>React ForwardRef</h1>
-            <code>const SomeComponent = forwardRef(render)</code>
+
+            <p>
+                <strong>부모 컴포넌트에서 자녀 컴포넌트로 ref를 전달</strong>
+            </p>
+
+            <code className="code-reference">
+                const SomeComponent = forwardRef(render)
+            </code>
             <ul>
-                <li>부모 컴포넌트에서 자녀 컴포넌트로 ref를 전달</li>
                 <li>두 번째 인자에 ref 전달</li>
                 <li>재사용성이 높은 자녀 컴포턴트</li>
                 <li>컴포넌트의 캡슐화의 장점을 없앨 수 있다. </li>

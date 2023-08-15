@@ -18,6 +18,9 @@ function Navigation() {
                     <Link to="/memo">Memo</Link>
                 </li>
                 <li>
+                    <Link to="/createcontext">CreateContext</Link>
+                </li>
+                <li>
                     <Link to="/products">Products</Link>
                 </li>
             </ul>
