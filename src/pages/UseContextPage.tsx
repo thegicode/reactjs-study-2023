@@ -4,6 +4,7 @@ import UseConText1 from "../contents/useContext/useContext1/";
 import UseConText2 from "../contents/useContext/useContext2/";
 import UseConText3 from "../contents/useContext/UseContext3";
 import UseConText4 from "../contents/useContext/UseContext4";
+import UseConText5 from "../contents/useContext/UseContext5";
 
 export default function useContextPage() {
     return (
@@ -46,6 +47,9 @@ export default function useContextPage() {
 
             <h2>4. Updating a value via context </h2>
             <UseConText4 />
+
+            <h2>5. Updating an object via context</h2>
+            <UseConText5 />
         </section>
     );
 }
