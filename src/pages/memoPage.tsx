@@ -85,6 +85,27 @@ export default function memoPage() {
                 memo를 적용했더라도 useContext를 사용하고 변경되었다면
                 리렌더링된다.
             </p>
+
+            <h2>Minimizing props changes</h2>
+            <p>- memo를 최대한 활용하려면 props의 변경을 최소화</p>
+            <p>
+                - 예, prop이 object 이면, useMemo를 사용하여 object가 parent
+                component가 매번 object를 re-create 하지 않도록 한다.
+            </p>
+            <p>
+                - props가 변경되는 것을 최소화하기 위해, whole object 대신
+                individual value를 props로 적용하라.
+                <code>{"<Profile person={person} />"}</code> 대신
+                <code>{"<Profile name={name} age={age} />"}</code>
+            </p>
+            <p>
+                - 값 자체 보다는 값의 존재 여부
+                <code>{"<CallToAction hasGroups={hasGroups} />"}</code>
+            </p>
+
+            <h2>
+                arePropsEqual의 활용 :S pecifying a custom comparison function{" "}
+            </h2>
         </section>
     );
 }
