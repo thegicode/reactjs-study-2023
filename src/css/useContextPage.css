@@ -1,0 +1,42 @@
+.useContextPage {
+    font-size: 14px;
+}
+
+.useContextPage > p {
+    margin: 10px 0;
+}
+
+.useContextPage h1 {
+    margin-bottom: 2rem;
+}
+
+.useContextPage h2 {
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.useContext1 {
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+.useContext1 h1 {
+    margin: 0;
+}
+
+.useContext1 header,
+.useContext1 .content,
+.useContext1 footer {
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.dark {
+    background-color: #000;
+    color: #fff;
+}
+
+.noDark {
+    background-color: #fff;
+    color: #000;
+}

@@ -17,8 +17,11 @@ function Navigation() {
                 <li>
                     <Link to="/memo">Memo</Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to="/createcontext">CreateContext</Link>
+                </li> */}
+                <li>
+                    <Link to="/usecontext">Context</Link>
                 </li>
                 <li>
                     <Link to="/products">Products</Link>

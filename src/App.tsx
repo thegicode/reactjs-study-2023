@@ -10,6 +10,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ForwardRefPage from "./pages/ForwardRefPage";
 import MemoPage from "./pages/MemoPage";
 import CreateContextPage from "./pages/CreateContextPage";
+import UseContextPage from "./pages/UseContextPage";
 import ProductsPage from "./pages/ProductsPage";
 
 function App() {
@@ -27,6 +28,8 @@ function App() {
                         path="/createcontext"
                         Component={CreateContextPage}
                     />
+                    <Route path="/usecontext" Component={UseContextPage} />
+
                     <Route path="/products" Component={ProductsPage} />
                     <Route Component={NotFoundPage} />
                 </Routes>
