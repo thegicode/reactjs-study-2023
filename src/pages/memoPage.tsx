@@ -1,8 +1,9 @@
 import "../css/memoPage.css";
 import Memo1 from "../contents/memo/memo1";
 import Memo2 from "../contents/memo/memo2";
-import MemoApp1 from "../contents/memo/MemoApp1";
-import MemoApp2 from "../contents/memo/MemoApp2";
+import Memo3 from "../contents/memo/memo3";
+import Memo4 from "../contents/memo/Memo4";
+import Memo5 from "../contents/memo/Memo5";
 
 export default function memoPage() {
     return (
@@ -58,22 +59,23 @@ export default function memoPage() {
             <Memo2 />
             <p>- useMemo를 사용하여 Child는 리렌더링이 되지 않는다.</p>
 
+            <h2>간단한 예제3: memo, useCallback</h2>
+            <Memo3 />
+            <p>- useCallback 사용하여 Child는 리렌더링이 되지 않는다.</p>
+
             <h2>Skipping re-rendering when props are unchanged</h2>
-            <MemoApp1 />
+            <Memo4 />
             <p>
-                name이 변경되면 Greeting component는 리렌더링된다. <br />
-                but address가 변경되면 Greeting component는 리렌더링되지 않는다.
+                - name이 변경되면 Greeting component는 리렌더링된다. <br />
+                but memo를 적용하였으므로 address가 변경되면 Greeting
+                component는 리렌더링되지 않는다.
             </p>
 
             <h2>Updating a memoized component using state</h2>
-            <MemoApp2 />
+            <Memo5 />
             <p>
-                컴포넌트의 state가 변경되면 컴포넌트가 memoized 되었더라도
+                - 컴포넌트의 state가 변경되면 컴포넌트가 memo 되었더라도
                 리렌더링된다.
-            </p>
-            <p>
-                state를 현재 값으로 설정하면 리액트는 memo 없이도 컴포넌트를
-                리렌더링되지 않는다.
             </p>
 
             <h2>Updating a memoized component using a context </h2>

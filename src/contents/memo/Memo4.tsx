@@ -1,6 +1,6 @@
 import React, { memo, useState, ChangeEvent, FC } from "react";
 
-const MemoApp1: FC = () => {
+const Memo4: FC = () => {
     const [name, setName] = useState<string>("");
     const [address, setAddress] = useState<string>("");
 
@@ -14,14 +14,16 @@ const MemoApp1: FC = () => {
 
     return (
         <>
-            <label>
-                Name{": "}
-                <input value={name} onChange={handleNameChange} />
-            </label>
-            <label>
-                Address{": "}
-                <input value={address} onChange={handleAddressChange} />
-            </label>
+            <div style={{ display: "flex", gap: "10px" }}>
+                <label>
+                    Name{": "}
+                    <input value={name} onChange={handleNameChange} />
+                </label>
+                <label>
+                    Address{": "}
+                    <input value={address} onChange={handleAddressChange} />
+                </label>
+            </div>
             <Greeting name={name} />
         </>
     );
@@ -41,4 +43,4 @@ const Greeting: FC<GreetingProps> = memo(({ name }) => {
     );
 });
 
-export default MemoApp1;
+export default Memo4;

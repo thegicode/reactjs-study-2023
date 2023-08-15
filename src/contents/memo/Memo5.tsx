@@ -1,22 +1,27 @@
 import React, { memo, useState } from "react";
 
-export default function MemoApp2() {
+export default function Memo5() {
     const [name, setName] = useState<string>("");
     const [address, setAddress] = useState<string>("");
 
     return (
         <>
-            <label>
-                Name{": "}
-                <input value={name} onChange={(e) => setName(e.target.value)} />
-            </label>
-            <label>
-                Address{": "}
-                <input
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                />
-            </label>
+            <div style={{ display: "flex", gap: "10px" }}>
+                <label>
+                    Name{": "}
+                    <input
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </label>
+                <label>
+                    Address{": "}
+                    <input
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                    />
+                </label>
+            </div>
             <Greeting name={name} />
         </>
     );
