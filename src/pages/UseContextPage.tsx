@@ -1,6 +1,7 @@
 import "../css/useContextPage.css";
 import UseConText0 from "../contents/useContext/useContext0/index";
 import UseConText1 from "../contents/useContext/useContext1/index";
+import UseConText2 from "../contents/useContext/useContext2/index";
 
 export default function useContextPage() {
     return (
@@ -14,13 +15,27 @@ export default function useContextPage() {
 
             <code className="code-reference"></code>
 
+            <ul>
+                <li>Context를 사용하면 컴포넌트를 재사용하기 어렵다.</li>
+                <li>
+                    Prop Drilling을 피하기 위한 목적이라면{" "}
+                    <strong style={{ textDecoration: "underline" }}>
+                        Component Composition(컴포넌트 합성) - 찾아볼것!
+                    </strong>
+                </li>
+            </ul>
+
             <h2>예제0 Context 적용전 : Prop Drilling</h2>
             <p>props로 자식에서 자식에게 전달</p>
             <UseConText0 />
 
-            <h2>예제1 : createContext, userContext</h2>
+            <h2>예제1 : createContext, useContext</h2>
+            <p>object, {"value={{ isDark, setIsDark }}"}</p>
             <UseConText1 />
-            <p>Page component 코드가 깔끔해짐</p>
+
+            <h2>예제2 </h2>
+            <p>string, {"value={'예쁜 타이틀 컨텍스트'}"}</p>
+            <UseConText2 />
         </section>
     );
 }
