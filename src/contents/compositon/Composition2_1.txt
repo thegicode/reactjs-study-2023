@@ -1,0 +1,121 @@
+import React, {
+    ChangeEvent,
+    useState,
+    useRef,
+    useImperativeHandle,
+    forwardRef,
+} from "react";
+
+interface DataProps {
+    a: number;
+    b: number;
+}
+
+const Data = [
+    { a: 1, b: 1 },
+    { a: 2, b: 2 },
+    { a: 3, b: 3 },
+];
+
+export default function App() {
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const itemRef = useRef<any>();
+
+    const handleShowModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const handleChangeAmount = (amount: number) => {
+        itemRef.current?.setLocalAmount(amount);
+    };
+
+    return (
+        <>
+            <Parent data={Data} ref={itemRef} onShowModal={handleShowModal} />
+            {showModal && (
+                <Modal
+                    onClose={handleCloseModal}
+                    onChangeAmount={handleChangeAmount}
+                />
+            )}
+        </>
+    );
+}
+
+function Parent({
+    data,
+    onShowModal,
+}: {
+    data: DataProps[];
+    onShowModal: () => void;
+}) {
+    const itemRefs = data.map(() => React.createRef<any>());
+    return (
+        <List>
+            {data.map((item, index) => (
+                <Item
+                    key={index}
+                    data={item}
+                    ref={itemRefs[index]}
+                    onShowModal={onShowModal}
+                />
+            ))}
+        </List>
+    );
+}
+
+function List({ children }: { children: React.ReactNode }) {
+    return <ul>{children}</ul>;
+}
+
+const Item = forwardRef(({ data, onShowModal }, ref) => {
+    const { a, b } = data;
+    const [localAmount, setLocalAmount] = useState<number>(b);
+
+    useImperativeHandle(ref, () => ({
+        setLocalAmount,
+    }));
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setLocalAmount(parseInt(event.target.value));
+    };
+
+    const handleClick = () => {
+        onShowModal();
+    };
+
+    return (
+        <li>
+            <p>
+                [{a}] amount: {localAmount}
+            </p>
+            <input
+                type="number"
+                value={localAmount}
+                min="0"
+                onChange={handleChange}
+                onClick={handleClick}
+            />
+        </li>
+    );
+});
+
+function Modal({ onClose, onChangeAmount }) {
+    const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
+        onChangeAmount(parseInt(e.target.value));
+    };
+
+    return (
+        <div className="modal">
+            <div className="modal-container">
+                <h3>Modal</h3>
+                <input type="number" onChange={handleAmountChange} />
+                <button onClick={onClose}>close</button>
+            </div>
+        </div>
+    );
+}
