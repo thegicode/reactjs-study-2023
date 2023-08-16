@@ -6,22 +6,22 @@ function Navigation() {
         <nav className="navigation">
             <ul>
                 <li>
-                    <Link to="/forwardref">ForwardRef</Link>
-                </li>
-                <li>
-                    <Link to="/memo">Memo</Link>
-                </li>
-                {/* <li>
-                    <Link to="/createcontext">CreateContext</Link>
-                </li> */}
-                <li>
-                    <Link to="/usecontext">Context</Link>
+                    <Link to="/useeffect">useEffect</Link>
                 </li>
                 <li>
                     <Link to="/usememo">useMemo</Link>
                 </li>
                 <li>
-                    <Link to="/useeffect">useEffect</Link>
+                    <Link to="/memo">Memo</Link>
+                </li>
+                <li>
+                    <Link to="/forwardref">ForwardRef</Link>
+                </li>
+                <li>
+                    <Link to="/usecontext">Context</Link>
+                </li>
+                <li>
+                    <Link to="/composition">Composition</Link>
                 </li>
                 <li>
                     <Link to="/products">Products</Link>

@@ -14,6 +14,7 @@ import UseMemoPage from "./pages/UseMemoPage";
 import UseEffectPage from "./pages/UseEffectPage";
 
 import ProductsPage from "./pages/ProductsPage";
+import CompositionPage from "./pages/CompositionPage";
 
 function App() {
     return (
@@ -33,7 +34,10 @@ function App() {
                     <Route path="/usememo" Component={UseMemoPage} />
                     <Route path="/useeffect" Component={UseEffectPage} />
 
+                    <Route path="/composition" Component={CompositionPage} />
+
                     <Route path="/products" Component={ProductsPage} />
+
                     <Route Component={NotFoundPage} />
                 </Routes>
             </div>
