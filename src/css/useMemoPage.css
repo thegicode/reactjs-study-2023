@@ -10,7 +10,18 @@
     margin-bottom: 2rem;
 }
 
-.useMemoPage h2 {
+.useMemo1,
+.useMemo2 {
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+.useMemo1 h3 ~ h3 {
     padding-top: 1rem;
-    border-top: 1px solid #ddd;
+    border-top: 1px dashed #ddd;
+}
+
+.useMemo2 h4 ~ h4 {
+    padding-top: 1rem;
+    border-top: 1px dashed #ddd;
 }

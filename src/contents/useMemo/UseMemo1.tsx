@@ -24,7 +24,7 @@ export default function UseMemo1() {
     // delayAmount가 변경될 때만 다시 memoizaton
 
     return (
-        <div>
+        <div className="useMemo1">
             <h3>가격 계산</h3>
             <input
                 type="number"

@@ -1,5 +1,6 @@
 import "../css/useMemoPage.css";
 import UseMemo1 from "../contents/useMemo/UseMemo1";
+import UseMemo2 from "../contents/useMemo/UseMemo2";
 
 function UseMemoPage() {
     return (
@@ -37,6 +38,9 @@ function UseMemoPage() {
 
             <h2>예제 1</h2>
             <UseMemo1 />
+
+            <h2>예제 2</h2>
+            <UseMemo2 />
         </section>
     );
 }
