@@ -1,6 +1,7 @@
 import "../css/useMemoPage.css";
 import UseMemo1 from "../contents/useMemo/UseMemo1";
 import UseMemo2 from "../contents/useMemo/UseMemo2";
+import UseMemo3 from "../contents/useMemo/UseMemo3";
 
 function UseMemoPage() {
     return (
@@ -9,7 +10,8 @@ function UseMemoPage() {
 
             <p>
                 <strong>
-                    자주 사용하는 값을 캐시해놓고 사용 <br />
+                    자주 사용하는 값을 memoozed 해놓고 반복적으로 사용. <br />
+                    값이 바뀔 때만 다시 memoization
                 </strong>
             </p>
 
@@ -41,6 +43,9 @@ function UseMemoPage() {
 
             <h2>예제 2</h2>
             <UseMemo2 />
+
+            <h2>예제 3</h2>
+            <UseMemo3 />
         </section>
     );
 }

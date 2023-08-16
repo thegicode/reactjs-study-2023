@@ -11,7 +11,8 @@
 }
 
 .useMemo1,
-.useMemo2 {
+.useMemo2,
+.useMemo3 {
     padding: 1rem;
     border-radius: 10px;
     border: 1px solid #ddd;
