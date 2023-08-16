@@ -5,12 +5,13 @@ import "./css/app.css";
 import Navigation from "./components/Navigation";
 
 // import HomePage from "./pages/HomePage";
-// import AboutPage from "./pages/AboutPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ForwardRefPage from "./pages/ForwardRefPage";
 import MemoPage from "./pages/MemoPage";
 import CreateContextPage from "./pages/CreateContextPage";
 import UseContextPage from "./pages/UseContextPage";
+import UseMemoPage from "./pages/UseMemoPage";
+
 import ProductsPage from "./pages/ProductsPage";
 
 function App() {
@@ -21,7 +22,6 @@ function App() {
             <div className="body">
                 <Routes>
                     {/* <Route path="/" Component={HomePage} /> */}
-                    {/* <Route path="/about" Component={AboutPage} /> */}
                     <Route path="/forwardref" Component={ForwardRefPage} />
                     <Route path="/memo" Component={MemoPage} />
                     <Route
@@ -29,6 +29,7 @@ function App() {
                         Component={CreateContextPage}
                     />
                     <Route path="/usecontext" Component={UseContextPage} />
+                    <Route path="/usememo" Component={UseMemoPage} />
 
                     <Route path="/products" Component={ProductsPage} />
                     <Route Component={NotFoundPage} />

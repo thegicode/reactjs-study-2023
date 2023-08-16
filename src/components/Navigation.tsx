@@ -5,23 +5,20 @@ function Navigation() {
     return (
         <nav className="navigation">
             <ul>
-                {/* <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/about">About</Link>
-                </li> */}
                 <li>
                     <Link to="/forwardref">ForwardRef</Link>
                 </li>
                 <li>
                     <Link to="/memo">Memo</Link>
                 </li>
-                {/* <li>
+                <li>
                     <Link to="/createcontext">CreateContext</Link>
-                </li> */}
+                </li>
                 <li>
                     <Link to="/usecontext">Context</Link>
+                </li>
+                <li>
+                    <Link to="/usememo">useMemo</Link>
                 </li>
                 <li>
                     <Link to="/products">Products</Link>

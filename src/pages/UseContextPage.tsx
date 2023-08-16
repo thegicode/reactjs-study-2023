@@ -50,8 +50,6 @@ export default function useContextPage() {
 
             <h2>5. Updating an object via context</h2>
             <UseConText5 />
-
-            <h2>6. Multiple contexts </h2>
         </section>
     );
 }
