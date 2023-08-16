@@ -21,6 +21,9 @@ function Navigation() {
                     <Link to="/usememo">useMemo</Link>
                 </li>
                 <li>
+                    <Link to="/useeffect">useEffect</Link>
+                </li>
+                <li>
                     <Link to="/products">Products</Link>
                 </li>
             </ul>

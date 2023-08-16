@@ -1,0 +1,30 @@
+.useEffectPage {
+    font-size: 14px;
+}
+
+.useEffectPage > p {
+    margin: 10px 0;
+}
+
+.useEffectPage h1 {
+    margin-bottom: 2rem;
+}
+
+.useEffect1 {
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.useEffect1 span {
+    margin-left: 5px;
+}
+.useEffect1 h3 ~ h3 {
+    padding-top: 1rem;
+    border-top: 1px dashed #ddd;
+}
+/* 
+.useEffect1 h4 ~ h4 {
+    padding-top: 1rem;
+    border-top: 1px dashed #ddd;
+} */
