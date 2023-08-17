@@ -1,10 +1,10 @@
 import "../css/productsPage.css";
 import "../css/modal.css";
 import Products1 from "../contents/products/Products1";
-// import Products2 from "../contents/products/products2/index";
-import Products3 from "../contents/products/Products3";
-import Products3_Memo from "../contents/products/Products3_Memo";
 import Products2 from "../contents/products/Products2";
+import Products3 from "../contents/products/Products3";
+import Products3Memo from "../contents/products/Products3Memo";
+import Products4 from "../contents/products/Products4";
 
 export default function memoPage() {
     return (
@@ -25,7 +25,10 @@ export default function memoPage() {
             <Products3 />
 
             <h2>Products 3 : forwardRef, 메모리 기능 추가</h2>
-            <Products3_Memo />
+            <Products3Memo />
+
+            <h2>Products 4 : useReducer</h2>
+            <Products4 />
         </section>
     );
 }
