@@ -1,2 +1,12 @@
-/* .productsPage {
-} */
+.productsPage input + button {
+    margin-left: 5px;
+}
+
+.productsPage ul {
+    padding: 0;
+    list-style: none;
+}
+
+.productsPage li p {
+    margin: 0 0 8px;
+}
