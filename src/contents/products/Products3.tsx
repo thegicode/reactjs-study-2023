@@ -29,6 +29,7 @@ interface ModalHandles {
 }
 
 export default function App() {
+    console.log("App");
     const modalRef = useRef<ModalHandles | null>(null);
 
     const handleItemClick = (
@@ -59,22 +60,23 @@ interface ParentProps {
 }
 
 function Parent({ data, onItemClicked }: ParentProps) {
+    console.log("Parent");
     return (
-        <List>
+        <ul>
             {data.map((item, index) => (
                 <Item key={index} data={item} onItemClicked={onItemClicked} />
             ))}
-        </List>
+        </ul>
     );
 }
 
-interface ListProps {
-    children: React.ReactNode;
-}
+// interface ListProps {
+//     children: React.ReactNode;
+// }
 
-function List({ children }: ListProps) {
-    return <ul>{children}</ul>;
-}
+// function List({ children }: ListProps) {
+//     return <ul>{children}</ul>;
+// }
 
 interface ItemProps {
     data: DataProps;
@@ -87,6 +89,8 @@ interface ItemProps {
 }
 
 function Item({ data, onItemClicked }: ItemProps) {
+    console.log("Item", data.id);
+
     const [currentAmount, setCurrentAmount] = useState<number>(data.amount);
 
     const handleClick = () => {
@@ -109,6 +113,8 @@ function Item({ data, onItemClicked }: ItemProps) {
 }
 
 const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
+    console.log("Modal");
+
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [id, setId] = useState<number | null>(null);
     const [currentAmount, setCurrentAmount] = useState<number>(0);
