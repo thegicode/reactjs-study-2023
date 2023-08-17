@@ -1,179 +1,135 @@
-import "../../css/modal.css";
-import "../../css/products.css";
+import React, { useState } from "react";
 
-import { useState } from "react";
-
-interface Product1 {
+interface DataProps {
     id: number;
     title: string;
     amount: number;
 }
 
-interface ProductListProps1 {
-    setSelectedItem: (product: Product1 | null) => void;
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-    controlItem: Product1 | null;
-    setControlItem: React.Dispatch<React.SetStateAction<Product1 | null>>;
-}
-
-interface ProductItemProps1 {
-    product: Product1;
-    setSelectedItem: (product: Product1 | null) => void;
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-    controlItem: Product1 | null;
-    setControlItem: React.Dispatch<React.SetStateAction<Product1 | null>>;
-}
-
-interface ModalProps1 {
-    product: Product1 | null;
-    // setSelectedItem: (product: Product | null) => void;
-    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-    controlItem: Product1 | null;
-    setControlItem: React.Dispatch<React.SetStateAction<Product1 | null>>;
-}
-
-const data: Product[] = [
-    { id: 1, title: "Product a", amount: 11 },
-    { id: 2, title: "Product b", amount: 22 },
-    { id: 3, title: "Product c", amount: 33 },
-    { id: 4, title: "Product d", amount: 44 },
-    { id: 5, title: "Product e", amount: 55 },
+const Data: DataProps[] = [
+    { id: 1, title: "title", amount: 1 },
+    { id: 2, title: "title", amount: 2 },
+    { id: 3, title: "title", amount: 3 },
 ];
 
-export default function Prouducts1() {
-    console.log("render index");
+export default function App() {
+    const [modalData, setModalData] = useState<DataProps | null>(null);
+    const [isVisible, setIsVisible] = useState<boolean>(false);
 
-    const [selectedItem, setSelectedItem] = useState<Product | null>(null);
-    const [isShowModal, setShowModal] = useState<boolean>(false);
-    const [controlItem, setControlItem] = useState<Product1 | null>(null);
+    const handleItemClick = (
+        data: DataProps,
+        onAmountChange: (newAmount: number) => void
+    ) => {
+        setModalData(data);
+        setIsVisible(true);
+    };
+
+    const handleModalClose = (newAmount: number) => {
+        if (modalData) {
+            const updatedData = Data.map((item) => {
+                if (item.id === modalData.id) {
+                    return { ...item, amount: newAmount };
+                }
+                return item;
+            });
+            Data.splice(0, Data.length, ...updatedData);
+        }
+        setIsVisible(false);
+    };
 
     return (
         <section className="products">
-            <h1>Products</h1>
-            <ProductList
-                setSelectedItem={setSelectedItem}
-                setShowModal={setShowModal}
-                controlItem={controlItem}
-                setControlItem={setControlItem}
-            />
-
-            {isShowModal && (
-                <Modal
-                    product={selectedItem}
-                    setShowModal={setShowModal}
-                    controlItem={controlItem}
-                    setControlItem={setControlItem}
-                />
+            <Parent data={Data} onItemClicked={handleItemClick} />
+            {isVisible && modalData && (
+                <Modal data={modalData} onClose={handleModalClose} />
             )}
         </section>
     );
 }
 
-function ProductList({
-    setSelectedItem,
-    setShowModal,
-    controlItem,
-    setControlItem,
-}: ProductListProps1) {
-    console.log("render ProductList");
+interface ParentProps {
+    data: DataProps[];
+    onItemClicked: (
+        data: DataProps,
+        onAmountChange: (newAmount: number) => void
+    ) => void;
+}
+
+function Parent({ data, onItemClicked }: ParentProps) {
     return (
-        <ul>
-            {data.map((item) => (
-                <ProductItem
-                    key={item.id}
-                    product={item}
-                    setSelectedItem={setSelectedItem}
-                    setShowModal={setShowModal}
-                    controlItem={controlItem}
-                    setControlItem={setControlItem}
-                />
+        <List>
+            {data.map((item, index) => (
+                <Item key={index} data={item} onItemClicked={onItemClicked} />
             ))}
-        </ul>
+        </List>
     );
 }
 
-function ProductItem({
-    product,
-    setSelectedItem,
-    setShowModal,
-    controlItem,
-    setControlItem,
-}: ProductItemProps1) {
-    console.log("render ProductItem", product.id);
+interface ListProps {
+    children: React.ReactNode;
+}
 
-    const { id, title, amount } = product;
-    const [chagedAmount, setChangedAmount] = useState<number>(amount);
+function List({ children }: ListProps) {
+    return <ul>{children}</ul>;
+}
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChangedAmount(parseInt(event.target.value));
-    };
+interface ItemProps {
+    data: DataProps;
+    onItemClicked: (
+        data: DataProps,
+        onAmountChange: (newAmount: number) => void
+    ) => void;
+}
+
+function Item({ data, onItemClicked }: ItemProps) {
+    const [currentAmount, setCurrentAmount] = useState<number>(data.amount);
 
     const handleClick = () => {
-        setSelectedItem(product);
-        setShowModal(true);
-        setControlItem({
-            id,
-            title,
-            amount: chagedAmount,
-        });
+        onItemClicked(data, setCurrentAmount);
     };
 
     return (
         <li>
-            <p className="id">{id}</p>
-            <p className="title">{title}</p>
-            <p className="amount">amount: {chagedAmount}</p>
-            <input type="number" value={chagedAmount} onChange={handleChange} />
+            <p>
+                [{data.id}] {data.title}: {currentAmount}
+            </p>
+            <input
+                type="number"
+                value={currentAmount}
+                min="0"
+                onChange={(e) => setCurrentAmount(Number(e.target.value))}
+            />
             <button onClick={handleClick}>button</button>
         </li>
     );
 }
 
-function Modal({
-    product,
-    setShowModal,
-    controlItem,
-    setControlItem,
-}: ModalProps1) {
-    const [chagedAmount, setChangedAmount] = useState<number>(
-        controlItem ? controlItem.amount : 0
-    );
+interface ModalProps {
+    data: DataProps;
+    onClose: (newAmount: number) => void;
+}
 
-    if (!product) return null;
-    if (!controlItem) return null;
+function Modal({ data, onClose }: ModalProps) {
+    const [newAmount, setNewAmount] = useState<number>(data.amount);
 
-    const { id, title, amount } = controlItem;
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChangedAmount(parseInt(event.target.value));
-    };
-
-    const onClose = () => {
-        setShowModal(false);
-        setControlItem({
-            id,
-            title,
-            amount: chagedAmount,
-        });
+    const handleClose = () => {
+        onClose(newAmount);
     };
 
     return (
-        <section className="modal">
+        <div className="modal">
             <div className="modal-container">
-                <h2>
-                    {id} {title}
-                </h2>
-                <p>amount: {chagedAmount}</p>
+                <h3>Modal</h3>
+                <h4>id: {data.id}</h4>
+                <h4>title: {data.title}</h4>
+                <p>amount: {newAmount}</p>
                 <input
                     type="number"
-                    value={chagedAmount}
-                    onChange={handleChange}
+                    value={newAmount}
+                    onChange={(e) => setNewAmount(Number(e.target.value))}
                 />
-
-                <button onClick={onClose}>Close</button>
-
-                {/* <button onClick={() => setSelectedItem(null)}>Close</button> */}
+                <button onClick={handleClose}>close</button>
             </div>
-        </section>
+        </div>
     );
 }
