@@ -21,7 +21,7 @@ function App() {
         // <React.StrictMode>
         <Router basename={process.env.PUBLIC_URL}>
             <Navigation />
-            <div className="body">
+            <div className="container">
                 <Routes>
                     {/* <Route path="/" Component={HomePage} /> */}
                     <Route path="/forwardref" Component={ForwardRefPage} />
