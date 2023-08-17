@@ -1,6 +1,6 @@
 // props drilling
 
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 interface DataProps {
     id: number;
@@ -15,6 +15,7 @@ const Data: DataProps[] = [
 ];
 
 export default function App() {
+    console.log("App");
     const [modalInfo, setModalInfo] = useState<{
         id: number;
         title: string;
@@ -65,13 +66,15 @@ interface ParentProps {
 }
 
 function Parent({ data, onItemClicked }: ParentProps) {
-    return (
-        <ul>
-            {data.map((item, index) => (
-                <Item key={index} data={item} onItemClicked={onItemClicked} />
-            ))}
-        </ul>
-    );
+    console.log("Parent");
+
+    const items = useMemo(() => {
+        return data.map((item, index) => (
+            <Item key={index} data={item} onItemClicked={onItemClicked} />
+        ));
+    }, [data, onItemClicked]);
+
+    return <ul>{items}</ul>;
 }
 
 interface ItemProps {
@@ -85,11 +88,13 @@ interface ItemProps {
 }
 
 function Item({ data, onItemClicked }: ItemProps) {
+    console.log("Item", data.id);
+
     const [currentAmount, setCurrentAmount] = useState<number>(data.amount);
 
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         onItemClicked(data.id, data.title, currentAmount, setCurrentAmount);
-    };
+    }, [data.id, data.title, currentAmount, setCurrentAmount, onItemClicked]);
 
     return (
         <li>
@@ -116,12 +121,14 @@ interface ModalProps {
 }
 
 function Modal({ id, title, amount, onAmountChange, onClose }: ModalProps) {
+    console.log("Modal");
+
     const [currentAmount, setCurrentAmount] = useState<number>(amount);
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         onAmountChange(currentAmount);
         onClose();
-    };
+    }, [currentAmount, onAmountChange, onClose]);
 
     return (
         <div className="modal">
@@ -140,8 +147,3 @@ function Modal({ id, title, amount, onAmountChange, onClose }: ModalProps) {
         </div>
     );
 }
-
-// onAmountChange는
-// 이 코드에서의 key concept 중 하나입니다.
-// 이 함수는 Item 컴포넌트에서 수량이 변경될 때마다 호출되며,
-// Modal 컴포넌트에게 변경된 수량을 전달하는 역할을 합니다.
