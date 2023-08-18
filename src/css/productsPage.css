@@ -1,12 +1,31 @@
-.productsPage input + button {
-    margin-left: 5px;
+.productsPage {
+    font-size: 14px;
 }
 
-.productsPage ul {
+.productsPage h2 {
+    padding-top: 1.5rem;
+}
+
+.productsPage .products {
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.productsPage .products ul {
+    margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.productsPage li p {
+.productsPage .products li {
+    padding: 8px 0;
+}
+
+.productsPage .products li p {
     margin: 0 0 8px;
+}
+
+.productsPage .products input + button {
+    margin-left: 5px;
 }

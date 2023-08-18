@@ -5,6 +5,7 @@ import Products2 from "../contents/products/Products2";
 import Products3 from "../contents/products/Products3";
 import Products3Memo from "../contents/products/Products3Memo";
 import Products4 from "../contents/products/Products4";
+import Products5 from "../contents/products/Products5";
 
 export default function memoPage() {
     return (
@@ -29,6 +30,9 @@ export default function memoPage() {
 
             <h2>Products 4 : useReducer</h2>
             <Products4 />
+
+            <h2>Products 5 : forwardRef + useReducer</h2>
+            <Products5 />
         </section>
     );
 }

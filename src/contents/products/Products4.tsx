@@ -66,7 +66,7 @@ export default function App() {
     };
 
     return (
-        <div>
+        <section className="products">
             <Parent data={updatedData} onItemClick={handleItemClick} />
             {state.selectedId !== null && (
                 <Modal
@@ -76,7 +76,7 @@ export default function App() {
                     onClose={handleCloseModal}
                 />
             )}
-        </div>
+        </section>
     );
 }
 
