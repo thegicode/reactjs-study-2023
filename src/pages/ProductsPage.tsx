@@ -6,6 +6,7 @@ import Products3 from "../contents/products/Products3";
 import Products3Memo from "../contents/products/Products3Memo";
 import Products4 from "../contents/products/Products4";
 import Products5 from "../contents/products/Products5";
+// import Products6 from "../contents/products/Products6";
 
 export default function memoPage() {
     return (
@@ -37,6 +38,13 @@ export default function memoPage() {
                 Modal이 닫힐 때마다 모든 Item이 리렌더링 된다.
             </p>
             <Products5 />
+
+            {/* <h2>Products 6 : forwardRef + useReducer + memo</h2>
+            <p>
+                - input chage 할 때, button click 할 때....의미가 있는지
+                모르겠다.{" "}
+            </p>
+            <Products6 /> */}
         </section>
     );
 }

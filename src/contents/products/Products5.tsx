@@ -1,6 +1,7 @@
 // forwardRef + useRedecuer
 
 import React, {
+    memo,
     forwardRef,
     useImperativeHandle,
     useReducer,
@@ -29,6 +30,8 @@ interface ModalHandles {
     ) => void;
 }
 
+const UPDATE_AMOUNT = "updateAmount";
+
 type Action = {
     type: "updateAmount";
     payload: {
@@ -39,7 +42,7 @@ type Action = {
 
 function dataReducer(state: DataProps[], action: Action): DataProps[] {
     switch (action.type) {
-        case "updateAmount":
+        case UPDATE_AMOUNT:
             const newState = state.map((item) =>
                 item.id === action.payload.id
                     ? { ...item, amount: action.payload.newAmount }
@@ -54,6 +57,7 @@ function dataReducer(state: DataProps[], action: Action): DataProps[] {
 
 export default function App() {
     console.log("App");
+
     const modalRef = useRef<ModalHandles | null>(null);
     const [data, dispatch] = useReducer(dataReducer, initialData);
 
@@ -93,9 +97,9 @@ function Parent({ data, dispatch, onItemClicked }: ParentProps) {
     console.log("Parent");
     return (
         <ul>
-            {data.map((item, index) => (
+            {data.map((item) => (
                 <Item
-                    key={index}
+                    key={item.id}
                     data={item}
                     dispatch={dispatch}
                     onItemClicked={onItemClicked}
@@ -116,104 +120,112 @@ interface ItemProps {
     ) => void;
 }
 
-function Item({ data, dispatch, onItemClicked }: ItemProps) {
-    console.log("Item", data.id);
+const Item = memo(
+    ({ data, dispatch, onItemClicked }: ItemProps) => {
+        console.log("Item", data.id);
 
-    const [currentAmount, setCurrentAmount] = useState<number>(data.amount);
+        const { id, title, amount } = data;
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newAmount = Number(e.target.value);
-        setCurrentAmount(newAmount);
-        dispatch({
-            type: "updateAmount",
-            payload: {
-                id: data.id,
-                newAmount: newAmount,
-            },
-        });
-    };
+        const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            console.log("Item handleAmountChange");
 
-    const handleClick = () => {
-        onItemClicked(data.id, data.title, currentAmount, setCurrentAmount);
-    };
-    return (
-        <li>
-            <p>
-                [{data.id}] {data.title}: {currentAmount}
-            </p>
-            <input
-                type="number"
-                value={currentAmount}
-                min="0"
-                onChange={handleChange}
-            />
-            <button onClick={handleClick}>button</button>
-        </li>
-    );
-}
+            const newAmount = Number(e.target.value);
+            dispatch({
+                type: UPDATE_AMOUNT,
+                payload: {
+                    id,
+                    newAmount,
+                },
+            });
+        };
+
+        const handleItemClick = () => {
+            console.log("Item handleItemClick");
+            onItemClicked(id, title, amount, (newAmount) => {
+                dispatch({
+                    type: UPDATE_AMOUNT,
+                    payload: {
+                        id,
+                        newAmount,
+                    },
+                });
+            });
+        };
+        return (
+            <li>
+                <p>
+                    [{id}] {title}: {amount}
+                </p>
+                <input
+                    type="number"
+                    value={amount}
+                    min="0"
+                    onChange={handleAmountChange}
+                />
+                <button onClick={handleItemClick}>button</button>
+            </li>
+        );
+    },
+    (prevProps, nextProps) => {
+        return prevProps.data.amount === nextProps.data.amount;
+    }
+);
 
 interface ModalProps {
     dispatch: React.Dispatch<Action>;
 }
 
-const Modal = forwardRef<ModalHandles, ModalProps>((props, ref) => {
-    console.log("Modal");
+const Modal = memo(
+    forwardRef<ModalHandles, ModalProps>(({ dispatch }, ref) => {
+        console.log("Modal");
 
-    const [isVisible, setIsVisible] = useState<boolean>(false);
-    const [id, setId] = useState<number | null>(null);
-    const [currentAmount, setCurrentAmount] = useState<number>(0);
-    const [title, setTitle] = useState<string>("");
-    const [onAmountChange, setOnAmountChange] = useState<
-        ((newAmount: number) => void) | null
-    >(null);
+        const [isVisible, setIsVisible] = useState<boolean>(false);
+        const [id, setId] = useState<number | null>(null);
+        const [currentAmount, setCurrentAmount] = useState<number>(0);
+        const [title, setTitle] = useState<string>("");
 
-    useImperativeHandle(ref, () => ({
-        openModal: (id, title, amount, onAmountChange) => {
-            setId(id);
-            setTitle(title);
-            setCurrentAmount(amount);
-            setOnAmountChange(() => onAmountChange);
-            setIsVisible(true);
-        },
-    }));
-
-    const handleClose = () => {
-        if (onAmountChange) {
-            onAmountChange(currentAmount);
-        }
-        // props.dispatch({
-        //     type: "updateAmount",
-        //     payload: {
-        //         id: id!,
-        //         newAmount: currentAmount,
-        //     },
-        // });
-        props.dispatch({
-            type: "updateAmount",
-            payload: {
-                id: id!,
-                newAmount: currentAmount,
+        useImperativeHandle(ref, () => ({
+            openModal: (id, title, amount) => {
+                setId(id);
+                setTitle(title);
+                setCurrentAmount(amount);
+                setIsVisible(true);
             },
-        });
+        }));
 
-        setIsVisible(false);
-    };
+        const handleClose = () => {
+            dispatch({
+                type: UPDATE_AMOUNT,
+                payload: {
+                    id: id!,
+                    newAmount: currentAmount,
+                },
+            });
 
-    return isVisible ? (
-        <div className="modal">
-            <div className="modal-container">
-                <h3>Modal</h3>
-                <h4>id: {id}</h4>
-                <h4>title: {title}</h4>
-                <p>amount: {currentAmount}</p>
-                <input
-                    type="number"
-                    min="0"
-                    value={currentAmount}
-                    onChange={(e) => setCurrentAmount(Number(e.target.value))}
-                />
-                <button onClick={handleClose}>close</button>
+            setIsVisible(false);
+        };
+
+        return isVisible ? (
+            <div className="modal">
+                <div className="modal-container">
+                    <h3>Modal</h3>
+                    <h4>id: {id}</h4>
+                    <h4>title: {title}</h4>
+                    <p>amount: {currentAmount}</p>
+                    <input
+                        type="number"
+                        min="0"
+                        value={currentAmount}
+                        onChange={(e) =>
+                            setCurrentAmount(Number(e.target.value))
+                        }
+                    />
+                    <button onClick={handleClose}>close</button>
+                </div>
             </div>
-        </div>
-    ) : null;
-});
+        ) : null;
+    }),
+    (prevProps, nextProps) => {
+        return prevProps.dispatch === nextProps.dispatch;
+    }
+);
