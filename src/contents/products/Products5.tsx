@@ -92,21 +92,26 @@ interface ParentProps {
     ) => void;
 }
 
-function Parent({ data, dispatch, onItemClicked }: ParentProps) {
-    console.log("Parent");
-    return (
-        <ul>
-            {data.map((item) => (
-                <Item
-                    key={item.id}
-                    data={item}
-                    dispatch={dispatch}
-                    onItemClicked={onItemClicked}
-                />
-            ))}
-        </ul>
-    );
-}
+const Parent = memo(
+    ({ data, dispatch, onItemClicked }: ParentProps) => {
+        console.log("Parent");
+        return (
+            <ul>
+                {data.map((item) => (
+                    <Item
+                        key={item.id}
+                        data={item}
+                        dispatch={dispatch}
+                        onItemClicked={onItemClicked}
+                    />
+                ))}
+            </ul>
+        );
+    },
+    (prevProps, nextProps) => {
+        return prevProps.data === nextProps.data;
+    }
+);
 
 interface ItemProps {
     data: DataProps;
@@ -126,7 +131,7 @@ const Item = memo(
         const { id, title, amount } = data;
 
         const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            console.log("Item handleAmountChange");
+            // console.log("Item handleAmountChange");
 
             const newAmount = Number(e.target.value);
             dispatch({
@@ -139,7 +144,7 @@ const Item = memo(
         };
 
         const handleItemClick = () => {
-            console.log("Item handleItemClick");
+            // console.log("Item handleItemClick");
             onItemClicked(id, title, amount, (newAmount) => {
                 dispatch({
                     type: UPDATE_AMOUNT,

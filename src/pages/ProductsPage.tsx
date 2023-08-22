@@ -31,6 +31,10 @@ export default function memoPage() {
             <Products3Memo />
 
             <h2>Products 4 : useReducer</h2>
+            <p>
+                - 모달 열릴 때 Parent, 모든 Item이 리렌더링, memo 추가해야 한다.
+            </p>
+            <p>- 모달 열릴 때 App이 리렌더링</p>
             <Products4 />
 
             <h2>Products 5 : forwardRef + useReducer(Item 기준)</h2>

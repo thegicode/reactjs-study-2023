@@ -1,6 +1,12 @@
 // useReducer
 
-import React, { ChangeEvent, useEffect, useReducer, useState } from "react";
+import React, {
+    ChangeEvent,
+    memo,
+    useEffect,
+    useReducer,
+    useState,
+} from "react";
 
 interface DataProps {
     id: number;
@@ -38,6 +44,7 @@ const modalReducer = (state: ModalState, action: ModalAction): ModalState => {
 };
 
 export default function App() {
+    console.log("App");
     const [state, dispatch] = useReducer(modalReducer, {
         selectedId: null,
         selectedAmount: 0,
@@ -85,47 +92,61 @@ interface ParentProps {
     onItemClick: (id: number, amount: number) => void;
 }
 
-function Parent({ data, onItemClick }: ParentProps) {
-    return (
-        <ul>
-            {data.map((item) => (
-                <Item key={item.id} data={item} onItemClick={onItemClick} />
-            ))}
-        </ul>
-    );
-}
+const Parent = memo(
+    ({ data, onItemClick }: ParentProps) => {
+        console.log("Parent");
+
+        return (
+            <ul>
+                {data.map((item) => (
+                    <Item key={item.id} data={item} onItemClick={onItemClick} />
+                ))}
+            </ul>
+        );
+    },
+    (prevProps, nextProps) => {
+        return prevProps.data === nextProps.data;
+    }
+);
 
 interface ItemProps {
     data: DataProps;
     onItemClick: (id: number, amount: number) => void;
 }
 
-function Item({ data, onItemClick }: ItemProps) {
-    const { id, title, amount } = data;
-    const [volume, setVolume] = useState<number>(amount);
+const Item = memo(
+    ({ data, onItemClick }: ItemProps) => {
+        console.log("Item", data.id);
 
-    useEffect(() => {
-        setVolume(amount);
-    }, [amount]);
+        const { id, title, amount } = data;
+        const [volume, setVolume] = useState<number>(amount);
 
-    const handleClick = () => {
-        onItemClick(id, volume);
-    };
+        useEffect(() => {
+            setVolume(amount);
+        }, [amount]);
 
-    return (
-        <li>
-            <p>
-                [{id}] {title}: {volume}
-            </p>
-            <input
-                type="number"
-                value={volume}
-                onChange={(e) => setVolume(parseInt(e.target.value))}
-            />
-            <button onClick={handleClick}>Open Modal</button>
-        </li>
-    );
-}
+        const handleClick = () => {
+            onItemClick(id, volume);
+        };
+
+        return (
+            <li>
+                <p>
+                    [{id}] {title}: {volume}
+                </p>
+                <input
+                    type="number"
+                    value={volume}
+                    onChange={(e) => setVolume(parseInt(e.target.value))}
+                />
+                <button onClick={handleClick}>Open Modal</button>
+            </li>
+        );
+    },
+    (prevProps, nextProps) => {
+        return prevProps.data === nextProps.data;
+    }
+);
 
 interface ModalProps {
     selectedId: number;
@@ -135,6 +156,8 @@ interface ModalProps {
 }
 
 function Modal({ selectedId, amount, onAmountChange, onClose }: ModalProps) {
+    console.log("Modal");
+
     const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
         onAmountChange(Number(e.target.value));
     };
