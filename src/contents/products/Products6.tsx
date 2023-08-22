@@ -104,65 +104,65 @@ function Item({ data, onItemClicked }: ItemProps) {
     );
 }
 
+const OPEN_MODAL = "OPEN_MODAL";
+const CLOSE_MODAL = "CLOSE_MODAL";
+const SET_AMOUNT = "SET_AMOUNT";
+
+type State = {
+    isVisible: boolean;
+    id: string | null;
+    title: string;
+    amount: number;
+    onAmountChange: ((newAmount: number) => void) | null;
+};
+
+// 모달의 상태와 액션을 정의
+type Action =
+    | {
+          type: typeof OPEN_MODAL;
+          id: string | null;
+          title: string;
+          amount: number;
+          onAmountChange: ((newAmount: number) => void) | null;
+      }
+    | { type: typeof CLOSE_MODAL }
+    | { type: typeof SET_AMOUNT; amount: number };
+
+// 모달의 초기 상태를 정의
+const initialState = {
+    isVisible: false,
+    id: null,
+    title: "",
+    amount: 0,
+    onAmountChange: null,
+};
+
+// 리듀서를 사용하여 모달의 상태를 관리
+const reducer = (state: State, action: Action) => {
+    switch (action.type) {
+        case OPEN_MODAL:
+            const { id, title, amount, onAmountChange } = action;
+            return {
+                isVisible: true,
+                id,
+                title,
+                amount,
+                onAmountChange,
+            };
+        case CLOSE_MODAL:
+            return initialState;
+        case SET_AMOUNT:
+            return {
+                ...state,
+                amount: action.amount,
+            };
+        default:
+            return state;
+    }
+};
+
 const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     console.log("Modal");
-
-    const OPEN_MODAL = "OPEN_MODAL";
-    const CLOSE_MODAL = "CLOSE_MODAL";
-    const SET_AMOUNT = "SET_AMOUNT";
-
-    type State = {
-        isVisible: boolean;
-        id: string | null;
-        title: string;
-        amount: number;
-        onAmountChange: ((newAmount: number) => void) | null;
-    };
-
-    // 모달의 상태와 액션을 정의
-    type Action =
-        | {
-              type: typeof OPEN_MODAL;
-              id: string | null;
-              title: string;
-              amount: number;
-              onAmountChange: ((newAmount: number) => void) | null;
-          }
-        | { type: typeof CLOSE_MODAL }
-        | { type: typeof SET_AMOUNT; amount: number };
-
-    // 모달의 초기 상태를 정의
-    const initialState = {
-        isVisible: false,
-        id: null,
-        title: "",
-        amount: 0,
-        onAmountChange: null,
-    };
-
-    // 리듀서를 사용하여 모달의 상태를 관리
-    const reducer = (state: State, action: Action) => {
-        switch (action.type) {
-            case OPEN_MODAL:
-                const { id, title, amount, onAmountChange } = action;
-                return {
-                    isVisible: true,
-                    id,
-                    title,
-                    amount,
-                    onAmountChange,
-                };
-            case CLOSE_MODAL:
-                return initialState;
-            case SET_AMOUNT:
-                return {
-                    ...state,
-                    amount: action.amount,
-                };
-            default:
-                return state;
-        }
-    };
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -190,7 +190,9 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
         dispatch({ type: CLOSE_MODAL });
     };
 
-    return state.isVisible ? (
+    if (!state.isVisible) return null;
+
+    return (
         <div className="modal">
             <div className="modal-container">
                 <h3>Modal</h3>
@@ -205,5 +207,5 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
                 <button onClick={handleClose}>close</button>
             </div>
         </div>
-    ) : null;
+    );
 });
