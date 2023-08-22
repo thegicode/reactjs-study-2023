@@ -1,11 +1,12 @@
 // forwardRef + useReducer (MOdal)
 
-import React, {
-    useState,
-    useRef,
+import {
+    ChangeEvent,
     forwardRef,
     useImperativeHandle,
     useReducer,
+    useRef,
+    useState,
 } from "react";
 
 interface DataProps {
@@ -20,14 +21,16 @@ const Data: DataProps[] = [
     { id: "3", title: "title", amount: 3 },
 ];
 
+interface OpenModalProps {
+    id: string;
+    title: string;
+    amount: number;
+    onAmountChange: (newAmount: number) => void;
+}
+
 // 모달을 열 때 필요한 기능을 정의하는 인터페이스
 interface ModalHandles {
-    openModal: (
-        id: string,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    openModal: (props: OpenModalProps) => void;
 }
 
 export default function App() {
@@ -35,13 +38,8 @@ export default function App() {
     const modalRef = useRef<ModalHandles | null>(null);
 
     // 아이템을 클릭할 때 실행되는 함수
-    const handleItemClick = (
-        id: string,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => {
-        modalRef.current?.openModal(id, title, amount, onAmountChange);
+    const handleItemClick = (props: OpenModalProps) => {
+        modalRef.current?.openModal(props);
     };
 
     return (
@@ -54,12 +52,7 @@ export default function App() {
 
 interface ParentProps {
     data: DataProps[];
-    onItemClicked: (
-        id: string,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
 // Parent 컴포넌트는 데이터를 받아 각각의 Item 컴포넌트를 렌더링
@@ -76,12 +69,7 @@ function Parent({ data, onItemClicked }: ParentProps) {
 
 interface ItemProps {
     data: DataProps;
-    onItemClicked: (
-        id: string,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
 function Item({ data, onItemClicked }: ItemProps) {
@@ -92,7 +80,12 @@ function Item({ data, onItemClicked }: ItemProps) {
 
     // 버튼을 클릭하면 모달을 연다.
     const handleClick = () => {
-        onItemClicked(id, title, currentAmount, setCurrentAmount);
+        onItemClicked({
+            id,
+            title,
+            amount: currentAmount,
+            onAmountChange: setCurrentAmount,
+        });
     };
 
     return (
@@ -172,9 +165,10 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     };
 
     const [state, dispatch] = useReducer(reducer, initialState);
+    console.log(state);
 
     useImperativeHandle(ref, () => ({
-        openModal: (id, title, amount, onAmountChange) => {
+        openModal: ({ id, title, amount, onAmountChange }: OpenModalProps) => {
             dispatch({
                 type: OPEN_MODAL,
                 id,
@@ -185,7 +179,7 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
         },
     }));
 
-    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch({ type: SET_AMOUNT, amount: Number(e.target.value) });
     };
 
