@@ -165,7 +165,6 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     };
 
     const [state, dispatch] = useReducer(reducer, initialState);
-    console.log(state);
 
     useImperativeHandle(ref, () => ({
         openModal: ({ id, title, amount, onAmountChange }: OpenModalProps) => {
