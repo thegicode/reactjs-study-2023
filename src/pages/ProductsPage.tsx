@@ -6,7 +6,7 @@ import Products3 from "../contents/products/Products3";
 import Products3Memo from "../contents/products/Products3Memo";
 import Products4 from "../contents/products/Products4";
 import Products5 from "../contents/products/Products5";
-// import Products6 from "../contents/products/Products6";
+import Products6 from "../contents/products/Products6";
 
 export default function memoPage() {
     return (
@@ -38,6 +38,13 @@ export default function memoPage() {
                 Modal이 닫힐 때마다 모든 Item이 리렌더링 된다.
             </p>
             <Products5 />
+
+            <h2>Products 6 : forwardRef + useReducer(Modal 기준)</h2>
+            <p>
+                - Modal에 useReducer를 적용하니 이전 코드에 비해 코드가 눈에 더
+                잘 들어오고 관리도 편한 것 같다.
+            </p>
+            <Products6 />
         </section>
     );
 }
