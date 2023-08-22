@@ -8,37 +8,34 @@ import React, {
 } from "react";
 
 interface DataProps {
-    id: number;
+    id: string;
     title: string;
     amount: number;
 }
 
 const Data: DataProps[] = [
-    { id: 1, title: "title", amount: 1 },
-    { id: 2, title: "title", amount: 2 },
-    { id: 3, title: "title", amount: 3 },
+    { id: "1", title: "title", amount: 1 },
+    { id: "2", title: "title", amount: 2 },
+    { id: "3", title: "title", amount: 3 },
 ];
 
+interface OpenModalProps {
+    id: string;
+    title: string;
+    amount: number;
+    onAmountChange: (newAmount: number) => void;
+}
+
 interface ModalHandles {
-    openModal: (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    openModal: (props: OpenModalProps) => void;
 }
 
 export default function App() {
     console.log("App");
     const modalRef = useRef<ModalHandles | null>(null);
 
-    const handleItemClick = (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => {
-        modalRef.current?.openModal(id, title, amount, onAmountChange);
+    const handleItemClick = (props: OpenModalProps) => {
+        modalRef.current?.openModal(props);
     };
 
     return (
@@ -51,12 +48,7 @@ export default function App() {
 
 interface ParentProps {
     data: DataProps[];
-    onItemClicked: (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
 function Parent({ data, onItemClicked }: ParentProps) {
@@ -70,36 +62,30 @@ function Parent({ data, onItemClicked }: ParentProps) {
     );
 }
 
-// interface ListProps {
-//     children: React.ReactNode;
-// }
-
-// function List({ children }: ListProps) {
-//     return <ul>{children}</ul>;
-// }
-
 interface ItemProps {
     data: DataProps;
-    onItemClicked: (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
 function Item({ data, onItemClicked }: ItemProps) {
     console.log("Item", data.id);
 
+    const { id, title } = data;
     const [currentAmount, setCurrentAmount] = useState<number>(data.amount);
 
     const handleClick = () => {
-        onItemClicked(data.id, data.title, currentAmount, setCurrentAmount);
+        onItemClicked({
+            id,
+            title,
+            amount: currentAmount,
+            onAmountChange: setCurrentAmount,
+        });
     };
+
     return (
         <li>
             <p>
-                [{data.id}] {data.title}: {currentAmount}
+                [{id}] {title}: {currentAmount}
             </p>
             <input
                 type="number"
@@ -116,7 +102,7 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     console.log("Modal");
 
     const [isVisible, setIsVisible] = useState<boolean>(false);
-    const [id, setId] = useState<number | null>(null);
+    const [id, setId] = useState<string | null>(null);
     const [currentAmount, setCurrentAmount] = useState<number>(0);
     const [title, setTitle] = useState<string>("");
     const [onAmountChange, setOnAmountChange] = useState<
@@ -124,7 +110,7 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     >(null);
 
     useImperativeHandle(ref, () => ({
-        openModal: (id, title, amount, onAmountChange) => {
+        openModal: ({ id, title, amount, onAmountChange }) => {
             setId(id);
             setTitle(title);
             setCurrentAmount(amount);
@@ -140,7 +126,9 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
         setIsVisible(false);
     };
 
-    return isVisible ? (
+    if (!isVisible) return null;
+
+    return (
         <div className="modal">
             <div className="modal-container">
                 <h3>Modal</h3>
@@ -155,5 +143,5 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
                 <button onClick={handleClose}>close</button>
             </div>
         </div>
-    ) : null;
+    );
 });
