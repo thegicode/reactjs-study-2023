@@ -1,4 +1,9 @@
-import React, { memo, useState } from "react";
+import React, {
+    memo,
+    useCallback,
+    //  useEffect,
+    useState,
+} from "react";
 
 interface DataProps {
     id: string;
@@ -24,13 +29,17 @@ export default function App() {
 
     const [modalProps, setModalProps] = useState<OpenModalProps | null>(null);
 
-    const handleItemClick = (props: OpenModalProps) => {
+    const handleItemClick = useCallback((props: OpenModalProps) => {
         setModalProps(props);
-    };
+    }, []);
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         setModalProps(null);
-    };
+    }, []);
+
+    // useEffect(() => {
+    //     console.log("handleItemClick 변경되었습니다.");
+    // }, [handleItemClick]);
 
     return (
         <section className="products">
@@ -124,6 +133,10 @@ function Modal({ id, title, amount, onAmountChange, onClose }: ModalProps) {
         onAmountChange(modalAmount);
         onClose();
     };
+
+    // useEffect(() => {
+    //     console.log("handleAmountChange 변경");
+    // }, [handleAmountChange]);
 
     return (
         <div className="modal">
