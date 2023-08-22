@@ -1,6 +1,7 @@
 // forwardRef Modal
 
 import React, {
+    ChangeEvent,
     useState,
     useRef,
     forwardRef,
@@ -119,6 +120,10 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
         },
     }));
 
+    const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setCurrentAmount(Number(e.target.value));
+    };
+
     const handleClose = () => {
         if (onAmountChange) {
             onAmountChange(currentAmount);
@@ -138,7 +143,7 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
                 <input
                     type="number"
                     value={currentAmount}
-                    onChange={(e) => setCurrentAmount(Number(e.target.value))}
+                    onChange={handleAmountChange}
                 />
                 <button onClick={handleClose}>close</button>
             </div>

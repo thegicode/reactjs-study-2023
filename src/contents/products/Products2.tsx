@@ -1,105 +1,86 @@
-// props drilling
-
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useState } from "react";
 
 interface DataProps {
-    id: number;
+    id: string;
     title: string;
     amount: number;
 }
 
 const Data: DataProps[] = [
-    { id: 1, title: "title", amount: 1 },
-    { id: 2, title: "title", amount: 2 },
-    { id: 3, title: "title", amount: 3 },
+    { id: "1", title: "title", amount: 1 },
+    { id: "2", title: "title", amount: 2 },
+    { id: "3", title: "title", amount: 3 },
 ];
+
+interface OpenModalProps {
+    id: string;
+    title: string;
+    amount: number;
+    onAmountChange: (newAmount: number) => void;
+}
 
 export default function App() {
     console.log("App");
-    const [modalInfo, setModalInfo] = useState<{
-        id: number;
-        title: string;
-        amount: number;
-        onAmountChange: (newAmount: number) => void;
-    } | null>(null);
 
-    const handleItemClick = useCallback(
-        (
-            id: number,
-            title: string,
-            amount: number,
-            onAmountChange: (newAmount: number) => void
-        ) => {
-            setModalInfo({ id, title, amount, onAmountChange });
-        },
-        []
-    );
+    const [modalProps, setModalProps] = useState<OpenModalProps | null>(null);
 
-    const closeModal = useCallback(() => {
-        setModalInfo(null);
-    }, []);
+    const handleItemClick = (props: OpenModalProps) => {
+        setModalProps(props);
+    };
+
+    const closeModal = () => {
+        setModalProps(null);
+    };
 
     return (
         <section className="products">
             <Parent data={Data} onItemClicked={handleItemClick} />
-            {modalInfo && (
-                <Modal
-                    id={modalInfo.id}
-                    title={modalInfo.title}
-                    amount={modalInfo.amount}
-                    onAmountChange={modalInfo.onAmountChange}
-                    onClose={closeModal}
-                />
-            )}
+            {modalProps && <Modal {...modalProps} onClose={closeModal} />}
         </section>
     );
 }
 
 interface ParentProps {
     data: DataProps[];
-    onItemClicked: (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
 function Parent({ data, onItemClicked }: ParentProps) {
     console.log("Parent");
 
-    const items = useMemo(() => {
-        return data.map((item, index) => (
-            <Item key={index} data={item} onItemClicked={onItemClicked} />
-        ));
-    }, [data, onItemClicked]);
-
-    return <ul>{items}</ul>;
+    return (
+        <ul>
+            {data.map((item, index) => (
+                <Item key={index} data={item} onItemClicked={onItemClicked} />
+            ))}
+        </ul>
+    );
 }
 
 interface ItemProps {
     data: DataProps;
-    onItemClicked: (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
 function Item({ data, onItemClicked }: ItemProps) {
     console.log("Item", data.id);
 
-    const [currentAmount, setCurrentAmount] = useState<number>(data.amount);
+    const { id, title, amount } = data;
+    const [currentAmount, setCurrentAmount] = useState<number>(amount);
 
-    const handleClick = useCallback(() => {
-        onItemClicked(data.id, data.title, currentAmount, setCurrentAmount);
-    }, [data.id, data.title, currentAmount, setCurrentAmount, onItemClicked]);
+    const handleClick = () => {
+        onItemClicked({
+            id,
+            title,
+            amount: currentAmount,
+            onAmountChange: setCurrentAmount,
+        });
+    };
 
     return (
         <li>
             <p>
-                [{data.id}] {data.title}: {currentAmount}
+                [{id}] {title}, amount: {currentAmount}
             </p>
             <input
                 type="number"
@@ -112,23 +93,23 @@ function Item({ data, onItemClicked }: ItemProps) {
     );
 }
 
-interface ModalProps {
-    id: number;
-    title: string;
-    amount: number;
-    onAmountChange: (newAmount: number) => void;
+interface ModalProps extends OpenModalProps {
     onClose: () => void;
 }
 
 function Modal({ id, title, amount, onAmountChange, onClose }: ModalProps) {
     console.log("Modal");
 
-    const [currentAmount, setCurrentAmount] = useState<number>(amount);
+    const [modalAmount, setModalAmount] = useState(amount);
 
-    const handleClose = useCallback(() => {
-        onAmountChange(currentAmount);
+    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setModalAmount(Number(e.target.value));
+    };
+
+    const handleClose = () => {
+        onAmountChange(modalAmount);
         onClose();
-    }, [currentAmount, onAmountChange, onClose]);
+    };
 
     return (
         <div className="modal">
@@ -136,11 +117,11 @@ function Modal({ id, title, amount, onAmountChange, onClose }: ModalProps) {
                 <h3>Modal</h3>
                 <h4>id: {id}</h4>
                 <h4>title: {title}</h4>
-                <p>amount: {currentAmount}</p>
+                <p>amount: {modalAmount}</p>
                 <input
                     type="number"
-                    value={currentAmount}
-                    onChange={(e) => setCurrentAmount(Number(e.target.value))}
+                    value={modalAmount}
+                    onChange={handleAmountChange}
                 />
                 <button onClick={handleClose}>close</button>
             </div>

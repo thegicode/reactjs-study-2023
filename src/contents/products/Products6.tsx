@@ -38,6 +38,7 @@ interface ModalHandles {
 
 export default function App() {
     console.log("App");
+
     const modalRef = useRef<ModalHandles | null>(null);
 
     // 아이템 클릭 시 실행되는 함수. 모달을 열어준다.
@@ -172,6 +173,7 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     console.log("Modal");
 
     const [state, dispatch] = useReducer(reducer, initialState);
+    const { isVisible, id, title, amount, onAmountChange } = state;
 
     useImperativeHandle(ref, () => ({
         openModal: ({ id, title, amount, onAmountChange }: OpenModalProps) => {
@@ -190,25 +192,25 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     };
 
     const handleClose = () => {
-        if (state.onAmountChange) {
-            state.onAmountChange(state.amount);
+        if (onAmountChange) {
+            onAmountChange(amount);
         }
 
         dispatch({ type: CLOSE_MODAL });
     };
 
-    if (!state.isVisible) return null;
+    if (!isVisible) return null;
 
     return (
         <div className="modal">
             <div className="modal-container">
                 <h3>Modal</h3>
-                <h4>id: {state.id}</h4>
-                <h4>title: {state.title}</h4>
-                <p>amount: {state.amount}</p>
+                <h4>id: {id}</h4>
+                <h4>title: {title}</h4>
+                <p>amount: {amount}</p>
                 <input
                     type="number"
-                    value={state.amount}
+                    value={amount}
                     onChange={handleAmountChange}
                 />
                 <button onClick={handleClose}>close</button>
