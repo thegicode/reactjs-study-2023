@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
 interface DataProps {
     id: string;
@@ -45,53 +45,67 @@ interface ParentProps {
     onItemClicked: (props: OpenModalProps) => void;
 }
 
-function Parent({ data, onItemClicked }: ParentProps) {
-    console.log("Parent");
+const Parent = memo(
+    ({ data, onItemClicked }: ParentProps) => {
+        console.log("Parent");
 
-    return (
-        <ul>
-            {data.map((item, index) => (
-                <Item key={index} data={item} onItemClicked={onItemClicked} />
-            ))}
-        </ul>
-    );
-}
+        return (
+            <ul>
+                {data.map((item, index) => (
+                    <Item
+                        key={index}
+                        data={item}
+                        onItemClicked={onItemClicked}
+                    />
+                ))}
+            </ul>
+        );
+    },
+    (prevProps, nextProps) => {
+        return prevProps.data === nextProps.data;
+    }
+);
 
 interface ItemProps {
     data: DataProps;
     onItemClicked: (props: OpenModalProps) => void;
 }
 
-function Item({ data, onItemClicked }: ItemProps) {
-    console.log("Item", data.id);
+const Item = memo(
+    ({ data, onItemClicked }: ItemProps) => {
+        console.log("Item", data.id);
 
-    const { id, title, amount } = data;
-    const [currentAmount, setCurrentAmount] = useState<number>(amount);
+        const { id, title, amount } = data;
+        const [currentAmount, setCurrentAmount] = useState<number>(amount);
 
-    const handleClick = () => {
-        onItemClicked({
-            id,
-            title,
-            amount: currentAmount,
-            onAmountChange: setCurrentAmount,
-        });
-    };
+        const handleClick = () => {
+            onItemClicked({
+                id,
+                title,
+                amount: currentAmount,
+                onAmountChange: setCurrentAmount,
+            });
+        };
 
-    return (
-        <li>
-            <p>
-                [{id}] {title}, amount: {currentAmount}
-            </p>
-            <input
-                type="number"
-                value={currentAmount}
-                min="0"
-                onChange={(e) => setCurrentAmount(Number(e.target.value))}
-            />
-            <button onClick={handleClick}>button</button>
-        </li>
-    );
-}
+        return (
+            <li>
+                <p>
+                    [{id}] {title}, amount: {currentAmount}
+                </p>
+                <input
+                    type="number"
+                    value={currentAmount}
+                    min="0"
+                    onChange={(e) => setCurrentAmount(Number(e.target.value))}
+                />
+                <button onClick={handleClick}>button</button>
+            </li>
+        );
+    },
+    (prevProps, nextProps) => {
+        return prevProps.data === nextProps.data;
+    }
+);
 
 interface ModalProps extends OpenModalProps {
     onClose: () => void;
