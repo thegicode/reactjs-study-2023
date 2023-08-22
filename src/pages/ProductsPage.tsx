@@ -8,7 +8,7 @@ import Products4 from "../contents/products/Products4";
 import Products5 from "../contents/products/Products5";
 import Products6 from "../contents/products/Products6";
 import Products7 from "../contents/products/Products7";
-// import Products8 from "../contents/products/Products8";
+import Products8 from "../contents/products/Products8";
 
 export default function memoPage() {
     return (
@@ -27,10 +27,10 @@ export default function memoPage() {
                 컴포넌트에게 변경된 수량을 전달하는 역할을 합니다.
             </p>
 
-            <h2>Products 3 : forwardRef</h2>
+            <h2>Products 3 : forwardRef *****</h2>
             <Products3 />
 
-            <h2>Products 3 : forwardRef, 메모리 기능 추가 *****</h2>
+            <h2>Products 3 : forwardRef, 메모리 기능 추가</h2>
             <Products3Memo />
 
             <h2>Products 4 : useReducer</h2>
@@ -61,9 +61,9 @@ export default function memoPage() {
             <p>- 모달이 변경될 때 App, Parent, 모든 Item이 리렌더링된다. </p>
             <Products7 />
 
-            {/* <h2>Products 8 : only useState</h2>
+            <h2>Products 8 : Products2 의 리렌더링 개선</h2>
             <p></p>
-            <Products8 /> */}
+            <Products8 />
         </section>
     );
 }

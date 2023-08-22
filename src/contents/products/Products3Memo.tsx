@@ -1,49 +1,44 @@
 // forwardRef Modal
 
 import React, {
-    memo,
+    ChangeEvent,
     useState,
     useRef,
     forwardRef,
     useImperativeHandle,
-    useMemo,
     useCallback,
 } from "react";
 
 interface DataProps {
-    id: number;
+    id: string;
     title: string;
     amount: number;
 }
 
 const Data: DataProps[] = [
-    { id: 1, title: "title", amount: 1 },
-    { id: 2, title: "title", amount: 2 },
-    { id: 3, title: "title", amount: 3 },
+    { id: "1", title: "title", amount: 1 },
+    { id: "2", title: "title", amount: 2 },
+    { id: "3", title: "title", amount: 3 },
 ];
 
+interface OpenModalProps {
+    id: string;
+    title: string;
+    amount: number;
+    onAmountChange: (newAmount: number) => void;
+}
+
 interface ModalHandles {
-    openModal: (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    openModal: (props: OpenModalProps) => void;
 }
 
 export default function App() {
     console.log("App");
-
     const modalRef = useRef<ModalHandles | null>(null);
 
-    const handleItemClick = (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => {
-        modalRef.current?.openModal(id, title, amount, onAmountChange);
-    };
+    const handleItemClick = useCallback((props: OpenModalProps) => {
+        modalRef.current?.openModal(props);
+    }, []);
 
     return (
         <section className="products">
@@ -55,58 +50,44 @@ export default function App() {
 
 interface ParentProps {
     data: DataProps[];
-    onItemClicked: (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
-const Parent = memo(({ data, onItemClicked }: ParentProps) => {
+function Parent({ data, onItemClicked }: ParentProps) {
     console.log("Parent");
-
-    const items = useMemo(() => {
-        return data.map((item, index) => (
-            <Item key={index} data={item} onItemClicked={onItemClicked} />
-        ));
-    }, [data, onItemClicked]);
-
-    return <ul>{items}</ul>;
-});
-
-// interface ListProps {
-//     children: React.ReactNode;
-// }
-
-// function List({ children }: ListProps) {
-//     return <ul>{children}</ul>;
-// }
+    return (
+        <ul>
+            {data.map((item, index) => (
+                <Item key={index} data={item} onItemClicked={onItemClicked} />
+            ))}
+        </ul>
+    );
+}
 
 interface ItemProps {
     data: DataProps;
-    onItemClicked: (
-        id: number,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
-const Item = memo(({ data, onItemClicked }: ItemProps) => {
+function Item({ data, onItemClicked }: ItemProps) {
     console.log("Item", data.id);
 
+    const { id, title } = data;
     const [currentAmount, setCurrentAmount] = useState<number>(data.amount);
 
-    const handleClick = useCallback(() => {
-        console.log("Item handleClick");
-        onItemClicked(data.id, data.title, currentAmount, setCurrentAmount);
-    }, [data.id, data.title, currentAmount, onItemClicked]);
+    const handleClick = () => {
+        onItemClicked({
+            id,
+            title,
+            amount: currentAmount,
+            onAmountChange: setCurrentAmount,
+        });
+    };
 
     return (
         <li>
             <p>
-                [{data.id}] {data.title}: {currentAmount}
+                [{id}] {title}: {currentAmount}
             </p>
             <input
                 type="number"
@@ -117,13 +98,13 @@ const Item = memo(({ data, onItemClicked }: ItemProps) => {
             <button onClick={handleClick}>button</button>
         </li>
     );
-});
+}
 
 const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     console.log("Modal");
 
     const [isVisible, setIsVisible] = useState<boolean>(false);
-    const [id, setId] = useState<number | null>(null);
+    const [id, setId] = useState<string | null>(null);
     const [currentAmount, setCurrentAmount] = useState<number>(0);
     const [title, setTitle] = useState<string>("");
     const [onAmountChange, setOnAmountChange] = useState<
@@ -131,7 +112,7 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     >(null);
 
     useImperativeHandle(ref, () => ({
-        openModal: (id, title, amount, onAmountChange) => {
+        openModal: ({ id, title, amount, onAmountChange }) => {
             setId(id);
             setTitle(title);
             setCurrentAmount(amount);
@@ -140,16 +121,20 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
         },
     }));
 
-    const handleClose = useCallback(() => {
-        console.log("Modal handleClose");
+    const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setCurrentAmount(Number(e.target.value));
+    };
 
+    const handleClose = () => {
         if (onAmountChange) {
             onAmountChange(currentAmount);
         }
         setIsVisible(false);
-    }, [onAmountChange, currentAmount]);
+    };
 
-    return isVisible ? (
+    if (!isVisible) return null;
+
+    return (
         <div className="modal">
             <div className="modal-container">
                 <h3>Modal</h3>
@@ -159,10 +144,10 @@ const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
                 <input
                     type="number"
                     value={currentAmount}
-                    onChange={(e) => setCurrentAmount(Number(e.target.value))}
+                    onChange={handleAmountChange}
                 />
                 <button onClick={handleClose}>close</button>
             </div>
         </div>
-    ) : null;
+    );
 });
