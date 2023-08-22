@@ -11,6 +11,7 @@ import MemoPage from "./pages/MemoPage";
 import CreateContextPage from "./pages/CreateContextPage";
 import UseContextPage from "./pages/UseContextPage";
 import UseMemoPage from "./pages/UseMemoPage";
+import UseCallbackPage from "./pages/UseCallbackPage";
 import UseEffectPage from "./pages/UseEffectPage";
 
 import ProductsPage from "./pages/ProductsPage";
@@ -32,6 +33,7 @@ function App() {
                     />
                     <Route path="/usecontext" Component={UseContextPage} />
                     <Route path="/usememo" Component={UseMemoPage} />
+                    <Route path="/usecallback" Component={UseCallbackPage} />
                     <Route path="/useeffect" Component={UseEffectPage} />
 
                     <Route path="/composition" Component={CompositionPage} />

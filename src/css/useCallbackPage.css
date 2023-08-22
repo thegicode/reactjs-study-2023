@@ -1,0 +1,35 @@
+.useCallbackPage {
+    font-size: 14px;
+}
+
+.useCallbackPage > p {
+    margin: 10px 0;
+}
+
+.useCallbackPage h1 {
+    margin-bottom: 2rem;
+}
+
+.useCallback {
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.useCallback h3 ~ h3 {
+    padding-top: 1rem;
+    border-top: 1px dashed #ddd;
+}
+
+.useCallback h4 ~ h4 {
+    padding-top: 1rem;
+    border-top: 1px dashed #ddd;
+}
+
+.useCallback button {
+    margin-left: 5px;
+}
+
+.theme-dark {
+    background-color: rgba(0, 0, 0, 0.7);
+}
