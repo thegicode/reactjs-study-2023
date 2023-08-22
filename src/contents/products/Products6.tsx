@@ -3,6 +3,8 @@
 import {
     ChangeEvent,
     forwardRef,
+    // memo,
+    // useEffect,
     useImperativeHandle,
     useReducer,
     useRef,
@@ -45,6 +47,10 @@ export default function App() {
     const handleItemClick = (props: OpenModalProps) => {
         modalRef.current?.openModal(props);
     };
+
+    // useEffect(() => {
+    //     console.log("handleItemClick 변경");
+    // }, [handleItemClick]);
 
     return (
         <section className="products">
@@ -92,6 +98,10 @@ function Item({ data, onItemClicked }: ItemProps) {
             onAmountChange: setCurrentAmount,
         });
     };
+
+    // useEffect(() => {
+    //     console.log("handleClick 변경");
+    // }, [handleClick]);
 
     return (
         <li>
@@ -169,6 +179,7 @@ const reducer = (state: State, action: Action) => {
 };
 
 // 모달 컴포넌트. forwardRef를 사용하여 모달을 제어할 수 있는 메서드를 노출
+
 const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     console.log("Modal");
 
