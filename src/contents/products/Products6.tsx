@@ -1,4 +1,4 @@
-// forwardRef + useReducer (MOdal)
+// forwardRef와 useReducer를 사용하여 모달 컴포넌트를 만들고 상태를 관리하는 예제
 
 import {
     ChangeEvent,
@@ -9,18 +9,21 @@ import {
     useState,
 } from "react";
 
+// 아이템 데이터에 대한 인터페이스 정의
 interface DataProps {
     id: string;
     title: string;
     amount: number;
 }
 
+// 아이템 데이터 예시
 const Data: DataProps[] = [
     { id: "1", title: "title", amount: 1 },
     { id: "2", title: "title", amount: 2 },
     { id: "3", title: "title", amount: 3 },
 ];
 
+// 모달 열기 시 필요한 속성을 정의한 인터페이스
 interface OpenModalProps {
     id: string;
     title: string;
@@ -37,7 +40,7 @@ export default function App() {
     console.log("App");
     const modalRef = useRef<ModalHandles | null>(null);
 
-    // 아이템을 클릭할 때 실행되는 함수
+    // 아이템 클릭 시 실행되는 함수. 모달을 열어준다.
     const handleItemClick = (props: OpenModalProps) => {
         modalRef.current?.openModal(props);
     };
@@ -55,7 +58,7 @@ interface ParentProps {
     onItemClicked: (props: OpenModalProps) => void;
 }
 
-// Parent 컴포넌트는 데이터를 받아 각각의 Item 컴포넌트를 렌더링
+// 부모 컴포넌트. 데이터를 받아 Item 컴포넌트를 렌더링한다.
 function Parent({ data, onItemClicked }: ParentProps) {
     console.log("Parent");
     return (
@@ -72,6 +75,7 @@ interface ItemProps {
     onItemClicked: (props: OpenModalProps) => void;
 }
 
+// 아이템 컴포넌트. 각 아이템을 렌더링하고 클릭 시 모달을 열어준다.
 function Item({ data, onItemClicked }: ItemProps) {
     console.log("Item", data.id);
 
@@ -104,10 +108,12 @@ function Item({ data, onItemClicked }: ItemProps) {
     );
 }
 
+// 리듀서의 액션 타입 정의
 const OPEN_MODAL = "OPEN_MODAL";
 const CLOSE_MODAL = "CLOSE_MODAL";
 const SET_AMOUNT = "SET_AMOUNT";
 
+// 모달 상태 정의
 type State = {
     isVisible: boolean;
     id: string | null;
@@ -116,7 +122,7 @@ type State = {
     onAmountChange: ((newAmount: number) => void) | null;
 };
 
-// 모달의 상태와 액션을 정의
+// 모달의 액션을 정의
 type Action =
     | {
           type: typeof OPEN_MODAL;
@@ -161,6 +167,7 @@ const reducer = (state: State, action: Action) => {
     }
 };
 
+// 모달 컴포넌트. forwardRef를 사용하여 모달을 제어할 수 있는 메서드를 노출
 const Modal = forwardRef<ModalHandles, {}>((props, ref) => {
     console.log("Modal");
 
