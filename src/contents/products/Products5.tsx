@@ -48,7 +48,6 @@ function dataReducer(state: DataProps[], action: Action): DataProps[] {
                     ? { ...item, amount: action.payload.newAmount }
                     : item
             );
-            console.log("dataReducer", newState);
             return newState;
         default:
             return state;

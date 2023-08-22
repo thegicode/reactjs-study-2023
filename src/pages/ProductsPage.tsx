@@ -32,19 +32,12 @@ export default function memoPage() {
             <h2>Products 4 : useReducer</h2>
             <Products4 />
 
-            <h2>Products 5 : forwardRef + useReducer</h2>
+            <h2>Products 5 : forwardRef + useReducer(Item 기준)</h2>
             <p>
                 - useReducer를 추가한후 Item input value가 변경될 때마다,
                 Modal이 닫힐 때마다 모든 Item이 리렌더링 된다.
             </p>
             <Products5 />
-
-            {/* <h2>Products 6 : forwardRef + useReducer + memo</h2>
-            <p>
-                - input chage 할 때, button click 할 때....의미가 있는지
-                모르겠다.{" "}
-            </p>
-            <Products6 /> */}
         </section>
     );
 }
