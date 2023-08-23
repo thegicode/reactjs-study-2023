@@ -32,27 +32,29 @@ interface ModalHandles {
     openModal: (props: OpenModalProps) => void;
 }
 
-// Actions Types
-const UPDATE_AMOUNT = "UPDATE_AMOUNT";
-const SORT_ASC = "SORT_ASC";
-const SORT_DESC = "SORT_DESC";
+enum ActionTypes {
+    UPDATE_AMOUNT = "UPDATE_AMOUNT",
+    SORT_ASC = "SORT_ASC",
+    SORT_DESC = "SORT_DESC",
+}
 
 type Action =
     | {
-          type: typeof UPDATE_AMOUNT;
+          type: ActionTypes.UPDATE_AMOUNT;
           payload: {
               id: string;
               newAmount: number;
           };
       }
     | {
-          type: typeof SORT_ASC;
+          type: ActionTypes.SORT_ASC;
       }
     | {
-          type: typeof SORT_DESC;
+          type: ActionTypes.SORT_DESC;
       };
 
 function dataReducer(state: DataProps[], action: Action): DataProps[] {
+    const { UPDATE_AMOUNT, SORT_ASC, SORT_DESC } = ActionTypes;
     switch (action.type) {
         case UPDATE_AMOUNT:
             return state.map((item) =>
@@ -82,6 +84,9 @@ export default function App() {
         modalRef.current?.openModal(props);
     }, []);
 
+    const dataRef = useRef(data);
+    dataRef.current = data;
+
     return (
         <section className="addToCart">
             {/* Sorting Controls */}
@@ -95,7 +100,7 @@ export default function App() {
             />
 
             {/* Actions */}
-            <DataActionButton data={data} />
+            <DataActionButton dataRef={dataRef} />
 
             {/* Modal */}
             <Modal ref={modalRef} dispatch={dispatch} />
@@ -110,8 +115,8 @@ interface SortControlsProps {
 const SortControls = memo(({ dispatch }: SortControlsProps) => {
     console.log("SortControls");
 
-    const sortDataAscending = () => dispatch({ type: SORT_ASC });
-    const sortDataDescending = () => dispatch({ type: SORT_DESC });
+    const sortDataAscending = () => dispatch({ type: ActionTypes.SORT_ASC });
+    const sortDataDescending = () => dispatch({ type: ActionTypes.SORT_DESC });
 
     return (
         <div className="addToCart-sorts">
@@ -174,7 +179,7 @@ const Item = memo(
         const dispatchAmount = useCallback(
             (currentAmount: number) => {
                 dispatch({
-                    type: UPDATE_AMOUNT,
+                    type: ActionTypes.UPDATE_AMOUNT,
                     payload: {
                         id,
                         newAmount: currentAmount,
@@ -256,14 +261,15 @@ const Item = memo(
 );
 
 interface DataActionButtonProps {
-    data: DataProps[];
+    // data: DataProps[];
+    dataRef: React.MutableRefObject<DataProps[]>;
 }
 
-const DataActionButton = ({ data }: DataActionButtonProps) => {
+const DataActionButton = memo(({ dataRef }: DataActionButtonProps) => {
     console.log("DataActionButton");
 
     const handleFilteredDataDisplay = () => {
-        const filteredData = data
+        const filteredData = dataRef.current
             .filter((item) => item.amount > 0)
             .map(({ id, amount }) => ({ id, amount }));
         console.log(filteredData);
@@ -279,7 +285,7 @@ const DataActionButton = ({ data }: DataActionButtonProps) => {
             </button>
         </div>
     );
-};
+});
 
 interface ModalProps {
     dispatch: React.Dispatch<Action>;
@@ -326,7 +332,7 @@ const Modal = memo(
 
         const handleConfirm = useCallback(() => {
             dispatch({
-                type: UPDATE_AMOUNT,
+                type: ActionTypes.UPDATE_AMOUNT,
                 payload: {
                     id: id!,
                     newAmount: currentAmount,
