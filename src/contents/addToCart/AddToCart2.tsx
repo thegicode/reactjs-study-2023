@@ -18,23 +18,18 @@ interface DataProps {
     amount: number;
 }
 
-// interface OpenModalProps extends DataProps {
-//     onAmountChange: (newAmount: number) => void;
-// }
-
 const initialData: DataProps[] = [
     { id: "1", title: "ccc", amount: 0 },
     { id: "2", title: "aaa", amount: 0 },
     { id: "3", title: "bbb", amount: 0 },
 ];
 
+interface OpenModalProps extends DataProps {
+    onAmountChange: (newAmount: number) => void;
+}
+
 interface ModalHandles {
-    openModal: (
-        id: string,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    openModal: (props: OpenModalProps) => void;
 }
 
 // Actions Types
@@ -86,13 +81,8 @@ export default function App() {
     const [data, dispatch] = useReducer(dataReducer, initialData);
 
     // Modal related handlers
-    const handleOpenModal = (
-        id: string,
-        title: string,
-        amount: number,
-        onUpdateAmount: (newAmount: number) => void
-    ) => {
-        modalRef.current?.openModal(id, title, amount, onUpdateAmount);
+    const handleOpenModal = (props: OpenModalProps) => {
+        modalRef.current?.openModal(props);
     };
 
     return (
@@ -139,12 +129,7 @@ const SortControls = ({ dispatch }: SortControlsProps) => {
 interface ProductListProps {
     data: DataProps[];
     dispatch: React.Dispatch<Action>;
-    onItemClicked: (
-        id: string,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
 const ProductList = memo(
@@ -171,12 +156,7 @@ const ProductList = memo(
 interface ItemProps {
     data: DataProps;
     dispatch: React.Dispatch<Action>;
-    onItemClicked: (
-        id: string,
-        title: string,
-        amount: number,
-        onAmountChange: (newAmount: number) => void
-    ) => void;
+    onItemClicked: (props: OpenModalProps) => void;
 }
 
 const Item = ({ data, dispatch, onItemClicked }: ItemProps) => {
@@ -216,7 +196,12 @@ const Item = ({ data, dispatch, onItemClicked }: ItemProps) => {
     }, [localAmount, dispatch, id]);
 
     const handleItemClick = () => {
-        onItemClicked(id, title, amount, setLocalAmount);
+        onItemClicked({
+            id,
+            title,
+            amount,
+            onAmountChange: setLocalAmount,
+        });
     };
 
     useEffect(() => {
@@ -243,7 +228,7 @@ const Item = ({ data, dispatch, onItemClicked }: ItemProps) => {
                     <button
                         type="button"
                         className="increase-button"
-                        disabled={localAmount >= 10}
+                        disabled={isMaxAmount}
                         onClick={increase}
                     >
                         +
@@ -251,7 +236,7 @@ const Item = ({ data, dispatch, onItemClicked }: ItemProps) => {
                     <button
                         type="button"
                         className="descrease-button"
-                        disabled={localAmount <= 0}
+                        disabled={isMinAmount}
                         onClick={decrease}
                     >
                         -
@@ -294,23 +279,40 @@ const Modal = memo(
     forwardRef<ModalHandles, ModalProps>(({ dispatch }, ref) => {
         console.log("Modal");
 
-        const [isVisible, setIsVisible] = useState<boolean>(false);
-        const [id, setId] = useState<string | null>(null);
-        const [currentAmount, setCurrentAmount] = useState<number>(0);
-        const [title, setTitle] = useState<string>("");
-        const [onAmountChange, setOnAmountChange] = useState<
-            ((newAmount: number) => void) | null
-        >(null);
+        const [modalState, setModalState] = useState({
+            isVisible: false,
+            id: null as string | null,
+            title: "",
+            currentAmount: 0,
+            onAmountChange: null as ((newAmount: number) => void) | null,
+        });
+
+        const { isVisible, id, title, currentAmount, onAmountChange } =
+            modalState;
 
         useImperativeHandle(ref, () => ({
-            openModal: (id, title, amount, onChangeCallback) => {
-                setId(id);
-                setTitle(title);
-                setCurrentAmount(amount);
-                setOnAmountChange(() => onChangeCallback);
-                setIsVisible(true);
+            openModal: ({
+                id,
+                title,
+                amount,
+                onAmountChange,
+            }: OpenModalProps) => {
+                setModalState({
+                    isVisible: true,
+                    id,
+                    title,
+                    currentAmount: amount,
+                    onAmountChange,
+                });
             },
         }));
+
+        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            setModalState((prevState) => ({
+                ...prevState,
+                currentAmount: Number(e.target.value),
+            }));
+        };
 
         const handleConfirm = () => {
             dispatch({
@@ -321,12 +323,15 @@ const Modal = memo(
                 },
             });
 
-            onAmountChange && onAmountChange(currentAmount);
-            setIsVisible(false);
+            onAmountChange?.(currentAmount);
+            setModalState((prevState) => ({
+                ...prevState,
+                isVisible: false,
+            }));
         };
 
         const handleClose = () => {
-            setIsVisible(false);
+            setModalState((prevState) => ({ ...prevState, isVisible: false }));
         };
 
         if (!isVisible) return null;
@@ -344,13 +349,10 @@ const Modal = memo(
                             min="0"
                             max="10"
                             value={currentAmount}
-                            onChange={(e) =>
-                                setCurrentAmount(Number(e.target.value))
-                            }
+                            onChange={handleChange}
                         />
                     </div>
 
-                    {/* <button onClick={handleClose}>close</button> */}
                     <div className="modal-actions">
                         <button type="button" onClick={handleConfirm}>
                             confirm
