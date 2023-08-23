@@ -1,6 +1,7 @@
 import "../css/productsPage.css";
 import "../css/modal.css";
 import AddToCart1 from "../contents/addToCart/AddToCart1";
+import AddToCart2 from "../contents/addToCart/AddToCart2";
 
 export default function memoPage() {
     return (
@@ -14,14 +15,11 @@ export default function memoPage() {
             </p>
             <AddToCart1 />
 
+            <h2>AddToCart 2 : forwardRef + useReducer(Item 기준)</h2>
+            <p></p>
+            <AddToCart2 />
+
             {/* 
-            <h2>Products 2 : props drilling, only useState *****</h2>
-            <Products2 />
-            <p>
-                onAmountChange는 이 코드에서의 key concept 중 하나입니다. 이
-                함수는 Item 컴포넌트에서 수량이 변경될 때마다 호출되며, Modal
-                컴포넌트에게 변경된 수량을 전달하는 역할을 합니다.
-            </p>
 
             <h2>Products 3 : forwardRef *****</h2>
             <Products3 />

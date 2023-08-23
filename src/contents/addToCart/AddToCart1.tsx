@@ -1,6 +1,6 @@
-import React, { memo, useCallback, useRef, useEffect, useState } from "react";
-
 import "../../css/addToCart.css";
+
+import React, { memo, useCallback, useRef, useEffect, useState } from "react";
 
 interface tempDataProps {
     id: string;
@@ -60,7 +60,7 @@ export default function App() {
     // }, [handleItemClick]);
 
     return (
-        <form className="addToCart">
+        <div className="addToCart">
             <div className="addToCart-sorts">
                 <button type="button" onClick={handleSortAsc}>
                     오름차순
@@ -75,7 +75,7 @@ export default function App() {
             </div>
 
             {modalProps && <Modal {...modalProps} onClose={closeModal} />}
-        </form>
+        </div>
     );
 }
 
