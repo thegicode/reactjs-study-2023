@@ -33,6 +33,7 @@ interface ModalHandles {
     ) => void;
 }
 
+// Actions Types
 const UPDATE_AMOUNT = "UPDATE_AMOUNT";
 const SORT_ASC = "SORT_ASC";
 const SORT_DESC = "SORT_DESC";
@@ -81,55 +82,29 @@ export default function App() {
     const [data, dispatch] = useReducer(dataReducer, initialData);
 
     // Modal related handlers
-    const handleItemClick = (
+    const handleOpenModal = (
         id: number,
         title: string,
         amount: number,
-        onAmountChange: (newAmount: number) => void
+        onUpdateAmount: (newAmount: number) => void
     ) => {
-        modalRef.current?.openModal(id, title, amount, onAmountChange);
+        modalRef.current?.openModal(id, title, amount, onUpdateAmount);
     };
-
-    // Data Filtering and Display
-    const handleFilteredDataDisplay = () => {
-        const filteredData = data
-            .filter((item) => item.amount > 0)
-            .map(({ id, amount }) => ({ id, amount }));
-        console.log(filteredData);
-    };
-
-    // Sorting Handlers
-    const sortDataAscending = () => dispatch({ type: SORT_ASC });
-    const sortDataDescending = () => dispatch({ type: SORT_DESC });
 
     return (
         <section className="addToCart">
             {/* Sorting Controls */}
-            <div className="addToCart-sorts">
-                <button type="button" onClick={sortDataAscending}>
-                    오름차순
-                </button>
-                <button type="button" onClick={sortDataDescending}>
-                    내림차순
-                </button>
-            </div>
+            <SortControls dispatch={dispatch} />
 
             {/* Product List  */}
-            <Parent
+            <ProductList
                 data={data}
-                onItemClicked={handleItemClick}
+                onItemClicked={handleOpenModal}
                 dispatch={dispatch}
             />
 
             {/* Actions */}
-            <div className="addToCart-actions">
-                <button
-                    onClick={handleFilteredDataDisplay}
-                    className="addToCartButton"
-                >
-                    Data 가져오기
-                </button>
-            </div>
+            <DataActionButton data={data} />
 
             {/* Modal */}
             <Modal ref={modalRef} dispatch={dispatch} />
@@ -137,7 +112,27 @@ export default function App() {
     );
 }
 
-interface ParentProps {
+interface SortControlsProps {
+    dispatch: React.Dispatch<Action>;
+}
+
+const SortControls = ({ dispatch }: SortControlsProps) => {
+    const sortDataAscending = () => dispatch({ type: SORT_ASC });
+    const sortDataDescending = () => dispatch({ type: SORT_DESC });
+
+    return (
+        <div className="addToCart-sorts">
+            <button type="button" onClick={sortDataAscending}>
+                오름차순
+            </button>
+            <button type="button" onClick={sortDataDescending}>
+                내림차순
+            </button>
+        </div>
+    );
+};
+
+interface ProductListProps {
     data: DataProps[];
     dispatch: React.Dispatch<Action>;
     onItemClicked: (
@@ -148,8 +143,8 @@ interface ParentProps {
     ) => void;
 }
 
-const Parent = memo(
-    ({ data, dispatch, onItemClicked }: ParentProps) => {
+const ProductList = memo(
+    ({ data, dispatch, onItemClicked }: ProductListProps) => {
         console.log("Parent");
         return (
             <ul className="addToCart-list">
@@ -262,6 +257,31 @@ const Item = ({ data, dispatch, onItemClicked }: ItemProps) => {
         </li>
     );
 };
+
+interface DataActionButtonProps {
+    data: DataProps[];
+}
+
+const DataActionButton = ({ data }: DataActionButtonProps) => {
+    const handleFilteredDataDisplay = () => {
+        const filteredData = data
+            .filter((item) => item.amount > 0)
+            .map(({ id, amount }) => ({ id, amount }));
+        console.log(filteredData);
+    };
+
+    return (
+        <div className="addToCart-actions">
+            <button
+                onClick={handleFilteredDataDisplay}
+                className="addToCartButton"
+            >
+                Data 가져오기
+            </button>
+        </div>
+    );
+};
+
 interface ModalProps {
     dispatch: React.Dispatch<Action>;
 }
@@ -305,7 +325,9 @@ const Modal = memo(
             setIsVisible(false);
         };
 
-        return isVisible ? (
+        if (!isVisible) return null;
+
+        return (
             <div className="modal">
                 <div className="modal-container">
                     <h3>Modal</h3>
@@ -335,7 +357,7 @@ const Modal = memo(
                     </div>
                 </div>
             </div>
-        ) : null;
+        );
     }),
     (prevProps, nextProps) => {
         return prevProps.dispatch === nextProps.dispatch;
