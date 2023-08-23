@@ -9,6 +9,7 @@ import React, {
     useRef,
     useState,
     useMemo,
+    useEffect,
 } from "react";
 import "../../css/addToCart.css";
 
@@ -85,8 +86,8 @@ export default function App() {
     }, []);
 
     // ActionButton이 리랜더링되지 않도록 useRef를 사용하여 data 전달
-    const dataRef = useRef(data);
-    dataRef.current = data;
+    // const dataRef = useRef(data);
+    // dataRef.current = data;
 
     return (
         <section className="addToCart">
@@ -101,7 +102,7 @@ export default function App() {
             />
 
             {/* Actions */}
-            <ActionButton dataRef={dataRef} />
+            <ActionButton data={data} />
 
             {/* Modal */}
             <Modal ref={modalRef} dispatch={dispatch} />
@@ -260,21 +261,29 @@ const Item = memo(
 );
 
 interface ActionButtonProps {
-    dataRef: React.MutableRefObject<DataProps[]>;
+    data: DataProps[];
 }
 
-const ActionButton = memo(({ dataRef }: ActionButtonProps) => {
+const ActionButton = ({ data }: ActionButtonProps) => {
     console.log("ActionButton");
 
-    const handleFilteredDataDisplay = () => {
-        const filteredData = dataRef.current
+    const [badgeCount, setBadgeCount] = useState<number>(0);
+
+    const handleFilteredDataDisplay = useCallback(() => {
+        const filteredData = data
             .filter((item) => item.amount > 0)
             .map(({ id, amount }) => ({ id, amount }));
+        setBadgeCount(filteredData.length);
         console.log(filteredData);
-    };
+    }, [data]);
+
+    useEffect(() => {
+        handleFilteredDataDisplay();
+    }, [data, handleFilteredDataDisplay]);
 
     return (
         <div className="addToCart-actions">
+            <span className="badge-count">{badgeCount}</span>
             <button
                 onClick={handleFilteredDataDisplay}
                 className="addToCartButton"
@@ -283,7 +292,7 @@ const ActionButton = memo(({ dataRef }: ActionButtonProps) => {
             </button>
         </div>
     );
-});
+};
 
 interface ModalProps {
     dispatch: React.Dispatch<Action>;

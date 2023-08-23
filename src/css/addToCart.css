@@ -80,12 +80,32 @@
     cursor: default;
 }
 
-.addToCartButton {
-    width: 100%;
+.addToCart-actions {
+    display: flex;
+    align-items: center;
     margin-top: 5px;
-    padding: 10px 0;
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    background-color: rgb(167 255 229 / 10%);
+}
+
+.addToCart-actions .badge-count {
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: blueviolet;
+    color: #fff;
+    font-size: 12px;
+}
+
+.addToCartButton {
+    flex: 1;
+    margin: 0 1rem;
+    padding: 10px 2rem;
+    border: none;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background-color: transparent;
     font-size: 12px;
     cursor: pointer;
 }
