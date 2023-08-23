@@ -155,40 +155,15 @@ interface ItemProps {
 
 const Item = memo(
     ({ data, dispatch, handleOpenModal }: ItemProps) => {
-        console.log("Item", data.id, data);
+        console.log("Item", data);
 
         const { id, title, amount } = data;
 
         const itemRef = useRef<HTMLLIElement>(null);
-
         const [localAmount, setLocalAmount] = useState<number>(amount);
 
         const isMaxAmount = localAmount >= 10;
         const isMinAmount = localAmount <= 0;
-
-        const increase = useCallback(() => {
-            if (!isMaxAmount) setLocalAmount((prev) => prev + 1);
-        }, [isMaxAmount]);
-
-        const decrease = useCallback(() => {
-            if (!isMinAmount) setLocalAmount((prev) => prev - 1);
-        }, [isMinAmount]);
-
-        const activeItem = useCallback((value: number) => {
-            if (itemRef.current) {
-                itemRef.current.dataset.active = value > 0 ? "true" : "false";
-            }
-        }, []);
-
-        const handleAmountChange = useCallback(() => {
-            dispatch({
-                type: UPDATE_AMOUNT,
-                payload: {
-                    id,
-                    newAmount: localAmount,
-                },
-            });
-        }, [localAmount, dispatch, id]);
 
         const handleInputClick = () => {
             handleOpenModal({
@@ -199,13 +174,34 @@ const Item = memo(
             });
         };
 
+        const increaseAmount = useCallback(() => {
+            if (!isMaxAmount) setLocalAmount((prev) => prev + 1);
+        }, [isMaxAmount]);
+
+        const decreaseAmount = useCallback(() => {
+            if (!isMinAmount) setLocalAmount((prev) => prev - 1);
+        }, [isMinAmount]);
+
+        const dispatchAmount = useCallback(() => {
+            dispatch({
+                type: UPDATE_AMOUNT,
+                payload: {
+                    id,
+                    newAmount: localAmount,
+                },
+            });
+        }, [localAmount, dispatch, id]);
+
         useEffect(() => {
-            activeItem(localAmount);
-            handleAmountChange();
-        }, [activeItem, localAmount, handleAmountChange]);
+            dispatchAmount();
+        }, [localAmount, dispatchAmount]);
 
         return (
-            <li className="addToCart-item" data-active="false" ref={itemRef}>
+            <li
+                className="addToCart-item"
+                data-active={localAmount > 0}
+                ref={itemRef}
+            >
                 <p>
                     [{id}] : {title} | amount: {amount}
                 </p>
@@ -224,7 +220,7 @@ const Item = memo(
                             type="button"
                             className="increase-button"
                             disabled={isMaxAmount}
-                            onClick={increase}
+                            onClick={increaseAmount}
                         >
                             +
                         </button>
@@ -232,7 +228,7 @@ const Item = memo(
                             type="button"
                             className="descrease-button"
                             disabled={isMinAmount}
-                            onClick={decrease}
+                            onClick={decreaseAmount}
                         >
                             -
                         </button>
