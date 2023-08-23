@@ -9,14 +9,16 @@ export default function memoPage() {
             <h1>AddToCart</h1>
 
             <h2>AddToCart 1 : only useState(중단)</h2>
-            <p>
-                - data를 가지고 있어야 하는 구조로 다시 변경하기로 개선, 2번으로
-                다른 버전
-            </p>
+            <p>- data를 가지고 있어야 하는 구조로 개선해야 함.</p>
             <AddToCart1 />
 
-            <h2>AddToCart 2 : forwardRef + useReducer(Item 기준)</h2>
-            <p></p>
+            <h2>AddToCart 2 : Modal forwardRef + Data useReducer</h2>
+            <p>- Modal을 ref로 컨트롤, Data를 useReducer로 컨트롤</p>
+            <p>- 최종 data를 가져오기 위해 useRef(data) 적용</p>
+            <p>
+                - 제안: Modal의 상태관리를 useState에서 useReducer로 관리, 다음
+                버전 적용 예정
+            </p>
             <AddToCart2 />
 
             {/* 

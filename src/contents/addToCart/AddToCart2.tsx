@@ -32,6 +32,7 @@ interface ModalHandles {
     openModal: (props: OpenModalProps) => void;
 }
 
+// Define action types and corresponding structure
 enum ActionTypes {
     UPDATE_AMOUNT = "UPDATE_AMOUNT",
     SORT_ASC = "SORT_ASC",
@@ -54,17 +55,16 @@ type Action =
       };
 
 function dataReducer(state: DataProps[], action: Action): DataProps[] {
-    const { UPDATE_AMOUNT, SORT_ASC, SORT_DESC } = ActionTypes;
     switch (action.type) {
-        case UPDATE_AMOUNT:
+        case ActionTypes.UPDATE_AMOUNT:
             return state.map((item) =>
                 item.id === action.payload.id
                     ? { ...item, amount: action.payload.newAmount }
                     : item
             );
-        case SORT_ASC:
+        case ActionTypes.SORT_ASC:
             return [...state].sort((a, b) => a.title.localeCompare(b.title));
-        case SORT_DESC:
+        case ActionTypes.SORT_DESC:
             return [...state].sort((a, b) => b.title.localeCompare(a.title));
         default:
             return state;
@@ -84,6 +84,7 @@ export default function App() {
         modalRef.current?.openModal(props);
     }, []);
 
+    // ActionButton이 리랜더링되지 않도록 useRef를 사용하여 data 전달
     const dataRef = useRef(data);
     dataRef.current = data;
 
@@ -100,7 +101,7 @@ export default function App() {
             />
 
             {/* Actions */}
-            <DataActionButton dataRef={dataRef} />
+            <ActionButton dataRef={dataRef} />
 
             {/* Modal */}
             <Modal ref={modalRef} dispatch={dispatch} />
@@ -171,10 +172,8 @@ const Item = memo(
 
         const itemRef = useRef<HTMLLIElement>(null);
 
-        // const isMaxAmount = amount >= 10;
-        // const isMinAmount = amount <= 0;
-        const isMaxAmount = useMemo(() => amount >= 10, [amount]);
-        const isMinAmount = useMemo(() => amount <= 0, [amount]);
+        const isMaxAmount = amount >= 10;
+        const isMinAmount = amount <= 0;
 
         const dispatchAmount = useCallback(
             (currentAmount: number) => {
@@ -260,13 +259,12 @@ const Item = memo(
     }
 );
 
-interface DataActionButtonProps {
-    // data: DataProps[];
+interface ActionButtonProps {
     dataRef: React.MutableRefObject<DataProps[]>;
 }
 
-const DataActionButton = memo(({ dataRef }: DataActionButtonProps) => {
-    console.log("DataActionButton");
+const ActionButton = memo(({ dataRef }: ActionButtonProps) => {
+    console.log("ActionButton");
 
     const handleFilteredDataDisplay = () => {
         const filteredData = dataRef.current
