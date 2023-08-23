@@ -70,10 +70,6 @@ export default function App() {
                 </button>
             </div>
             <Parent data={sortedData} onItemClicked={handleItemClick} />
-            <div className="addToCart-actions">
-                <button type="submit">Add To Cart</button>
-            </div>
-
             {modalProps && <Modal {...modalProps} onClose={closeModal} />}
         </div>
     );
