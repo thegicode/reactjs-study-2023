@@ -13,20 +13,24 @@ import React, {
 } from "react";
 
 interface DataProps {
-    id: number;
+    id: string;
     title: string;
     amount: number;
 }
 
+// interface OpenModalProps extends DataProps {
+//     onAmountChange: (newAmount: number) => void;
+// }
+
 const initialData: DataProps[] = [
-    { id: 1, title: "ccc", amount: 0 },
-    { id: 2, title: "aaa", amount: 0 },
-    { id: 3, title: "bbb", amount: 0 },
+    { id: "1", title: "ccc", amount: 0 },
+    { id: "2", title: "aaa", amount: 0 },
+    { id: "3", title: "bbb", amount: 0 },
 ];
 
 interface ModalHandles {
     openModal: (
-        id: number,
+        id: string,
         title: string,
         amount: number,
         onAmountChange: (newAmount: number) => void
@@ -42,7 +46,7 @@ type Action =
     | {
           type: typeof UPDATE_AMOUNT;
           payload: {
-              id: number;
+              id: string;
               newAmount: number;
           };
       }
@@ -83,7 +87,7 @@ export default function App() {
 
     // Modal related handlers
     const handleOpenModal = (
-        id: number,
+        id: string,
         title: string,
         amount: number,
         onUpdateAmount: (newAmount: number) => void
@@ -136,7 +140,7 @@ interface ProductListProps {
     data: DataProps[];
     dispatch: React.Dispatch<Action>;
     onItemClicked: (
-        id: number,
+        id: string,
         title: string,
         amount: number,
         onAmountChange: (newAmount: number) => void
@@ -168,7 +172,7 @@ interface ItemProps {
     data: DataProps;
     dispatch: React.Dispatch<Action>;
     onItemClicked: (
-        id: number,
+        id: string,
         title: string,
         amount: number,
         onAmountChange: (newAmount: number) => void
@@ -291,7 +295,7 @@ const Modal = memo(
         console.log("Modal");
 
         const [isVisible, setIsVisible] = useState<boolean>(false);
-        const [id, setId] = useState<number | null>(null);
+        const [id, setId] = useState<string | null>(null);
         const [currentAmount, setCurrentAmount] = useState<number>(0);
         const [title, setTitle] = useState<string>("");
         const [onAmountChange, setOnAmountChange] = useState<
