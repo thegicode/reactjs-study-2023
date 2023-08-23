@@ -48,11 +48,78 @@ li {
     padding: 5px 0;
 }
 
-.container {
-    padding: 1rem;
-}
-
 .code-reference {
     font-size: 1rem;
     font-weight: 700;
+}
+
+/* layout */
+html,
+body {
+    height: 100%;
+}
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    background-color: #8553b5;
+
+    font-size: 14px;
+}
+
+.header a {
+    flex: 1;
+
+    padding: 10px 0;
+
+    font-weight: bold;
+    color: #fff;
+
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    flex: 1;
+
+    overflow: hidden;
+    display: flex;
+}
+
+.side {
+    /* width: 10%; */
+    min-width: 100px;
+
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+
+    background-color: beige;
+
+    font-size: 14px;
+}
+
+.side a {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+
+    text-decoration: none;
+}
+
+.contents {
+    flex: 1;
+
+    overflow: auto;
+
+    padding: 1rem;
 }
