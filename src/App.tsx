@@ -13,9 +13,10 @@ import UseContextPage from "./pages/UseContextPage";
 import UseMemoPage from "./pages/UseMemoPage";
 import UseCallbackPage from "./pages/UseCallbackPage";
 import UseEffectPage from "./pages/UseEffectPage";
+import CompositionPage from "./pages/CompositionPage";
 
 import ProductsPage from "./pages/ProductsPage";
-import CompositionPage from "./pages/CompositionPage";
+import AddToCartPage from "./pages/AddToCartPage";
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                     <Route path="/composition" Component={CompositionPage} />
 
                     <Route path="/products" Component={ProductsPage} />
+                    <Route path="/addtocart" Component={AddToCartPage} />
 
                     <Route Component={NotFoundPage} />
                 </Routes>

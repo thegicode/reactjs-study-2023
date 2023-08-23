@@ -21,6 +21,7 @@ function Navigation() {
                     <p className="title">Practical</p>
                     <nav className="depth2">
                         <Link to="/products">Products</Link>
+                        <Link to="/addtocart">AddToCart</Link>
                     </nav>
                 </li>
             </ul>
