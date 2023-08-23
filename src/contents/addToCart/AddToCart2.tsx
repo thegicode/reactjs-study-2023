@@ -3,7 +3,7 @@ import React, {
     memo,
     forwardRef,
     useCallback,
-    useEffect,
+    // useEffect,
     useImperativeHandle,
     useReducer,
     useRef,
@@ -25,7 +25,7 @@ const initialData: DataProps[] = [
 ];
 
 interface OpenModalProps extends DataProps {
-    changeAmount: (newAmount: number) => void;
+    // changeAmount: (newAmount: number) => void;
 }
 
 interface ModalHandles {
@@ -107,18 +107,23 @@ interface SortControlsProps {
     dispatch: React.Dispatch<Action>;
 }
 
-const SortControls = ({ dispatch }: SortControlsProps) => {
+const SortControls = memo(({ dispatch }: SortControlsProps) => {
+    console.log("SortControls");
+
+    const sortDataAscending = () => dispatch({ type: SORT_ASC });
+    const sortDataDescending = () => dispatch({ type: SORT_DESC });
+
     return (
         <div className="addToCart-sorts">
-            <button type="button" onClick={() => dispatch({ type: SORT_ASC })}>
+            <button type="button" onClick={sortDataAscending}>
                 오름차순
             </button>
-            <button type="button" onClick={() => dispatch({ type: SORT_DESC })}>
+            <button type="button" onClick={sortDataDescending}>
                 내림차순
             </button>
         </div>
     );
-};
+});
 
 interface ProductListProps {
     data: DataProps[];
@@ -160,46 +165,53 @@ const Item = memo(
         const { id, title, amount } = data;
 
         const itemRef = useRef<HTMLLIElement>(null);
-        const [localAmount, setLocalAmount] = useState<number>(amount);
 
-        const isMaxAmount = localAmount >= 10;
-        const isMinAmount = localAmount <= 0;
+        // const isMaxAmount = amount >= 10;
+        // const isMinAmount = amount <= 0;
+        const isMaxAmount = useMemo(() => amount >= 10, [amount]);
+        const isMinAmount = useMemo(() => amount <= 0, [amount]);
+
+        const dispatchAmount = useCallback(
+            (currentAmount: number) => {
+                dispatch({
+                    type: UPDATE_AMOUNT,
+                    payload: {
+                        id,
+                        newAmount: currentAmount,
+                    },
+                });
+            },
+            [dispatch, id]
+        );
 
         const handleInputClick = () => {
             handleOpenModal({
                 id,
                 title,
                 amount,
-                changeAmount: setLocalAmount,
             });
         };
 
         const increaseAmount = useCallback(() => {
-            if (!isMaxAmount) setLocalAmount((prev) => prev + 1);
-        }, [isMaxAmount]);
+            if (!isMaxAmount) {
+                dispatchAmount(amount + 1);
+            }
+        }, [isMaxAmount, dispatchAmount, amount]);
 
         const decreaseAmount = useCallback(() => {
-            if (!isMinAmount) setLocalAmount((prev) => prev - 1);
-        }, [isMinAmount]);
+            if (!isMinAmount) {
+                dispatchAmount(amount - 1);
+            }
+        }, [isMinAmount, dispatchAmount, amount]);
 
-        const dispatchAmount = useCallback(() => {
-            dispatch({
-                type: UPDATE_AMOUNT,
-                payload: {
-                    id,
-                    newAmount: localAmount,
-                },
-            });
-        }, [localAmount, dispatch, id]);
-
-        useEffect(() => {
-            dispatchAmount();
-        }, [localAmount, dispatchAmount]);
+        // useEffect(() => {
+        //     dispatchAmount();
+        // }, [localAmount, dispatchAmount]);
 
         return (
             <li
                 className="addToCart-item"
-                data-active={localAmount > 0}
+                data-active={amount > 0}
                 ref={itemRef}
             >
                 <p>
@@ -248,6 +260,8 @@ interface DataActionButtonProps {
 }
 
 const DataActionButton = ({ data }: DataActionButtonProps) => {
+    console.log("DataActionButton");
+
     const handleFilteredDataDisplay = () => {
         const filteredData = data
             .filter((item) => item.amount > 0)
@@ -281,29 +295,21 @@ const Modal = memo(
                 id: null as string | null,
                 title: "",
                 currentAmount: 0,
-                changeAmount: null as ((newAmount: number) => void) | null,
             }),
             []
         );
 
         const [modalState, setModalState] = useState(initialModalState);
 
-        const { isVisible, id, title, currentAmount, changeAmount } =
-            modalState;
+        const { isVisible, id, title, currentAmount } = modalState;
 
         useImperativeHandle(ref, () => ({
-            openModal: ({
-                id,
-                title,
-                amount,
-                changeAmount,
-            }: OpenModalProps) => {
+            openModal: ({ id, title, amount }: OpenModalProps) => {
                 setModalState({
                     isVisible: true,
                     id,
                     title,
                     currentAmount: amount,
-                    changeAmount,
                 });
             },
         }));
@@ -327,12 +333,11 @@ const Modal = memo(
                 },
             });
 
-            changeAmount?.(currentAmount);
             setModalState((prevState) => ({
                 ...prevState,
                 isVisible: false,
             }));
-        }, [currentAmount, dispatch, id, changeAmount]);
+        }, [currentAmount, dispatch, id]);
 
         const handleClose = useCallback(() => {
             setModalState(initialModalState);
