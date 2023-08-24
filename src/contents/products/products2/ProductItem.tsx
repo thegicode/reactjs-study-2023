@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SelectedItemContext } from "../../../context/SelectdItemContext";
+import { SelectedItemContext } from "../../context/SelectdItemContext";
 
 const ProductItem = ({ product }: ProductItemProps2) => {
     console.log("ProductItem", product.id);

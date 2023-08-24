@@ -1,77 +1,98 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./css/app.css";
+
+import Layout from "./components/Layout";
 
 // navigation
 // import Navigation from "./components/Navigation";
-import Header from "./components/Header";
+// import Header from "./components/Header";
 
 // side
-import Hooks from "./components/Hooks";
+import SideHooks from "./components/SideHooks";
+import SidePractical from "./components/SidePractical";
 
-// import HomePage from "./pages/HomePage";
-// import NotFoundPage from "./pages/NotFoundPage";
-import ForwardRefPage from "./pages/ForwardRefPage";
-// import MemoPage from "./pages/MemoPage";
-// import CreateContextPage from "./pages/CreateContextPage";
-// import UseContextPage from "./pages/UseContextPage";
-// import UseMemoPage from "./pages/UseMemoPage";
-// import UseCallbackPage from "./pages/UseCallbackPage";
+// contents
+// hooks
 import UseEffectPage from "./pages/UseEffectPage";
+import UseMemoPage from "./pages/UseMemoPage";
+import UseCallbackPage from "./pages/UseCallbackPage";
+import MemoPage from "./pages/MemoPage";
+import ForwardRefPage from "./pages/ForwardRefPage";
+import UseContextPage from "./pages/UseContextPage";
+import CompositionPage from "./pages/CompositionPage";
 
-// import ProductsPage from "./pages/ProductsPage";
-// import CompositionPage from "./pages/CompositionPage";
+// practical
+import ProductsPage from "./pages/ProductsPage";
+
+// import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
     return (
         // <React.StrictMode>
         <Router basename={process.env.PUBLIC_URL}>
-            <Header />
-            {/* <Navigation /> */}
+            <Layout>
+                <>
+                    <aside className="side">
+                        <Routes>
+                            <Route path="/hooks/*" element={<SideHooks />} />
+                            <Route
+                                path="/practical/*"
+                                element={<SidePractical />}
+                            />
+                        </Routes>
+                    </aside>
 
-            <div className="container">
-                <aside className="side">
-                    <h2>Side Menu</h2>
-                    <Routes>
-                        <Route path="/hooks" element={<Hooks />} />
-                    </Routes>
-                </aside>
+                    <main className="contents">
+                        <Routes>
+                            <Route path="/hooks" element={<UseEffectPage />} />
+                            <Route
+                                path="/hooks/useeffect"
+                                element={<UseEffectPage />}
+                            />
+                            <Route
+                                path="/hooks/usememo"
+                                element={<UseMemoPage />}
+                            />
+                            <Route
+                                path="/hooks/usecallback"
+                                element={<UseCallbackPage />}
+                            />
+                            <Route path="/hooks/memo" element={<MemoPage />} />
+                            <Route
+                                path="/hooks/forwardref"
+                                element={<ForwardRefPage />}
+                            ></Route>
+                            <Route
+                                path="/hooks/usecontext"
+                                element={<UseContextPage />}
+                            />
+                            <Route
+                                path="/hooks/composition"
+                                element={<CompositionPage />}
+                            />
 
-                <main className="contents">
-                    <Routes>
-                        <Route
-                            path="/forwardref"
-                            element={<ForwardRefPage />}
-                        ></Route>
-                        <Route path="/useeffect" element={<UseEffectPage />} />
+                            <Route
+                                path="/practical/"
+                                element={<ProductsPage />}
+                            />
+                            <Route
+                                path="/practical/products"
+                                element={<ProductsPage />}
+                            />
+                        </Routes>
+                        {/* <Routes>
+                        
+                        
 
-                        {/* <Route path="/practical"></Route> */}
-                    </Routes>
-                    {/* <Routes>
-                        <Route path="/forwardref" Component={ForwardRefPage} />
-                        <Route path="/memo" Component={MemoPage} />
-                        <Route
-                            path="/createcontext"
-                            Component={CreateContextPage}
-                        />
-                        <Route path="/usecontext" Component={UseContextPage} />
-                        <Route path="/usememo" Component={UseMemoPage} />
-                        <Route
-                            path="/usecallback"
-                            Component={UseCallbackPage}
-                        />
-
-                        <Route
-                            path="/composition"
-                            Component={CompositionPage}
-                        />
+                       
 
                         <Route path="/products" Component={ProductsPage} />
 
                         <Route Component={NotFoundPage} />
                     </Routes> */}
-                </main>
-            </div>
+                    </main>
+                </>
+            </Layout>
         </Router>
         // </React.StrictMode>
     );

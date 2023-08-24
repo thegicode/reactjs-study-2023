@@ -3,7 +3,7 @@ import { useState } from "react";
 import PorductList from "./ProductList";
 import ModalContext from "../../../components/ModalContext";
 
-import { SelectedItemContext } from "../../../context/SelectdItemContext";
+import { SelectedItemContext } from "../../context/SelectdItemContext";
 
 export default function ProuductsPage() {
     console.log("Index");

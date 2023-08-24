@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Page from "./Page";
-import { ThemeContext } from "../../../context/ThemeContext";
-import { TitleContext } from "../../../context/TitleContext";
+import { ThemeContext } from "../../context/ThemeContext";
+import { TitleContext } from "../../context/TitleContext";
 
 export default function UseConText1() {
     const [isDark, setIsDark] = useState<boolean>(false);
