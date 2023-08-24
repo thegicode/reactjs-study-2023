@@ -85,10 +85,6 @@ export default function App() {
         modalRef.current?.openModal(props);
     }, []);
 
-    // ActionButton이 리랜더링되지 않도록 useRef를 사용하여 data 전달
-    // const dataRef = useRef(data);
-    // dataRef.current = data;
-
     return (
         <section className="addToCart">
             {/* Sorting Controls */}
@@ -267,29 +263,37 @@ interface ActionButtonProps {
 const ActionButton = ({ data }: ActionButtonProps) => {
     console.log("ActionButton");
 
-    const [badgeCount, setBadgeCount] = useState<number>(0);
+    const [showData, setShowData] = useState<string>("");
 
-    const handleFilteredDataDisplay = useCallback(() => {
-        const filteredData = data
-            .filter((item) => item.amount > 0)
-            .map(({ id, amount }) => ({ id, amount }));
-        setBadgeCount(filteredData.length);
-        console.log(filteredData);
+    const filteredData = useMemo(() => {
+        return data.filter((item) => item.amount > 0);
     }, [data]);
 
-    useEffect(() => {
-        handleFilteredDataDisplay();
-    }, [data, handleFilteredDataDisplay]);
+    const handleClick = () => {
+        setShowData(
+            `Data 가져오기 버튼 클릭 후 \n${JSON.stringify(
+                filteredData,
+                null,
+                4
+            )}`
+        );
+    };
+
+    const handleBlur = () => {
+        setShowData("");
+    };
 
     return (
         <div className="addToCart-actions">
-            <span className="badge-count">{badgeCount}</span>
+            <span className="badge-count">{filteredData.length}</span>
             <button
-                onClick={handleFilteredDataDisplay}
                 className="addToCartButton"
+                onClick={handleClick}
+                onBlur={handleBlur}
             >
                 Data 가져오기
             </button>
+            <pre>{showData}</pre>
         </div>
     );
 };
