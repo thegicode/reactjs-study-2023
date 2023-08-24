@@ -3,6 +3,7 @@ import "../css/modal.css";
 import AddToCart1 from "../contents/addToCart/AddToCart1";
 import AddToCart2 from "../contents/addToCart/AddToCart2";
 import AddToCart3 from "../contents/addToCart/AddToCart3";
+import AddToCart4 from "../contents/addToCart/AddToCart4";
 
 export default function memoPage() {
     return (
@@ -13,12 +14,13 @@ export default function memoPage() {
             <h3>: Data useState + Modal forwardRef</h3>
             <AddToCart1 />
 
-            <h2>AddToCart 2</h2>
+            <h2>AddToCart 2 *****</h2>
             <h3> : Data useReducer + Modal forwardRef</h3>
             <p>- Modal을 ref로, Data를 useReducer로 컨트롤</p>
-            <p>- Data를 Reducer로 정의하면 한 눈에 보기 쉽다. </p>
+            <p>- Data를 Reducer를 적용하면 한 눈에 보기 쉽다. </p>
             <p>- ActionButton의 리랜더링을 더 막을 수는 없을까?</p>
             <p>- App, ProductList의 리랜더링은 괜찮은가?</p>
+            <p>- 이 방식이 가장 좋은 것 같다.</p>
             <AddToCart2 />
 
             <h2>AddToCart 3</h2>
@@ -32,9 +34,11 @@ export default function memoPage() {
             <p>- 굳이 useReducer로 적용해야 할까?</p>
             <AddToCart3 />
 
+            <h2>AddToCart4</h2>
+            <h3>: Data useReducer + Modal useState</h3>
+            <AddToCart4 />
+
             {/* 
-            <h2>Products 3 : forwardRef, 메모리 기능 추가</h2>
-            <Products3Memo />
 
             <h2>Products 4 : useReducer</h2>
             <p>
