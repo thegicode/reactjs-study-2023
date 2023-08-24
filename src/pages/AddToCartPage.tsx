@@ -34,8 +34,15 @@ export default function memoPage() {
             <p>- 굳이 useReducer로 적용해야 할까?</p>
             <AddToCart3 />
 
-            <h2>AddToCart4</h2>
+            <h2>AddToCart4 *****</h2>
             <h3>: Data useReducer + Modal useState</h3>
+            <p>
+                - Data는 useReducer를 사용하는 것이 코드를 한 눈에 보기가 좋다.
+            </p>
+            <p>
+                - Modal을 forwardRef를 사용하지 않고 useState로 구현해도 괜찮은
+                것 같다.
+            </p>
             <AddToCart4 />
 
             {/* 

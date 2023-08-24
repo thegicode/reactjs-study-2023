@@ -2,8 +2,23 @@
     font-size: 14px;
 }
 
+.productsPage h1 {
+    font-size: 2rem;
+}
+
 .productsPage h2 {
-    padding-top: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 5px solid #e3edc2;
+    color: #006da0;
+}
+
+.productsPage h3 {
+    color: #006da0;
+}
+
+.productsPage > p {
+    color: #666;
 }
 
 .productsPage .products {
