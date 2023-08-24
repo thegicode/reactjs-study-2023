@@ -1,15 +1,3 @@
-html,
-body {
-    height: 100%;
-}
-
-#root {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
 .header {
     box-sizing: border-box;
     border-bottom: 1px solid #ddd;
