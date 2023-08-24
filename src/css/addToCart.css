@@ -131,3 +131,46 @@
 .addToCart pre:empty {
     display: none;
 }
+
+.addToCart .modal {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addToCart .modal-container {
+    width: 50%;
+    padding: 1rem;
+    border-radius: 10px;
+    /* border: 2px solid #b5d8e6; */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+.addToCart .modal-container input {
+    width: 100px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.addToCart .modal-container h3 {
+    color: #fff;
+}
+
+.addToCart .modal-actions {
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.addToCart .modal-actions button {
+    flex: 1;
+    padding: 8px;
+}
