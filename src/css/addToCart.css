@@ -93,28 +93,28 @@ body {
 }
 
 .addToCart-actions .badge-count {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    border: 1px solid #86cee8;
-    background-color: rgb(204 243 238);
-    color: #1e8eb7;
+    border: 1px solid rgb(205 226 115);
+    background-color: rgb(243 251 200);
+    color: #ef6220;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 .addToCartButton {
     flex: 1;
-    margin: 0 1rem;
+    margin: 0 10px;
     padding: 10px 0;
-    border: none;
     border-radius: 10px;
-    border: 1px solid #accfdc;
-    background-color: #d7f0fa;
+    border: 1px solid #bbe6f6;
+    background-color: #e0f6ff;
     font-size: 12px;
+    color: #041b36;
     cursor: pointer;
 }
 

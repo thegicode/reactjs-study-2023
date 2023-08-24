@@ -1,4 +1,5 @@
-// forwardRef + useRedecuer
+// Data useReducer + Modal forwardRef
+
 import React, {
     memo,
     forwardRef,
@@ -17,12 +18,6 @@ interface DataProps {
     title: string;
     amount: number;
 }
-
-const initialData: DataProps[] = [
-    { id: "1", title: "ccc", amount: 0 },
-    { id: "2", title: "aaa", amount: 0 },
-    { id: "3", title: "bbb", amount: 0 },
-];
 
 interface OpenModalProps extends DataProps {
     // changeAmount: (newAmount: number) => void;
@@ -71,13 +66,20 @@ function dataReducer(state: DataProps[], action: Action): DataProps[] {
     }
 }
 
+const initialData: DataProps[] = [
+    { id: "1", title: "ccc", amount: 0 },
+    { id: "2", title: "aaa", amount: 0 },
+    { id: "3", title: "bbb", amount: 0 },
+];
+
 export default function App() {
     console.log("App");
 
-    // Modal 핸들러 참조
-    const modalRef = useRef<ModalHandles | null>(null);
     // 데이터 및 관리자 초기화
     const [data, dispatch] = useReducer(dataReducer, initialData);
+
+    // Modal 핸들러 참조
+    const modalRef = useRef<ModalHandles | null>(null);
 
     // Modal 열기 핸들러
     const handleOpenModal = useCallback((props: OpenModalProps) => {
@@ -92,8 +94,8 @@ export default function App() {
             {/* Product List  */}
             <ProductList
                 data={data}
-                handleOpenModal={handleOpenModal}
                 dispatch={dispatch}
+                handleOpenModal={handleOpenModal}
             />
 
             {/* Actions */}
@@ -136,6 +138,7 @@ interface ProductListProps {
 const ProductList = memo(
     ({ data, dispatch, handleOpenModal }: ProductListProps) => {
         console.log("ProductList");
+
         return (
             <ul className="addToCart-list">
                 {data.map((item) => (

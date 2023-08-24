@@ -1,4 +1,5 @@
-// forwardRef + useRedecuer
+//  Data useReducer + Modal forwardRef + Modal useReducer
+
 import React, {
     memo,
     forwardRef,

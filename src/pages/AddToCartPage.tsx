@@ -10,13 +10,13 @@ export default function memoPage() {
             <h1>AddToCart</h1>
 
             <h2>AddToCart 1 </h2>
-            <h3>: only useState(중단)</h3>
-            <p>- data를 가지고 있어야 하는 구조로 개선해야 함.</p>
+            <h3>: Data useState + Modal forwardRef</h3>
             <AddToCart1 />
 
             <h2>AddToCart 2</h2>
             <h3> : Data useReducer + Modal forwardRef</h3>
             <p>- Modal을 ref로, Data를 useReducer로 컨트롤</p>
+            <p>- Data를 Reducer로 정의하면 한 눈에 보기 쉽다. </p>
             <p>- ActionButton의 리랜더링을 더 막을 수는 없을까?</p>
             <p>- App, ProductList의 리랜더링은 괜찮은가?</p>
             <AddToCart2 />
@@ -24,7 +24,10 @@ export default function memoPage() {
             <h2>AddToCart 3</h2>
             <h3>: Data useReducer + Modal forwardRef + Modal useReducer</h3>
             <p>- Modal의 상태관리를 useReducer로 적용</p>
-            <p>- Modal의 상태관리를 한 눈에 볼 수 있다. </p>
+            <p>
+                - ModalAction, modalReducer를 통해 Modal의 동작이 한 눈에
+                보인다.
+            </p>
             <p>- 코드가 길어진다. </p>
             <p>- 굳이 useReducer로 적용해야 할까?</p>
             <AddToCart3 />
