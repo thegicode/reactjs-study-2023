@@ -3,10 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Layout from "./components/Layout";
 
-// navigation
-// import Navigation from "./components/Navigation";
-// import Header from "./components/Header";
-
 // side
 import SideHooks from "./components/SideHooks";
 import SidePractical from "./components/SidePractical";
@@ -23,6 +19,7 @@ import CompositionPage from "./pages/CompositionPage";
 
 // practical
 import ProductsPage from "./pages/ProductsPage";
+import AddToCartPage from "./pages/AddToCartPage";
 
 // import NotFoundPage from "./pages/NotFoundPage";
 
@@ -30,73 +27,76 @@ import styles from "./css/App.module.css";
 
 function App() {
     return (
-        // <React.StrictMode>
-        <Router basename={process.env.PUBLIC_URL}>
-            <Layout>
-                <>
-                    <aside className={styles.side}>
-                        <Routes>
-                            <Route path="/hooks/*" element={<SideHooks />} />
-                            <Route
-                                path="/practical/*"
-                                element={<SidePractical />}
-                            />
-                        </Routes>
-                    </aside>
+        <React.StrictMode>
+            <Router basename={process.env.PUBLIC_URL}>
+                <Layout>
+                    <>
+                        <aside className={styles.side}>
+                            <Routes>
+                                <Route
+                                    path="/hooks/*"
+                                    element={<SideHooks />}
+                                />
+                                <Route
+                                    path="/practical/*"
+                                    element={<SidePractical />}
+                                />
+                            </Routes>
+                        </aside>
 
-                    <main className={styles.contents}>
-                        <Routes>
-                            <Route path="/hooks" element={<UseEffectPage />} />
-                            <Route
-                                path="/hooks/useeffect"
-                                element={<UseEffectPage />}
-                            />
-                            <Route
-                                path="/hooks/usememo"
-                                element={<UseMemoPage />}
-                            />
-                            <Route
-                                path="/hooks/usecallback"
-                                element={<UseCallbackPage />}
-                            />
-                            <Route path="/hooks/memo" element={<MemoPage />} />
-                            <Route
-                                path="/hooks/forwardref"
-                                element={<ForwardRefPage />}
-                            ></Route>
-                            <Route
-                                path="/hooks/usecontext"
-                                element={<UseContextPage />}
-                            />
-                            <Route
-                                path="/hooks/composition"
-                                element={<CompositionPage />}
-                            />
+                        <main className={styles.contents}>
+                            <Routes>
+                                <Route
+                                    path="/hooks"
+                                    element={<UseEffectPage />}
+                                />
+                                <Route
+                                    path="/hooks/useeffect"
+                                    element={<UseEffectPage />}
+                                />
+                                <Route
+                                    path="/hooks/usememo"
+                                    element={<UseMemoPage />}
+                                />
+                                <Route
+                                    path="/hooks/usecallback"
+                                    element={<UseCallbackPage />}
+                                />
+                                <Route
+                                    path="/hooks/memo"
+                                    element={<MemoPage />}
+                                />
+                                <Route
+                                    path="/hooks/forwardref"
+                                    element={<ForwardRefPage />}
+                                ></Route>
+                                <Route
+                                    path="/hooks/usecontext"
+                                    element={<UseContextPage />}
+                                />
+                                <Route
+                                    path="/hooks/composition"
+                                    element={<CompositionPage />}
+                                />
 
-                            <Route
-                                path="/practical/"
-                                element={<ProductsPage />}
-                            />
-                            <Route
-                                path="/practical/products"
-                                element={<ProductsPage />}
-                            />
-                        </Routes>
-                        {/* <Routes>
-                        
-                        
-
-                       
-
-                        <Route path="/products" Component={ProductsPage} />
-
-                        <Route Component={NotFoundPage} />
-                    </Routes> */}
-                    </main>
-                </>
-            </Layout>
-        </Router>
-        // </React.StrictMode>
+                                <Route
+                                    path="/practical/"
+                                    element={<ProductsPage />}
+                                />
+                                <Route
+                                    path="/practical/products"
+                                    element={<ProductsPage />}
+                                />
+                                <Route
+                                    path="/practical/addtocart"
+                                    element={<AddToCartPage />}
+                                />
+                            </Routes>
+                        </main>
+                    </>
+                </Layout>
+            </Router>
+        </React.StrictMode>
     );
 }
 

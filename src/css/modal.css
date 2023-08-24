@@ -16,3 +16,21 @@
     background-color: rgba(53, 23, 71, 0.7);
     color: #fff;
 }
+
+.modal-container input {
+    width: 100px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 8px;
+}
