@@ -1,4 +1,4 @@
-import "../css/productsPage.css";
+import "../css/addToCartPage.css";
 import "../css/modal.css";
 import AddToCart1 from "../contents/addToCart/AddToCart1";
 import AddToCart2 from "../contents/addToCart/AddToCart2";
@@ -7,7 +7,7 @@ import AddToCart4 from "../contents/addToCart/AddToCart4";
 
 export default function memoPage() {
     return (
-        <section className="productsPage">
+        <section className="addToCartPage">
             <h1>AddToCart</h1>
 
             <h2>AddToCart 1 </h2>
