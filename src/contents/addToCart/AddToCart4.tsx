@@ -11,28 +11,22 @@ import React, {
 } from "react";
 import "../../css/addToCart.css";
 
+// --- Types & Enums ---
+
+enum ActionTypes {
+    UPDATE_AMOUNT = "UPDATE_AMOUNT",
+    SORT_ASC = "SORT_ASC",
+    SORT_DESC = "SORT_DESC",
+}
+
 interface DataProps {
     id: string;
     title: string;
     amount: number;
 }
 
-interface ModalProps {
-    state: typeof initialModalState;
-    setState: React.Dispatch<React.SetStateAction<typeof initialModalState>>;
-    closeModal: () => void;
-    dispatch: React.Dispatch<Action>;
-}
-
 interface OpenModalProps extends DataProps {
     // changeAmount: (newAmount: number) => void;
-}
-
-// Define action types and corresponding structure
-enum ActionTypes {
-    UPDATE_AMOUNT = "UPDATE_AMOUNT",
-    SORT_ASC = "SORT_ASC",
-    SORT_DESC = "SORT_DESC",
 }
 
 type Action =
@@ -49,6 +43,8 @@ type Action =
     | {
           type: ActionTypes.SORT_DESC;
       };
+
+// --- Reducers ---
 
 function dataReducer(state: DataProps[], action: Action): DataProps[] {
     switch (action.type) {
@@ -67,6 +63,8 @@ function dataReducer(state: DataProps[], action: Action): DataProps[] {
     }
 }
 
+// --- Initial States ---
+
 const initialData: DataProps[] = [
     { id: "1", title: "ccc", amount: 0 },
     { id: "2", title: "aaa", amount: 0 },
@@ -80,6 +78,8 @@ const initialModalState = {
     currentAmount: 0,
 };
 
+// --- Main App Component ---
+
 export default function App() {
     console.log("App");
 
@@ -87,52 +87,40 @@ export default function App() {
     const [data, dispatch] = useReducer(dataReducer, initialData);
 
     // handle Modal
-
     const [modalState, setModalState] = useState(initialModalState);
 
-    // Modal 열기 핸들러
-    const handleOpenModal = useCallback((props: OpenModalProps) => {
-        setModalState({
-            isVisible: true,
-            id: props.id,
-            title: props.title,
-            currentAmount: props.amount,
-        });
-    }, []);
-
-    const closeModal = useCallback(() => {
-        setModalState(initialModalState);
-    }, []);
-
-    // useEffect(() => {
-    //     console.log("handleOpenModal 변경");
-    // }, [handleOpenModal]);
+    // Item에서 Modal 열기 핸들러
+    const handleOpenModal = useCallback(
+        ({ id, title, amount }: OpenModalProps) => {
+            setModalState({
+                isVisible: true,
+                id,
+                title,
+                currentAmount: amount,
+            });
+        },
+        []
+    );
 
     return (
         <section className="addToCart">
-            {/* Sorting Controls */}
             <SortControls dispatch={dispatch} />
-
-            {/* Product List  */}
             <ProductList
                 data={data}
                 dispatch={dispatch}
                 handleOpenModal={handleOpenModal}
             />
-
-            {/* Actions */}
             <ActionButton data={data} />
-
-            {/* Modal */}
             <Modal
                 state={modalState}
                 setState={setModalState}
-                closeModal={closeModal}
                 dispatch={dispatch}
             />
         </section>
     );
 }
+
+// --- Sub Components ---
 
 interface SortControlsProps {
     dispatch: React.Dispatch<Action>;
@@ -214,6 +202,7 @@ const Item = memo(
             [dispatch, id]
         );
 
+        // Modal 열기, App에 있는 handleOpenModal
         const handleInputClick = () => {
             handleOpenModal({
                 id,
@@ -233,10 +222,6 @@ const Item = memo(
                 dispatchAmount(amount - 1);
             }
         }, [isMinAmount, dispatchAmount, amount]);
-
-        // useEffect(() => {
-        //     dispatchAmount();
-        // }, [localAmount, dispatchAmount]);
 
         return (
             <li
@@ -326,15 +311,19 @@ const ActionButton = ({ data }: ActionButtonProps) => {
 interface ModalProps {
     state: typeof initialModalState;
     setState: React.Dispatch<React.SetStateAction<typeof initialModalState>>;
-    closeModal: () => void;
+    // closeModal: () => void;
     dispatch: React.Dispatch<Action>;
 }
 
 const Modal = memo(
-    ({ state, setState, closeModal, dispatch }: ModalProps) => {
+    ({ state, setState, dispatch }: ModalProps) => {
         console.log("Modal");
 
         const { isVisible, id, title, currentAmount } = state;
+
+        const closeModal = useCallback(() => {
+            setState(initialModalState);
+        }, [setState]);
 
         // input element change event : update amount
         const handleChange = useCallback(

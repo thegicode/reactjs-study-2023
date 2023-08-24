@@ -12,6 +12,8 @@ import React, {
 } from "react";
 import "../../css/addToCart.css";
 
+// --- Types & Enums ---
+
 interface DataProps {
     id: string;
     title: string;
@@ -31,11 +33,15 @@ interface UpdateAmountProps {
     newAmount: number;
 }
 
+// --- Initial States ---
+
 const initialData: DataProps[] = [
     { id: "1", title: "ccc", amount: 0 },
     { id: "2", title: "aaa", amount: 0 },
     { id: "3", title: "bbb", amount: 0 },
 ];
+
+// --- Main App Component ---
 
 export default function App() {
     console.log("App");
@@ -95,6 +101,8 @@ export default function App() {
         </section>
     );
 }
+
+// --- Sub Components ---
 
 interface SortControlsProps {
     sortDataAscending: () => void;

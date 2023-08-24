@@ -13,6 +13,14 @@ import React, {
 } from "react";
 import "../../css/addToCart.css";
 
+// --- Types & Enums ---
+
+enum ActionTypes {
+    UPDATE_AMOUNT = "UPDATE_AMOUNT",
+    SORT_ASC = "SORT_ASC",
+    SORT_DESC = "SORT_DESC",
+}
+
 interface DataProps {
     id: string;
     title: string;
@@ -25,13 +33,6 @@ interface OpenModalProps extends DataProps {
 
 interface ModalHandles {
     openModal: (props: OpenModalProps) => void;
-}
-
-// Define action types and corresponding structure
-enum ActionTypes {
-    UPDATE_AMOUNT = "UPDATE_AMOUNT",
-    SORT_ASC = "SORT_ASC",
-    SORT_DESC = "SORT_DESC",
 }
 
 type Action =
@@ -48,6 +49,8 @@ type Action =
     | {
           type: ActionTypes.SORT_DESC;
       };
+
+// --- Reducers ---
 
 function dataReducer(state: DataProps[], action: Action): DataProps[] {
     switch (action.type) {
@@ -66,11 +69,15 @@ function dataReducer(state: DataProps[], action: Action): DataProps[] {
     }
 }
 
+// --- Initial States ---
+
 const initialData: DataProps[] = [
     { id: "1", title: "ccc", amount: 0 },
     { id: "2", title: "aaa", amount: 0 },
     { id: "3", title: "bbb", amount: 0 },
 ];
+
+// --- Main App Component ---
 
 export default function App() {
     console.log("App");
@@ -106,6 +113,8 @@ export default function App() {
         </section>
     );
 }
+
+// --- Sub Components ---
 
 interface SortControlsProps {
     dispatch: React.Dispatch<Action>;
