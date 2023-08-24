@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import styles from "../../css/UseMemo.module.css";
 
 export default function UseMemo2() {
     const [number, setNumber] = useState<number>(0);
@@ -28,7 +29,7 @@ export default function UseMemo2() {
     }, [animal]);
 
     return (
-        <div className="useMemo2">
+        <div className={styles.useMemo2}>
             <h3>원시 타입과 객체 비교</h3>
 
             <h4>숫자 입력</h4>

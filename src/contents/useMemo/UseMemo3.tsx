@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import styles from "../../css/UseMemo.module.css";
 
 interface ItemProps {
     id: string;
@@ -17,7 +18,7 @@ const items = [
 
 export default function UseMemo3() {
     return (
-        <div className="useMemo3">
+        <div className={styles.useMemo3}>
             <h3>loop 안에서 사용시</h3>
             <ul>
                 {items.map((item) => (

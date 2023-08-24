@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-import "../css/layout.css";
+import styles from "../css/Layout.module.css";
 
 interface LayoutProps {
     children: ReactNode;
@@ -9,13 +9,13 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
     return (
         <>
-            <header className="header">
-                <nav className="navigation">
+            <header className={styles.header}>
+                <nav className={styles.navigation}>
                     <Link to="/hooks">Hooks</Link>
                     <Link to="/practical">Practical</Link>
                 </nav>
             </header>
-            <div className="container">{children}</div>
+            <div className={styles.container}>{children}</div>
         </>
     );
 }

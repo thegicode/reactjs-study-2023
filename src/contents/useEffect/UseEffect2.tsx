@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import styles from "../../css/UseEffect1.module.css";
 
 export default function UseEffect2() {
     const [showTimer, setShowTimer] = useState<boolean>(false);
 
     return (
-        <section className="useEffect1">
+        <section className={styles.useEffect1}>
             {showTimer && <Timer />}
             <button type="button" onClick={() => setShowTimer(!showTimer)}>
                 Toggle Timer

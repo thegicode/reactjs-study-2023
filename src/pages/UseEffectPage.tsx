@@ -1,10 +1,10 @@
-import "../css/useEffectPage.css";
 import UseEffect1 from "../contents/useEffect/UseEffect1";
 import UseEffect2 from "../contents/useEffect/UseEffect2";
+import styles from "../css/UseEffectPage.module.css";
 
 export default function UseEffectPage() {
     return (
-        <section className="useEffectPage">
+        <section className={styles.useEffectPage}>
             <h1>useEffect Page</h1>
             <p>
                 Mount(화면 첫 렌더링), Update(다시 렌더링), Unmont(화면에서

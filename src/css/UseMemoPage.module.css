@@ -1,0 +1,11 @@
+.useMemoPage {
+    font-size: 14px;
+}
+
+.useMemoPage > p {
+    margin: 10px 0;
+}
+
+.useMemoPage h1 {
+    margin-bottom: 2rem;
+}

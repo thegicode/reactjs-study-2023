@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import styles from "../../css/UseMemo.module.css";
 
 const calculate = (amount: number) => {
     console.log("calculate");
@@ -24,7 +25,7 @@ export default function UseMemo1() {
     // delayAmount가 변경될 때만 다시 memoizaton
 
     return (
-        <div className="useMemo1">
+        <div className={styles.useMemo1}>
             <h3>가격 계산</h3>
             <input
                 type="number"

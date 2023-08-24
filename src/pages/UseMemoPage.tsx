@@ -1,11 +1,11 @@
-import "../css/useMemoPage.css";
 import UseMemo1 from "../contents/useMemo/UseMemo1";
 import UseMemo2 from "../contents/useMemo/UseMemo2";
 import UseMemo3 from "../contents/useMemo/UseMemo3";
+import styles from "../css/UseMemoPage.module.css";
 
 function UseMemoPage() {
     return (
-        <section className="useMemoPage">
+        <section className={styles.useMemoPage}>
             <h1>useMemo Page</h1>
 
             <p>
@@ -15,7 +15,7 @@ function UseMemoPage() {
                 </strong>
             </p>
 
-            <code className="code-reference">
+            <code>
                 const cachedValue = useMemo(calculateValue, dependencies)
             </code>
             <ul>

@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
+import styles from "../../css/UseEffect1.module.css";
 
 export default function UseEffect1() {
     const [count, setCount] = useState<number>(0);
@@ -28,7 +29,7 @@ export default function UseEffect1() {
     }, []);
 
     return (
-        <section className="useEffect1">
+        <section className={styles.useEffect1}>
             <h3>count 증가 </h3>
             <button type="button" onClick={handleClick}>
                 Update count

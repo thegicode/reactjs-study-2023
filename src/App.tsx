@@ -26,13 +26,15 @@ import ProductsPage from "./pages/ProductsPage";
 
 // import NotFoundPage from "./pages/NotFoundPage";
 
+import styles from "./css/App.module.css";
+
 function App() {
     return (
         // <React.StrictMode>
         <Router basename={process.env.PUBLIC_URL}>
             <Layout>
                 <>
-                    <aside className="side">
+                    <aside className={styles.side}>
                         <Routes>
                             <Route path="/hooks/*" element={<SideHooks />} />
                             <Route
@@ -42,7 +44,7 @@ function App() {
                         </Routes>
                     </aside>
 
-                    <main className="contents">
+                    <main className={styles.contents}>
                         <Routes>
                             <Route path="/hooks" element={<UseEffectPage />} />
                             <Route

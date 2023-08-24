@@ -36,31 +36,3 @@ body {
     display: flex;
     overflow: hidden;
 }
-
-.container .side {
-    overflow: auto;
-    box-sizing: border-box;
-    width: 130px;
-    border-right: 1px solid #f2f0f0;
-    background-color: #f8f8f8;
-}
-
-.container .side a {
-    display: block;
-    padding: 10px;
-    border-bottom: 1px solid #ebe9e9;
-    font-size: 13px;
-    color: #666;
-    text-decoration: none;
-}
-.container .side a:hover {
-    color: #333;
-    background-color: #ffffff;
-}
-
-.contents {
-    flex: 1;
-
-    overflow: auto;
-    padding: 1rem;
-}
