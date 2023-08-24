@@ -13,3 +13,7 @@
 <!-- "homepage": "https://thegicode.github.io/reactjs-study-2023", -->
 
 [Buit-in React APIs](https://react.dev/reference/react/apis)
+
+# Local
+
+[URL](http://localhost:3000/practical)
