@@ -18,6 +18,11 @@
     font-size: 14px;
     color: #fff;
 }
+
+.navigation a:hover {
+    background-color: #532599;
+}
+
 .container {
     flex: 1;
 

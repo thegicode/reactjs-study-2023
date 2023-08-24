@@ -1,5 +1,4 @@
 import "../css/addToCartPage.css";
-import "../css/modal.css";
 import AddToCart1 from "../contents/addToCart/AddToCart1";
 import AddToCart2 from "../contents/addToCart/AddToCart2";
 import AddToCart3 from "../contents/addToCart/AddToCart3";
