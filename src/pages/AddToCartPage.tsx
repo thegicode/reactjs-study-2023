@@ -2,29 +2,34 @@ import "../css/productsPage.css";
 import "../css/modal.css";
 import AddToCart1 from "../contents/addToCart/AddToCart1";
 import AddToCart2 from "../contents/addToCart/AddToCart2";
+import AddToCart3 from "../contents/addToCart/AddToCart3";
 
 export default function memoPage() {
     return (
         <section className="productsPage">
             <h1>AddToCart</h1>
 
-            <h2>AddToCart 1 : only useState(중단)</h2>
+            <h2>AddToCart 1 </h2>
+            <h3>: only useState(중단)</h3>
             <p>- data를 가지고 있어야 하는 구조로 개선해야 함.</p>
             <AddToCart1 />
 
-            <h2>AddToCart 2 : Modal forwardRef + Data useReducer</h2>
-            <p>- Modal을 ref로 컨트롤, Data를 useReducer로 컨트롤</p>
-            <p>
-                - 제안: Modal의 상태관리를 useState에서 useReducer로 관리, 다음
-                버전 적용 예정
-            </p>
+            <h2>AddToCart 2</h2>
+            <h3> : Data useReducer + Modal forwardRef</h3>
+            <p>- Modal을 ref로, Data를 useReducer로 컨트롤</p>
+            <p>- ActionButton의 리랜더링을 더 막을 수는 없을까?</p>
+            <p>- App, ProductList의 리랜더링은 괜찮은가?</p>
             <AddToCart2 />
 
+            <h2>AddToCart 3</h2>
+            <h3>: Data useReducer + Modal forwardRef + Modal useReducer</h3>
+            <p>- Modal의 상태관리를 useReducer로 적용</p>
+            <p>- Modal의 상태관리를 한 눈에 볼 수 있다. </p>
+            <p>- 코드가 길어진다. </p>
+            <p>- 굳이 useReducer로 적용해야 할까?</p>
+            <AddToCart3 />
+
             {/* 
-
-            <h2>Products 3 : forwardRef *****</h2>
-            <Products3 />
-
             <h2>Products 3 : forwardRef, 메모리 기능 추가</h2>
             <Products3Memo />
 

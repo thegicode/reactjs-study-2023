@@ -297,36 +297,83 @@ const ActionButton = ({ data }: ActionButtonProps) => {
     );
 };
 
+// Modal 상태관리를 useReducer로 적용
+enum ModalActionTypes {
+    OPEN_MODAL = "OPEN_MODAL",
+    UPDATE_AMOUNT = "UPDATE_AMOUNT",
+    CLOSE_MODAL = "CLOSE_MODAL",
+}
+
+type ModalAction =
+    | {
+          type: ModalActionTypes.OPEN_MODAL;
+          payload: {
+              id: string;
+              title: string;
+              currentAmount: number;
+          };
+      }
+    | {
+          type: ModalActionTypes.UPDATE_AMOUNT;
+          payload: number;
+      }
+    | {
+          type: ModalActionTypes.CLOSE_MODAL;
+      };
+
+const initialModalState = {
+    isVisible: false,
+    id: null as string | null,
+    title: "",
+    currentAmount: 0,
+};
+
 interface ModalProps {
     dispatch: React.Dispatch<Action>;
+}
+
+function modalReducer(state: typeof initialModalState, action: ModalAction) {
+    switch (action.type) {
+        case ModalActionTypes.OPEN_MODAL:
+            return {
+                isVisible: true,
+                id: action.payload.id,
+                title: action.payload.title,
+                currentAmount: action.payload.currentAmount,
+            };
+        case ModalActionTypes.UPDATE_AMOUNT:
+            return {
+                ...state,
+                currentAmount: action.payload,
+            };
+        case ModalActionTypes.CLOSE_MODAL:
+            return initialModalState;
+        default:
+            return state;
+    }
 }
 
 const Modal = memo(
     forwardRef<ModalHandles, ModalProps>(({ dispatch }, ref) => {
         console.log("Modal");
 
-        const initialModalState = useMemo(
-            () => ({
-                isVisible: false,
-                id: null as string | null,
-                title: "",
-                currentAmount: 0,
-            }),
-            []
+        const [modalState, modalDispatch] = useReducer(
+            modalReducer,
+            initialModalState
         );
-
-        const [modalState, setModalState] = useState(initialModalState);
 
         const { isVisible, id, title, currentAmount } = modalState;
 
         useImperativeHandle(ref, () => ({
             // Item에서 Modal을 열 때
             openModal: ({ id, title, amount }: OpenModalProps) => {
-                setModalState({
-                    isVisible: true,
-                    id,
-                    title,
-                    currentAmount: amount,
+                modalDispatch({
+                    type: ModalActionTypes.OPEN_MODAL,
+                    payload: {
+                        id,
+                        title,
+                        currentAmount: amount,
+                    },
                 });
             },
         }));
@@ -334,15 +381,15 @@ const Modal = memo(
         // input element change event : update amount
         const handleChange = useCallback(
             (e: React.ChangeEvent<HTMLInputElement>) => {
-                setModalState((prevState) => ({
-                    ...prevState,
-                    currentAmount: Number(e.target.value),
-                }));
+                modalDispatch({
+                    type: ModalActionTypes.UPDATE_AMOUNT,
+                    payload: Number(e.target.value),
+                });
             },
             []
         );
 
-        // click confirm button : dispatch update amount, close Modal
+        // click confirm button : dispatch update id and amount
         const handleConfirm = useCallback(() => {
             dispatch({
                 type: ActionTypes.UPDATE_AMOUNT,
@@ -352,13 +399,16 @@ const Modal = memo(
                 },
             });
 
-            setModalState(initialModalState);
-        }, [currentAmount, dispatch, id, initialModalState]);
+            modalDispatch({
+                type: ModalActionTypes.CLOSE_MODAL,
+            });
+        }, [currentAmount, dispatch, id]);
 
-        // close Modal
         const handleClose = useCallback(() => {
-            setModalState(initialModalState);
-        }, [initialModalState]);
+            modalDispatch({
+                type: ModalActionTypes.CLOSE_MODAL,
+            });
+        }, []);
 
         if (!isVisible) return null;
 
