@@ -9,6 +9,7 @@ export default function Hooks() {
             <Link to="./memo">Memo</Link>
             <Link to="./forwardref">ForwardRef</Link>
             <Link to="./usecontext">useContext</Link>
+            <Link to="./customhooks">customHooks</Link>
             <Link to="./composition">Composition</Link>
         </>
     );
