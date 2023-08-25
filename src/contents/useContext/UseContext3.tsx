@@ -1,11 +1,24 @@
-import { createContext, useContext, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
-const ThemeContext = createContext<string | null>(null);
+type Theme = "light" | "dark";
+
+const ThemeContext = createContext<Theme | null>(null);
 
 export default function UseContext3() {
+    const [theme, setTheme] = useState<Theme>("light");
     return (
-        <ThemeContext.Provider value="dark">
+        <ThemeContext.Provider value={theme}>
             <Form />
+            <label>
+                <input
+                    type="checkbox"
+                    checked={theme === "dark"}
+                    onChange={(e) => {
+                        setTheme(e.target.checked ? "dark" : "light");
+                    }}
+                />
+                Use dark mode
+            </label>
         </ThemeContext.Provider>
     );
 }
@@ -26,7 +39,7 @@ interface PanelProps {
 
 function Panel({ title, children }: PanelProps) {
     const theme = useContext(ThemeContext);
-    const className = "userContext3 panel-" + theme;
+    const className = "useContext4 panel-" + theme;
     return (
         <section className={className}>
             <h1>{title}</h1>

@@ -4,7 +4,6 @@ import UseConText1 from "../contents/useContext/UseContext1";
 import UseConText2 from "../contents/useContext/UseContext2";
 import UseConText3 from "../contents/useContext/UseContext3";
 import UseConText4 from "../contents/useContext/UseContext4";
-import UseConText5 from "../contents/useContext/UseContext5";
 
 export default function useContextPage() {
     return (
@@ -49,14 +48,11 @@ export default function useContextPage() {
             <p>string, {"value={'예쁜 타이틀 컨텍스트'}"}</p>
             <UseConText2 />
 
-            <h2>3. Passing data deeply into the tree </h2>
+            <h2>3. Updating a value via context </h2>
             <UseConText3 />
 
-            <h2>4. Updating a value via context </h2>
+            <h2>4. Updating an object via context</h2>
             <UseConText4 />
-
-            <h2>5. Updating an object via context</h2>
-            <UseConText5 />
         </section>
     );
 }
