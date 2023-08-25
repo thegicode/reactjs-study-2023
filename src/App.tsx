@@ -17,6 +17,7 @@ const UseCallbackPage = lazy(() => import("./pages/UseCallbackPage"));
 const MemoPage = lazy(() => import("./pages/MemoPage"));
 const ForwardRefPage = lazy(() => import("./pages/ForwardRefPage"));
 const UseContextPage = lazy(() => import("./pages/UseContextPage"));
+const CustomHooksPage = lazy(() => import("./pages/CustomHooksPage"));
 const CompositionPage = lazy(() => import("./pages/CompositionPage"));
 
 // practical pages
@@ -72,6 +73,10 @@ function App() {
                                     <Route
                                         path="/hooks/usecontext"
                                         element={<UseContextPage />}
+                                    />
+                                    <Route
+                                        path="/hooks/customhooks"
+                                        element={<CustomHooksPage />}
                                     />
                                     <Route
                                         path="/hooks/composition"
