@@ -1,4 +1,5 @@
 import React, { memo, useState, ChangeEvent, FC } from "react";
+// import styles from "../../../css/Memo.module.css";
 
 const Memo4: FC = () => {
     const [name, setName] = useState<string>("");

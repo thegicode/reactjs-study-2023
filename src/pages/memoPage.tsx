@@ -1,4 +1,3 @@
-import "../css/memoPage.css";
 import Memo1 from "../contents/memo/memo1";
 import Memo2 from "../contents/memo/memo2";
 import Memo3 from "../contents/memo/memo3";
@@ -6,16 +5,18 @@ import Memo4 from "../contents/memo/Memo4";
 import Memo5 from "../contents/memo/Memo5";
 import Memo6 from "../contents/memo/Memo6";
 
+import styles from "../css/MemoPage.module.css";
+
 export default function memoPage() {
     return (
-        <section className="memoPage">
+        <section className={styles.memoPage}>
             <h1>React Memo</h1>
 
             <p>
                 <strong>prop이 변동되지 않으면 리렌더링을 하지 않는다.</strong>
             </p>
 
-            <code className="code-reference">
+            <code className={styles.codeReference}>
                 const MemoizedComponent = memo(SomeComponent, arePropsEqual?)
             </code>
 

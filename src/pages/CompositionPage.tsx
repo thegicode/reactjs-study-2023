@@ -1,12 +1,12 @@
-import "../css/compositionPage.css";
-
 import Composition1 from "../contents/compositon/Composition1";
 import Composition2 from "../contents/compositon/Composition2";
 import Composition3 from "../contents/compositon/Composition3";
 
+import styles from "../css/CompositionPage.module.css";
+
 function CompositonPage() {
     return (
-        <div className="compositionPage">
+        <div className={styles.compositionPage}>
             <h1>CompositonPage</h1>
 
             <h2>1</h2>

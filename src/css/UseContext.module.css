@@ -1,24 +1,3 @@
-.useContextPage {
-    font-size: 14px;
-}
-
-.useContextPage > p {
-    margin: 10px 0;
-}
-
-.useContextPage h1 {
-    margin-bottom: 2rem;
-}
-
-.useContextPage h2 {
-    padding-top: 1rem;
-    border-top: 1px solid #ddd;
-}
-
-.useContextPage > ul li {
-    padding: 5px 0;
-}
-
 .useContext1 {
     overflow: hidden;
     border: 1px solid #ddd;
@@ -35,14 +14,14 @@
     border-top: 1px solid #ddd;
 }
 
-.useContextPage .dark,
-.useContextPage .theme-dark {
+.dark,
+.themeDark {
     background-color: #000;
     color: #fff;
 }
 
-.useContextPage .noDark,
-.useContextPage .theme-normal {
+.noDark,
+.themeNormal {
     background-color: #fff;
     color: #000;
 }
@@ -63,7 +42,7 @@
     color: #fff;
 }
 
-.useContextPage .panel-dark button {
+.panel-dark button {
     border: 1px solid rgba(255, 255, 255, 0.8);
     background-color: transparent;
     color: #fff;
@@ -80,4 +59,17 @@
 
 .useContext4 h1 {
     margin: 0 0 1rem;
+}
+
+.button-light {
+    color: #000;
+}
+.button-dark {
+    color: #fff;
+}
+
+.panel {
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }

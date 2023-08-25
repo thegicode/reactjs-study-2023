@@ -1,0 +1,16 @@
+.memoPage {
+    font-size: 14px;
+}
+
+.memoPage > p {
+    margin: 10px 0;
+}
+
+.memoPage h1 {
+    margin-bottom: 2rem;
+}
+
+.memoPage h2 {
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}

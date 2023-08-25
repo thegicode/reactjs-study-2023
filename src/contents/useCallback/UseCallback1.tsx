@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import styles from "../../css/UseCallback.module.css";
 
 export default function UseCallback1() {
     const [number, setNumber] = useState<number>(0);
@@ -15,7 +16,7 @@ export default function UseCallback1() {
     }, [handleClick]);
 
     return (
-        <section className="useCallback">
+        <section className={styles.useCallback}>
             <input
                 type="number"
                 min="0"
