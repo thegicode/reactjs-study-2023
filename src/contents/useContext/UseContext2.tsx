@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { TitleContext } from "../../context/TitleContext";
+import styles from "../../css/UseContext.module.css";
 
 export default function UseConText2() {
     const [isDark, setIsDark] = useState<boolean>(false);
@@ -15,7 +16,7 @@ export default function UseConText2() {
 
 const Page = () => {
     return (
-        <div className="useContext1">
+        <div className={styles.useContext1}>
             <Header />
             <Content />
             <Footer />
@@ -33,7 +34,7 @@ const Header = () => {
 
     const { isDark } = themeContext;
 
-    const className = "theme-" + (isDark ? "dark" : "normal");
+    const className = isDark ? styles.themeDark : styles.themeNormal;
 
     return (
         <header className={className}>
@@ -52,10 +53,13 @@ const Content = () => {
 
     const { isDark } = themeContext;
 
-    const className = "content theme-" + (isDark ? "dark" : "normal");
+    const classNames = [styles.content];
+    isDark
+        ? classNames.push(styles.themeDark)
+        : classNames.push(styles.themeNormal);
 
     return (
-        <section className={className}>
+        <section className={classNames.join(" ")}>
             <h1>Content - {titleContext}</h1>
         </section>
     );
@@ -74,10 +78,8 @@ const Footer = () => {
         setIsDark(!isDark);
     };
 
-    const className = "theme-" + (isDark ? "dark" : "normal");
-
     return (
-        <footer className={className}>
+        <footer className={isDark ? styles.themeDark : styles.themeNormal}>
             <h1>Footer</h1>
             <button onClick={toggle}>Dark Mode</button>
         </footer>

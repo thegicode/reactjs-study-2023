@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import styles from "../../css/UseCallback.module.css";
 
 export default function UseCallback2() {
     const [size, setSize] = useState<number>(100);
@@ -12,10 +13,14 @@ export default function UseCallback2() {
         };
     }, [size]);
 
-    const themeClassName = isDark ? "theme-dark" : "";
+    const classNames = [styles.useCallback];
+    if (isDark) {
+        classNames.push(styles.themeDark);
+    }
+    const themeClassName = classNames.join(" ");
 
     return (
-        <section className={"useCallback " + themeClassName}>
+        <section className={themeClassName}>
             <input
                 type="number"
                 min="0"

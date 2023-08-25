@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
 import MyVideoPlayer from "./MyVideoPlayer";
+import styles from "../../../css/ForwardRef.module.css";
 
 export default function App() {
     const ref = useRef<HTMLVideoElement | null>(null);
 
     return (
-        <div className="forwardRef2">
+        <div className={styles.forwardRef2}>
             <button onClick={() => ref.current?.play()}>Play</button>
             <button onClick={() => ref.current?.pause()}>Pause</button>
             <br />

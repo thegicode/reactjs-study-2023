@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from "react";
+import styles from "../../css/UseContext.module.css";
 
 interface CurrentUserType {
     name: string;
@@ -32,7 +33,7 @@ interface PanelProps {
 }
 function Panel({ title, children }: PanelProps) {
     return (
-        <section className="panel">
+        <section className={styles.panel}>
             <h3>{title}</h3>
             {children}
         </section>
@@ -68,7 +69,7 @@ interface ButtonProps {
 
 function Button({ children, onClick }: ButtonProps) {
     return (
-        <button className="button" onClick={onClick}>
+        <button className={styles.button} onClick={onClick}>
             {children}
         </button>
     );

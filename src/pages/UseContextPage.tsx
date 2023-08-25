@@ -1,13 +1,13 @@
-import "../css/useContextPage.css";
 import UseConText0 from "../contents/useContext/UseContext0";
 import UseConText1 from "../contents/useContext/UseContext1";
 import UseConText2 from "../contents/useContext/UseContext2";
 import UseConText3 from "../contents/useContext/UseContext3";
 import UseConText4 from "../contents/useContext/UseContext4";
+import styles from "../css/UseContextPage.module.css";
 
 export default function useContextPage() {
     return (
-        <section className="useContextPage">
+        <section className={styles.useContextPage}>
             <h1>CreateContext, UseContext</h1>
             <p>
                 <strong>
@@ -15,7 +15,7 @@ export default function useContextPage() {
                 </strong>
             </p>
 
-            <code className="code-reference">
+            <code className={styles.codeReference}>
                 const value = useContext(SomeContext)
             </code>
 

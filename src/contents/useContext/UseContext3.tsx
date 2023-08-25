@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import styles from "../../css/UseContext.module.css";
 
 type Theme = "light" | "dark";
 
@@ -39,7 +40,9 @@ interface PanelProps {
 
 function Panel({ title, children }: PanelProps) {
     const theme = useContext(ThemeContext);
-    const className = "useContext4 panel-" + theme;
+
+    const className = `${styles.useContext4} ${styles["panel-" + theme]}`;
+
     return (
         <section className={className}>
             <h1>{title}</h1>
@@ -54,6 +57,7 @@ interface ButtonProps {
 
 function Button({ children }: ButtonProps) {
     const theme = useContext(ThemeContext);
-    const className = "button-" + theme;
+    const className = styles["button-" + theme];
+    console.log(theme);
     return <button className={className}>{children}</button>;
 }

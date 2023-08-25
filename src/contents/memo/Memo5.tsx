@@ -1,4 +1,5 @@
 import React, { memo, useState } from "react";
+// import styles from "../../../css/Memo.module.css";
 
 export default function Memo5() {
     const [name, setName] = useState<string>("");

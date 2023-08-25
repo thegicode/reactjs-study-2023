@@ -1,10 +1,10 @@
-import "../css/useCallbackPage.css";
 import UseCallback1 from "../contents/useCallback/UseCallback1";
 import UseCallback2 from "../contents/useCallback/UseCallback2";
+import styles from "../css/UseCallbackPage.module.css";
 
 export default function UseCallbackPage() {
     return (
-        <section className="useCallbackPage">
+        <section className={styles.useCallbackPage}>
             <h1>useCallback Page</h1>
 
             {/* <p>
