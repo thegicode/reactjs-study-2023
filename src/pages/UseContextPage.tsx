@@ -1,6 +1,6 @@
 import "../css/useContextPage.css";
-import UseConText0 from "../contents/useContext/useContext0/";
-import UseConText1 from "../contents/useContext/useContext1/";
+import UseConText0 from "../contents/useContext/UseContext0";
+import UseConText1 from "../contents/useContext/UseContext1";
 import UseConText2 from "../contents/useContext/useContext2/";
 import UseConText3 from "../contents/useContext/UseContext3";
 import UseConText4 from "../contents/useContext/UseContext4";
@@ -9,7 +9,7 @@ import UseConText5 from "../contents/useContext/UseContext5";
 export default function useContextPage() {
     return (
         <section className="useContextPage">
-            <h1>React CreateContext, UseContext</h1>
+            <h1>CreateContext, UseContext</h1>
             <p>
                 <strong>
                     전역적으로 사용되는 데이터를 하위 컴포넌트에 공유
@@ -23,7 +23,7 @@ export default function useContextPage() {
             <ul>
                 <li>Context를 사용하면 컴포넌트를 재사용하기 어렵다.</li>
                 <li>
-                    Prop Drilling을 피하기 위한 목적이라면{" "}
+                    Prop Drilling을 피하기 위한 목적이라면
                     <strong style={{ textDecoration: "underline" }}>
                         Component Composition(컴포넌트 합성) - 찾아볼것!
                     </strong>
@@ -35,7 +35,14 @@ export default function useContextPage() {
             <UseConText0 />
 
             <h2>1. createContext, useContext</h2>
-            <p>object, {"value={{ isDark, setIsDark }}"}</p>
+            <ul>
+                <li>
+                    루트에서 createContext 후 Provider로 자식을 감싸주면 원하는
+                    자식 컴포넌트에서 useContext로 가져와서 적용한다.
+                </li>
+                <li>props로 전달하지 않아 간결하다.</li>
+            </ul>
+
             <UseConText1 />
 
             <h2>2. </h2>
