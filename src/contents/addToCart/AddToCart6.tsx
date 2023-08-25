@@ -1,4 +1,4 @@
-// Data useReducer + Modal forwardRef
+// Data useReducer + useContext + Modal forwardRef
 
 import React, {
     memo,
@@ -98,6 +98,9 @@ export default function AddToCart6() {
     const handleOpenModal = useCallback((props: OpenModalProps) => {
         modalRef.current?.openModal(props);
     }, []);
+
+    /* Item과 Modal에서 동일한 기능을 하는 updateAmount를 공통의 함수로 뺄 것이냐? 
+        diapatch로 받아 각각 작성해서 구현할 것이냐? */
 
     return (
         <DataDispatchContext.Provider value={dispatch}>
@@ -313,6 +316,19 @@ interface ModalProps {
     // dispatch: React.Dispatch<Action>;
 }
 
+const initialModalState = {
+    isVisible: false,
+    id: null as string | null,
+    title: "",
+    currentAmount: 0,
+};
+
+const resetModalState = () => initialModalState;
+// resetModalState() 함수를 사용:
+// 함수가 항상 동일한 객체를 반환합니다.
+// 상태 초기화 로직이 변경될 경우, 함수 내부만 수정하면 되므로 유지보수가 더 용이합니다.
+// 예를 들어, 초기 상태를 설정하는 데 로직이 필요하거나 추가적인 연산이 필요한 경우 함수 내에서 수행할 수 있습니다.
+
 const Modal = memo(
     forwardRef<ModalHandles, ModalProps>((props, ref) => {
         console.log("Modal");
@@ -321,17 +337,8 @@ const Modal = memo(
         if (!dispatch) {
             throw new Error("DataDispatchContext not available.");
         }
-        const initialModalState = useMemo(
-            () => ({
-                isVisible: false,
-                id: null as string | null,
-                title: "",
-                currentAmount: 0,
-            }),
-            []
-        );
 
-        const [modalState, setModalState] = useState(initialModalState);
+        const [modalState, setModalState] = useState(resetModalState);
 
         const { isVisible, id, title, currentAmount } = modalState;
 
@@ -368,13 +375,13 @@ const Modal = memo(
                 },
             });
 
-            setModalState(initialModalState);
-        }, [currentAmount, dispatch, id, initialModalState]);
+            setModalState(resetModalState());
+        }, [currentAmount, dispatch, id]);
 
         // close Modal
         const handleClose = useCallback(() => {
-            setModalState(initialModalState);
-        }, [initialModalState]);
+            setModalState(resetModalState());
+        }, []);
 
         if (!isVisible) return null;
 

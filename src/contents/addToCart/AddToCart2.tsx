@@ -93,6 +93,9 @@ export default function App() {
         modalRef.current?.openModal(props);
     }, []);
 
+    /* Item과 Modal에서 동일한 기능을 하는 updateAmount를 props로 전달해 공통의 함수로 뺄 것이냐? 
+        diapatch로 받아 각각 작성해서 구현할 것이냐? */
+
     return (
         <section className="addToCart">
             {/* Sorting Controls */}
