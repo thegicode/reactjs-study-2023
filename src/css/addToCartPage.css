@@ -20,27 +20,13 @@
 .addToCartPage > p {
     color: #666;
 }
-/* 
-.addToCartPage .products {
-    padding: 1rem;
-    border-radius: 10px;
-    border: 1px solid #ddd;
+
+.addToCartPage > ul {
+    padding: 0 1rem;
 }
 
-.addToCartPage .products ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.addToCartPage > ul li {
+    padding-top: 5px;
+    color: #666;
+    line-height: 1.5;
 }
-
-.addToCartPage .products li {
-    padding: 8px 0;
-}
-
-.addToCartPage .products li p {
-    margin: 0 0 8px;
-}
-
-.addToCartPage .products input + button {
-    margin-left: 5px;
-} */

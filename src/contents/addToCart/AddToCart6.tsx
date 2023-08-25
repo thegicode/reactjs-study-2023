@@ -10,6 +10,7 @@ import React, {
     useRef,
     useState,
     useMemo,
+    useContext,
 } from "react";
 import "../../css/addToCart.css";
 
@@ -77,6 +78,17 @@ const initialData: DataProps[] = [
     { id: "3", title: "bbb", amount: 0 },
 ];
 
+// --- Context ---
+
+// const DataContext = React.createContext<DataProps[] | undefined>(undefined);
+// const DataDispatchContext = React.createContext<
+//     React.Dispatch<Action> | undefined
+// >(undefined);
+
+const DataDispatchContext = React.createContext<React.Dispatch<Action> | null>(
+    null
+);
+
 // --- Main App Component ---
 
 export default function App() {
@@ -94,34 +106,41 @@ export default function App() {
     }, []);
 
     return (
-        <section className="addToCart">
-            {/* Sorting Controls */}
-            <SortControls dispatch={dispatch} />
+        <DataDispatchContext.Provider value={dispatch}>
+            <section className="addToCart">
+                {/* Sorting Controls */}
+                <SortControls />
 
-            {/* Product List  */}
-            <ProductList
-                data={data}
-                dispatch={dispatch}
-                handleOpenModal={handleOpenModal}
-            />
+                {/* Product List  */}
+                <ProductList
+                    data={data}
+                    // dispatch={dispatch}
+                    handleOpenModal={handleOpenModal}
+                />
 
-            {/* Actions */}
-            <ActionButton data={data} />
+                {/* Actions */}
+                <ActionButton data={data} />
 
-            {/* Modal */}
-            <Modal ref={modalRef} dispatch={dispatch} />
-        </section>
+                {/* Modal */}
+                <Modal ref={modalRef} />
+            </section>
+        </DataDispatchContext.Provider>
     );
 }
 
 // --- Sub Components ---
 
-interface SortControlsProps {
-    dispatch: React.Dispatch<Action>;
-}
+// interface SortControlsProps {
+//     dispatch: React.Dispatch<Action>;
+// }
 
-const SortControls = memo(({ dispatch }: SortControlsProps) => {
+const SortControls = () => {
     console.log("SortControls");
+
+    const dispatch = useContext(DataDispatchContext);
+    if (!dispatch) {
+        throw new Error("DataDispatchContext not available.");
+    }
 
     const sortDataAscending = () => dispatch({ type: ActionTypes.SORT_ASC });
     const sortDataDescending = () => dispatch({ type: ActionTypes.SORT_DESC });
@@ -136,17 +155,22 @@ const SortControls = memo(({ dispatch }: SortControlsProps) => {
             </button>
         </div>
     );
-});
+};
 
 interface ProductListProps {
     data: DataProps[];
-    dispatch: React.Dispatch<Action>;
+    // dispatch: React.Dispatch<Action>;
     handleOpenModal: (props: OpenModalProps) => void;
 }
 
 const ProductList = memo(
-    ({ data, dispatch, handleOpenModal }: ProductListProps) => {
+    ({ data, handleOpenModal }: ProductListProps) => {
         console.log("ProductList");
+
+        const dispatch = useContext(DataDispatchContext);
+        if (!dispatch) {
+            throw new Error("DataDispatchContext not available.");
+        }
 
         return (
             <ul className="addToCart-list">
@@ -263,7 +287,7 @@ const Item = memo(
     },
     (prevProps, nextProps) => {
         // 성능을 위해 변경이 있는 데이터만 리렌더링
-        return prevProps.data === nextProps.data;
+        return prevProps.data.amount === nextProps.data.amount;
     }
 );
 
@@ -310,101 +334,99 @@ const ActionButton = ({ data }: ActionButtonProps) => {
 };
 
 interface ModalProps {
-    dispatch: React.Dispatch<Action>;
+    // dispatch: React.Dispatch<Action>;
 }
 
-const Modal = memo(
-    forwardRef<ModalHandles, ModalProps>(({ dispatch }, ref) => {
-        console.log("Modal");
+const Modal = forwardRef<ModalHandles, ModalProps>((props, ref) => {
+    console.log("Modal");
 
-        const initialModalState = useMemo(
-            () => ({
-                isVisible: false,
-                id: null as string | null,
-                title: "",
-                currentAmount: 0,
-            }),
-            []
-        );
+    const dispatch = useContext(DataDispatchContext);
+    if (!dispatch) {
+        throw new Error("DataDispatchContext not available.");
+    }
+    const initialModalState = useMemo(
+        () => ({
+            isVisible: false,
+            id: null as string | null,
+            title: "",
+            currentAmount: 0,
+        }),
+        []
+    );
 
-        const [modalState, setModalState] = useState(initialModalState);
+    const [modalState, setModalState] = useState(initialModalState);
 
-        const { isVisible, id, title, currentAmount } = modalState;
+    const { isVisible, id, title, currentAmount } = modalState;
 
-        useImperativeHandle(ref, () => ({
-            // Item에서 Modal을 열 때
-            openModal: ({ id, title, amount }: OpenModalProps) => {
-                setModalState({
-                    isVisible: true,
-                    id,
-                    title,
-                    currentAmount: amount,
-                });
-            },
-        }));
-
-        // input element change event : update amount
-        const handleChange = useCallback(
-            (e: React.ChangeEvent<HTMLInputElement>) => {
-                setModalState((prevState) => ({
-                    ...prevState,
-                    currentAmount: Number(e.target.value),
-                }));
-            },
-            []
-        );
-
-        // click confirm button : dispatch update amount, close Modal
-        const handleConfirm = useCallback(() => {
-            dispatch({
-                type: ActionTypes.UPDATE_AMOUNT,
-                payload: {
-                    id: id!,
-                    newAmount: currentAmount,
-                },
+    useImperativeHandle(ref, () => ({
+        // Item에서 Modal을 열 때
+        openModal: ({ id, title, amount }: OpenModalProps) => {
+            setModalState({
+                isVisible: true,
+                id,
+                title,
+                currentAmount: amount,
             });
+        },
+    }));
 
-            setModalState(initialModalState);
-        }, [currentAmount, dispatch, id, initialModalState]);
+    // input element change event : update amount
+    const handleChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setModalState((prevState) => ({
+                ...prevState,
+                currentAmount: Number(e.target.value),
+            }));
+        },
+        []
+    );
 
-        // close Modal
-        const handleClose = useCallback(() => {
-            setModalState(initialModalState);
-        }, [initialModalState]);
+    // click confirm button : dispatch update amount, close Modal
+    const handleConfirm = useCallback(() => {
+        dispatch({
+            type: ActionTypes.UPDATE_AMOUNT,
+            payload: {
+                id: id!,
+                newAmount: currentAmount,
+            },
+        });
 
-        if (!isVisible) return null;
+        setModalState(initialModalState);
+    }, [currentAmount, dispatch, id, initialModalState]);
 
-        return (
-            <div className="modal">
-                <div className="modal-container">
-                    <h3>Modal</h3>
-                    <div className="modal-contents">
-                        <p>id: {id}</p>
-                        <p>title: {title}</p>
-                        <p>amount: {currentAmount}</p>
-                        <input
-                            type="number"
-                            min="0"
-                            max="10"
-                            value={currentAmount}
-                            onChange={handleChange}
-                        />
-                    </div>
+    // close Modal
+    const handleClose = useCallback(() => {
+        setModalState(initialModalState);
+    }, [initialModalState]);
 
-                    <div className="modal-actions">
-                        <button type="button" onClick={handleConfirm}>
-                            confirm
-                        </button>
-                        <button type="button" onClick={handleClose}>
-                            close
-                        </button>
-                    </div>
+    if (!isVisible) return null;
+
+    return (
+        <div className="modal">
+            <div className="modal-container">
+                <h3>Modal</h3>
+                <div className="modal-contents">
+                    <p>id: {id}</p>
+                    <p>title: {title}</p>
+                    <p>amount: {currentAmount}</p>
+                    <input
+                        type="number"
+                        min="0"
+                        max="10"
+                        value={currentAmount}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className="modal-actions">
+                    <button type="button" onClick={handleConfirm}>
+                        confirm
+                    </button>
+                    <button type="button" onClick={handleClose}>
+                        close
+                    </button>
                 </div>
             </div>
-        );
-    }),
-    (prevProps, nextProps) => {
-        // 성능을 위해 변경이 있는 dispatch만 리렌더링
-        return prevProps.dispatch === nextProps.dispatch;
-    }
-);
+        </div>
+    );
+});
