@@ -15,11 +15,11 @@ export default function CustomHook1() {
         useInput("", displayMessage);
 
     return (
-        <div>
-            <h1>useInput</h1>
+        <section>
+            <h2>useInput</h2>
             <input type="text" value={inputValue} onChange={handleChange} />
             <button onClick={handleSubmit}>확인</button>
-        </div>
+        </section>
     );
 }
 

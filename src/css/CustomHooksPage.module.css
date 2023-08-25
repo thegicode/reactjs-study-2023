@@ -1,3 +1,18 @@
 .customHooksPage {
     font-size: 14px;
 }
+
+.customHooksPage section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.customHooksPage h2 {
+    margin: 0 0 1.5rem;
+}
+
+.customHooksPage button {
+    margin-left: 4px;
+}
