@@ -11,6 +11,8 @@ export default function memoPage() {
 
             <h2>AddToCart 1 </h2>
             <h3>: Data useState + Modal forwardRef</h3>
+            <p>- state를 루트에서 관리</p>
+            <p>- 관련 메서드들도 루트에 작성, 한 눈에 파악이 어렵다.</p>
             <AddToCart1 />
 
             <h2>AddToCart 2 *****</h2>
@@ -42,6 +44,11 @@ export default function memoPage() {
                 - Modal을 forwardRef를 사용하지 않고 useState로 구현해도 괜찮은
                 것 같다.
             </p>
+            <p>
+                - ModalState, setModalState, handleOpenModal 구현이 루트에
+                있어야 한다.{" "}
+            </p>
+            <p>- ModalState, setModalState을 Modal에 Prop로 전달해야 한다. </p>
             <AddToCart4 />
 
             {/* 

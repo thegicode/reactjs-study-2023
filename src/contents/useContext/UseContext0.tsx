@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import Page from "./Page";
 
 export default function UseConText1() {
     const [isDark, setIsDark] = useState<boolean>(false);
@@ -27,13 +26,7 @@ interface HeaderProps {
 
 const Header = ({ isDark }: HeaderProps) => {
     return (
-        <header
-            className={isDark ? "dark" : "noDark"}
-            // style={{
-            //     backgroundColor: isDark ? "black" : "white",
-            //     color: isDark ? "white" : "black",
-            // }}
-        >
+        <header className={isDark ? "dark" : "noDark"}>
             <h1>Header</h1>
         </header>
     );
