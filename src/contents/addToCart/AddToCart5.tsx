@@ -1,25 +1,20 @@
-// Data useReducer + Modal forwardRef
+// Data useContext + Modal forwardRef
 
 import React, {
-    memo,
+    createContext,
     forwardRef,
+    memo,
     useCallback,
+    useContext,
     // useEffect,
     useImperativeHandle,
-    useReducer,
+    useMemo,
     useRef,
     useState,
-    useMemo,
 } from "react";
 import "../../css/addToCart.css";
 
 // --- Types & Enums ---
-
-enum ActionTypes {
-    UPDATE_AMOUNT = "UPDATE_AMOUNT",
-    SORT_ASC = "SORT_ASC",
-    SORT_DESC = "SORT_DESC",
-}
 
 interface DataProps {
     id: string;
@@ -35,39 +30,16 @@ interface ModalHandles {
     openModal: (props: OpenModalProps) => void;
 }
 
-type Action =
-    | {
-          type: ActionTypes.UPDATE_AMOUNT;
-          payload: {
-              id: string;
-              newAmount: number;
-          };
-      }
-    | {
-          type: ActionTypes.SORT_ASC;
-      }
-    | {
-          type: ActionTypes.SORT_DESC;
-      };
-
-// --- Reducers ---
-
-function dataReducer(state: DataProps[], action: Action): DataProps[] {
-    switch (action.type) {
-        case ActionTypes.UPDATE_AMOUNT:
-            return state.map((item) =>
-                item.id === action.payload.id
-                    ? { ...item, amount: action.payload.newAmount }
-                    : item
-            );
-        case ActionTypes.SORT_ASC:
-            return [...state].sort((a, b) => a.title.localeCompare(b.title));
-        case ActionTypes.SORT_DESC:
-            return [...state].sort((a, b) => b.title.localeCompare(a.title));
-        default:
-            return state;
-    }
+// --- Context ---
+interface DataContextType {
+    data: DataProps[];
+    setData: React.Dispatch<React.SetStateAction<DataProps[]>>;
 }
+const defaultContextValue: DataContextType = {
+    data: [],
+    setData: () => {},
+};
+const DataContext = createContext<DataContextType>(defaultContextValue);
 
 // --- Initial States ---
 
@@ -77,13 +49,20 @@ const initialData: DataProps[] = [
     { id: "3", title: "bbb", amount: 0 },
 ];
 
+const initialModalState = () => ({
+    isVisible: false,
+    id: null as string | null,
+    title: "",
+    currentAmount: 0,
+});
+
 // --- Main App Component ---
 
-export default function App() {
+export default function AddToCart5() {
     console.log("App");
 
     // 데이터 및 관리자 초기화
-    const [data, dispatch] = useReducer(dataReducer, initialData);
+    const [data, setData] = useState<DataProps[]>(initialData);
 
     // Modal 핸들러 참조
     const modalRef = useRef<ModalHandles | null>(null);
@@ -94,37 +73,35 @@ export default function App() {
     }, []);
 
     return (
-        <section className="addToCart">
-            {/* Sorting Controls */}
-            <SortControls dispatch={dispatch} />
-
-            {/* Product List  */}
-            <ProductList
-                data={data}
-                dispatch={dispatch}
-                handleOpenModal={handleOpenModal}
-            />
-
-            {/* Actions */}
-            <ActionButton data={data} />
-
-            {/* Modal */}
-            <Modal ref={modalRef} dispatch={dispatch} />
-        </section>
+        <DataContext.Provider value={{ data, setData }}>
+            <section className="addToCart">
+                <SortControls />
+                <ProductList handleOpenModal={handleOpenModal} />
+                <ActionButton />
+                <Modal ref={modalRef} />
+            </section>
+        </DataContext.Provider>
     );
 }
 
 // --- Sub Components ---
 
-interface SortControlsProps {
-    dispatch: React.Dispatch<Action>;
-}
-
-const SortControls = memo(({ dispatch }: SortControlsProps) => {
+const SortControls = () => {
     console.log("SortControls");
 
-    const sortDataAscending = () => dispatch({ type: ActionTypes.SORT_ASC });
-    const sortDataDescending = () => dispatch({ type: ActionTypes.SORT_DESC });
+    const { setData } = useContext(DataContext);
+
+    const sortDataAscending = useCallback(() => {
+        setData((prevData) =>
+            [...prevData].sort((a, b) => a.title.localeCompare(b.title))
+        );
+    }, [setData]);
+
+    const sortDataDescending = useCallback(() => {
+        setData((prevData) =>
+            [...prevData].sort((a, b) => b.title.localeCompare(a.title))
+        );
+    }, [setData]);
 
     return (
         <div className="addToCart-sorts">
@@ -136,45 +113,40 @@ const SortControls = memo(({ dispatch }: SortControlsProps) => {
             </button>
         </div>
     );
-});
+};
 
 interface ProductListProps {
-    data: DataProps[];
-    dispatch: React.Dispatch<Action>;
     handleOpenModal: (props: OpenModalProps) => void;
 }
 
-const ProductList = memo(
-    ({ data, dispatch, handleOpenModal }: ProductListProps) => {
-        console.log("ProductList");
+const ProductList = memo(({ handleOpenModal }: ProductListProps) => {
+    console.log("ProductList");
 
-        return (
-            <ul className="addToCart-list">
-                {data.map((item) => (
-                    <Item
-                        key={item.id}
-                        data={item}
-                        dispatch={dispatch}
-                        handleOpenModal={handleOpenModal}
-                    />
-                ))}
-            </ul>
-        );
-    },
-    (prevProps, nextProps) => {
-        return prevProps.data === nextProps.data;
-    }
-);
+    const { data } = useContext(DataContext);
+
+    return (
+        <ul className="addToCart-list">
+            {data.map((item) => (
+                <Item
+                    key={item.id}
+                    data={item}
+                    handleOpenModal={handleOpenModal}
+                />
+            ))}
+        </ul>
+    );
+});
 
 interface ItemProps {
     data: DataProps;
-    dispatch: React.Dispatch<Action>;
     handleOpenModal: (props: OpenModalProps) => void;
 }
 
 const Item = memo(
-    ({ data, dispatch, handleOpenModal }: ItemProps) => {
+    ({ data, handleOpenModal }: ItemProps) => {
         console.log("Item", data);
+
+        const { setData } = useContext(DataContext);
 
         const { id, title, amount } = data;
 
@@ -183,17 +155,15 @@ const Item = memo(
         const isMaxAmount = amount >= 10;
         const isMinAmount = amount <= 0;
 
-        const dispatchAmount = useCallback(
-            (currentAmount: number) => {
-                dispatch({
-                    type: ActionTypes.UPDATE_AMOUNT,
-                    payload: {
-                        id,
-                        newAmount: currentAmount,
-                    },
-                });
+        const updateAmount = useCallback(
+            (newAmount: number) => {
+                setData((prevData) =>
+                    prevData.map((item) =>
+                        item.id === id ? { ...item, amount: newAmount } : item
+                    )
+                );
             },
-            [dispatch, id]
+            [id, setData]
         );
 
         const handleInputClick = () => {
@@ -206,19 +176,19 @@ const Item = memo(
 
         const increaseAmount = useCallback(() => {
             if (!isMaxAmount) {
-                dispatchAmount(amount + 1);
+                updateAmount(amount + 1);
             }
-        }, [isMaxAmount, dispatchAmount, amount]);
+        }, [isMaxAmount, updateAmount, amount]);
 
         const decreaseAmount = useCallback(() => {
             if (!isMinAmount) {
-                dispatchAmount(amount - 1);
+                updateAmount(amount - 1);
             }
-        }, [isMinAmount, dispatchAmount, amount]);
+        }, [isMinAmount, updateAmount, amount]);
 
         // useEffect(() => {
-        //     dispatchAmount();
-        // }, [localAmount, dispatchAmount]);
+        //     updateAmount();
+        // }, [localAmount, updateAmount]);
 
         return (
             <li
@@ -262,17 +232,19 @@ const Item = memo(
         );
     },
     (prevProps, nextProps) => {
-        // 성능을 위해 변경이 있는 데이터만 리렌더링
-        return prevProps.data === nextProps.data;
+        // id, title, amount 중 하나라도 변경되면 리렌더링을 트리거
+        return (
+            prevProps.data.id === nextProps.data.id &&
+            prevProps.data.title === nextProps.data.title &&
+            prevProps.data.amount === nextProps.data.amount
+        );
     }
 );
 
-interface ActionButtonProps {
-    data: DataProps[];
-}
-
-const ActionButton = ({ data }: ActionButtonProps) => {
+const ActionButton = () => {
     console.log("ActionButton");
+
+    const { data } = useContext(DataContext);
 
     const [showData, setShowData] = useState<string>("");
 
@@ -309,25 +281,15 @@ const ActionButton = ({ data }: ActionButtonProps) => {
     );
 };
 
-interface ModalProps {
-    dispatch: React.Dispatch<Action>;
-}
-
 const Modal = memo(
-    forwardRef<ModalHandles, ModalProps>(({ dispatch }, ref) => {
+    forwardRef<ModalHandles, {}>((props, ref) => {
         console.log("Modal");
 
-        const initialModalState = useMemo(
-            () => ({
-                isVisible: false,
-                id: null as string | null,
-                title: "",
-                currentAmount: 0,
-            }),
-            []
-        );
+        const { setData } = useContext(DataContext);
 
-        const [modalState, setModalState] = useState(initialModalState);
+        // Lazy Initialization: 컴포넌트가 처음 렌더링될 때만 함수를 실행
+        const [modalState, setModalState] = useState(() => initialModalState());
+        // const [modalState, setModalState] = useState(initialModalState);
 
         const { isVisible, id, title, currentAmount } = modalState;
 
@@ -343,6 +305,17 @@ const Modal = memo(
             },
         }));
 
+        const changeDataAmount = useCallback(
+            (id: string, newAmount: number) => {
+                setData((prevData) =>
+                    prevData.map((item) =>
+                        item.id === id ? { ...item, amount: newAmount } : item
+                    )
+                );
+            },
+            [setData]
+        );
+
         // input element change event : update amount
         const handleChange = useCallback(
             (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -356,21 +329,15 @@ const Modal = memo(
 
         // click confirm button : dispatch update amount, close Modal
         const handleConfirm = useCallback(() => {
-            dispatch({
-                type: ActionTypes.UPDATE_AMOUNT,
-                payload: {
-                    id: id!,
-                    newAmount: currentAmount,
-                },
-            });
+            changeDataAmount(id!, currentAmount);
 
             setModalState(initialModalState);
-        }, [currentAmount, dispatch, id, initialModalState]);
+        }, [currentAmount, id, changeDataAmount]);
 
         // close Modal
         const handleClose = useCallback(() => {
             setModalState(initialModalState);
-        }, [initialModalState]);
+        }, []);
 
         if (!isVisible) return null;
 
@@ -402,9 +369,5 @@ const Modal = memo(
                 </div>
             </div>
         );
-    }),
-    (prevProps, nextProps) => {
-        // 성능을 위해 변경이 있는 dispatch만 리렌더링
-        return prevProps.dispatch === nextProps.dispatch;
-    }
+    })
 );

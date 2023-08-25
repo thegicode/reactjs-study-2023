@@ -28,6 +28,17 @@ export default function useContextPage() {
                         Component Composition(컴포넌트 합성) - 찾아볼것!
                     </strong>
                 </li>
+                <li>
+                    useContext는 자주 변경되는 상태를 전역적으로 공유할 때
+                    리렌더링의 증가로 인해 성능 문제가 발생할 수 있다. 따라서
+                    성능에 민감한 경우에는 React.memo나 다른 최적화 기법을
+                    사용하여 불필요한 리렌더링을 방지해야 한다.
+                </li>
+                <li>
+                    useContext는 일반적으로 전역 상태 관리, 테마 설정, 언어 설정
+                    등과 같이 많은 컴포넌트에서 필요한 값을 효율적으로 전달하는
+                    데 사용
+                </li>
             </ul>
 
             <h2>0. Context 적용전 : Prop Drilling</h2>
