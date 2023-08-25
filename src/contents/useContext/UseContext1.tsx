@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
+import styles from "../../css/UseContext.module.css";
 
 export default function UseConText1() {
     const [isDark, setIsDark] = useState<boolean>(false);
@@ -12,7 +13,7 @@ export default function UseConText1() {
 
 const Page = () => {
     return (
-        <div className="useContext1">
+        <div className={styles.useContext1}>
             <Header />
             <Content />
             <Footer />
@@ -30,7 +31,7 @@ const Header = () => {
     const { isDark } = themeContext;
 
     return (
-        <header className={isDark ? "dark" : "noDark"}>
+        <header className={isDark ? styles.dark : styles.noDark}>
             <h1>Header</h1>
         </header>
     );
@@ -45,8 +46,11 @@ const Content = () => {
 
     const { isDark } = themeContext;
 
+    const classNames = [styles.content];
+    isDark ? classNames.push(styles.dark) : classNames.push(styles.noDark);
+
     return (
-        <section className={"content " + (isDark ? "dark" : "noDark")}>
+        <section className={classNames.join(" ")}>
             <h1>Content</h1>
         </section>
     );
@@ -66,7 +70,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className={isDark ? "dark" : "noDark"}>
+        <footer className={isDark ? styles.dark : styles.noDark}>
             <h1>Footer</h1>
             <button onClick={toggle}>Dark Mode</button>
         </footer>

@@ -1,4 +1,5 @@
 import React, { createContext, memo, useContext, useState } from "react";
+import styles from "../../css/Memo.module.css";
 
 type Theme = "dark" | "light";
 const ThemeContext = createContext<Theme | null>(null);
@@ -28,5 +29,7 @@ const Greeting: React.FC<GreetingProps> = memo(({ name }) => {
     if (!theme) {
         throw new Error("Theme context is not set!");
     }
-    return <h3 className={theme}>Hello, {name}!</h3>;
+
+    const className = styles[theme];
+    return <h3 className={className}>Hello, {name}!</h3>;
 });

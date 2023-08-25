@@ -1,0 +1,20 @@
+.useContextPage {
+    font-size: 14px;
+}
+
+.useContextPage > p {
+    margin: 10px 0;
+}
+
+.useContextPage h1 {
+    margin-bottom: 2rem;
+}
+
+.useContextPage h2 {
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.useContextPage > ul li {
+    padding: 5px 0;
+}

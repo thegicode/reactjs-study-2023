@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
 import Child from "./Child";
+import styles from "../../../css/Memo.module.css";
 
-export default function App() {
+export default function Memo3() {
     console.log("부모 컴포넌트");
     const [amount, setAmount] = useState<number>(0);
 
@@ -23,7 +24,7 @@ export default function App() {
     // useCallback으로 passFn memoiztaion -> Child의 props가 변동이 없으므로 리렌더링되지 않는다.
 
     return (
-        <section className="memo1">
+        <section className={styles.memo1}>
             <h3>Parent Component</h3>
             <span>수량: {amount}</span>
             <button type="button" onClick={increase}>

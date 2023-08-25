@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "../../css/UseContext.module.css";
 
 export default function UseConText1() {
     const [isDark, setIsDark] = useState<boolean>(false);
@@ -12,7 +13,7 @@ interface PageProps {
 
 const Page: React.FC<PageProps> = ({ isDark, setIsDark }) => {
     return (
-        <div className="useContext1">
+        <div className={styles.useContext1}>
             <Header isDark={isDark} />
             <Content isDark={isDark} />
             <Footer isDark={isDark} setIsDark={setIsDark} />
@@ -26,7 +27,7 @@ interface HeaderProps {
 
 const Header = ({ isDark }: HeaderProps) => {
     return (
-        <header className={isDark ? "dark" : "noDark"}>
+        <header className={isDark ? styles.dark : styles.noDark}>
             <h1>Header</h1>
         </header>
     );
@@ -37,8 +38,15 @@ interface ContentProps {
 }
 
 const Content = ({ isDark }: ContentProps) => {
+    const classNames = [styles.content];
+    if (isDark) {
+        classNames.push(styles.dark);
+    } else {
+        classNames.push(styles.noDark);
+    }
+
     return (
-        <section className={"content " + (isDark ? "dark" : "noDark")}>
+        <section className={classNames.join(" ")}>
             <h1>Content</h1>
         </section>
     );
@@ -55,7 +63,7 @@ const Footer = ({ isDark, setIsDark }: FooterProps) => {
     };
 
     return (
-        <footer className={isDark ? "dark" : "noDark"}>
+        <footer className={isDark ? styles.dark : styles.noDark}>
             <h1>Footer</h1>
             <button onClick={toggle}>Dark Mode</button>
         </footer>
