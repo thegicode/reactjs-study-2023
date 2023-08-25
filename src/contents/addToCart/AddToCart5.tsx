@@ -86,7 +86,7 @@ export default function AddToCart5() {
 
 // --- Sub Components ---
 
-const SortControls = () => {
+const SortControls = memo(() => {
     console.log("SortControls");
 
     const { setData } = useContext(DataContext);
@@ -113,7 +113,7 @@ const SortControls = () => {
             </button>
         </div>
     );
-};
+});
 
 interface ProductListProps {
     handleOpenModal: (props: OpenModalProps) => void;

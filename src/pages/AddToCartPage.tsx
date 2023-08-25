@@ -4,6 +4,8 @@ import AddToCart2 from "../contents/addToCart/AddToCart2";
 import AddToCart3 from "../contents/addToCart/AddToCart3";
 import AddToCart4 from "../contents/addToCart/AddToCart4";
 import AddToCart5 from "../contents/addToCart/AddToCart5";
+import AddToCart6 from "../contents/addToCart/AddToCart6";
+// import AddToCart7 from "../contents/addToCart/AddToCart7";
 
 export default function memoPage() {
     return (
@@ -86,12 +88,20 @@ export default function memoPage() {
             <AddToCart5 />
 
             <h2>AddToCart 6 : </h2>
-            <h3> : Data useReducer + Modal forwardRef + useContext</h3>
+            <h3> : Data useReducer + useContext + Modal forwardRef </h3>
             <ul>
                 <li>dispatch를 Context로 적용</li>
-                <li>역시나 모든 컴포넌트가 리렌더링</li>
+                <li>성능은 AddToCart 2와 비슷하다. </li>
+                <li>넘겨주는 props가 빠지니 간결해진다. </li>
             </ul>
-            <AddToCart5 />
+            <AddToCart6 />
+
+            {/* <h2>AddToCart 7 : </h2>
+            <h3> : AddToCart 2의 ActionButton 변경</h3>
+            <ul>
+                <li></li>
+            </ul>
+            <AddToCart7 /> */}
         </section>
     );
 }
