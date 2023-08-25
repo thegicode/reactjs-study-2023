@@ -1,10 +1,9 @@
 import "../css/useContextPage.css";
 import UseConText0 from "../contents/useContext/UseContext0";
 import UseConText1 from "../contents/useContext/UseContext1";
-import UseConText2 from "../contents/useContext/useContext2/";
+import UseConText2 from "../contents/useContext/UseContext2";
 import UseConText3 from "../contents/useContext/UseContext3";
 import UseConText4 from "../contents/useContext/UseContext4";
-import UseConText5 from "../contents/useContext/UseContext5";
 
 export default function useContextPage() {
     return (
@@ -21,6 +20,7 @@ export default function useContextPage() {
             </code>
 
             <ul>
+                <li>props로 전달하지 않아 간결하다.</li>
                 <li>Context를 사용하면 컴포넌트를 재사용하기 어렵다.</li>
                 <li>
                     Prop Drilling을 피하기 위한 목적이라면
@@ -40,7 +40,6 @@ export default function useContextPage() {
                     루트에서 createContext 후 Provider로 자식을 감싸주면 원하는
                     자식 컴포넌트에서 useContext로 가져와서 적용한다.
                 </li>
-                <li>props로 전달하지 않아 간결하다.</li>
             </ul>
 
             <UseConText1 />
@@ -49,14 +48,11 @@ export default function useContextPage() {
             <p>string, {"value={'예쁜 타이틀 컨텍스트'}"}</p>
             <UseConText2 />
 
-            <h2>3. Passing data deeply into the tree </h2>
+            <h2>3. Updating a value via context </h2>
             <UseConText3 />
 
-            <h2>4. Updating a value via context </h2>
+            <h2>4. Updating an object via context</h2>
             <UseConText4 />
-
-            <h2>5. Updating an object via context</h2>
-            <UseConText5 />
         </section>
     );
 }
