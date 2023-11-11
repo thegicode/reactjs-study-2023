@@ -23,6 +23,7 @@ const CompositionPage = lazy(() => import("./pages/CompositionPage"));
 // practical pages
 const ProductsPage = lazy(() => import("./pages/ProductsPage"));
 const AddToCartPage = lazy(() => import("./pages/AddToCartPage"));
+const ScrollPage = lazy(() => import("./pages/ScrollPage"));
 
 function App() {
     return (
@@ -94,6 +95,10 @@ function App() {
                                     <Route
                                         path="/practical/addtocart"
                                         element={<AddToCartPage />}
+                                    />
+                                    <Route
+                                        path="/practical/scroll"
+                                        element={<ScrollPage />}
                                     />
                                 </Routes>
                             </main>

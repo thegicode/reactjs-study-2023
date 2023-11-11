@@ -1,0 +1,21 @@
+.scroll-container {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid green;
+}
+
+.scroll-content {
+    overflow-x: auto;
+    white-space: nowrap;
+    border: 1px solid #ddd;
+    height: 200px;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 5px;
+    background-color: blue;
+}

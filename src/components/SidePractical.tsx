@@ -5,6 +5,7 @@ export default function Hooks() {
         <>
             <Link to="./products">Products</Link>
             <Link to="./addtocart">AddToCart</Link>
+            <Link to="./scroll">Scroll</Link>
         </>
     );
 }
